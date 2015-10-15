@@ -1,0 +1,7 @@
+10-07-2015:
+- cleaned TorusDemo for starting point
+
+10-14-2015:
+- changed resource loading such that materials and models, source are all in seperate directories
+- base player ship model made and has been loaded
+- cmake file now works with any number of materials and source files

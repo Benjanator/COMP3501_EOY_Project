@@ -1,0 +1,17 @@
+material Skybox
+{
+  technique
+   {
+      pass
+      {
+         lighting off
+         depth_write off
+
+         texture_unit
+         {
+            cubic_texture Space_Skybox_front5.jpg Space_Skybox_back6.jpg Space_Skybox_left2.jpg Space_Skybox_right1.jpg Space_Skybox_top3.jpg Space_Skybox_bottom4.jpg separateUV
+            tex_address_mode clamp
+         }
+      }
+	}
+}

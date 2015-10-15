@@ -1,0 +1,39 @@
+vertex_program blue_material_shader/vs glsl 
+{
+    source MaterialVpBlue.glsl 
+
+    default_params
+    {
+        param_named_auto world_mat world_matrix
+        param_named_auto view_mat view_matrix
+        param_named_auto projection_mat projection_matrix
+    }
+}
+
+
+fragment_program blue_material_shader/fs glsl 
+{
+    source MaterialFpBlue.glsl 
+
+	default_params
+	{
+	}
+}
+
+
+material BlueMaterial
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref blue_material_shader/vs
+            {
+            }
+
+            fragment_program_ref blue_material_shader/fs
+            {
+            }
+        } 
+    }
+}
