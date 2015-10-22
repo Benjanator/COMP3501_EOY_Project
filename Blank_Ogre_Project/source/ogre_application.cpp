@@ -40,6 +40,8 @@ const Ogre::String material_directory_g = MATERIAL_DIRECTORY;
 Ogre::SceneNode* player;
 float change = 0.0f;
 
+ObjectManager objectManager;
+
 
 OgreApplication::OgreApplication(void){
 
@@ -599,6 +601,12 @@ void OgreApplication::createLoadedEntity(Ogre::String _objectName)
 	 child->translate(1.66224f, 0.21, 0.005);
 
 	 //
+
+}
+
+void OgreApplication::test()
+{
+
 
 }
 

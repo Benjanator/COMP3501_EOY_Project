@@ -12,6 +12,9 @@
 #include "OGRE/OgreEntity.h"
 #include "OIS/OIS.h"
 
+#include "SmallShip.h"
+#include "ObjectManager.h"
+
 namespace ogre_application {
 
 
@@ -70,6 +73,7 @@ namespace ogre_application {
 			void LoadMaterials(void);
 			void LoadModels(void);
 			void LoadSkybox(void);
+			void test(void);
 
 			/* Methods to handle events */
 			bool frameRenderingQueued(const Ogre::FrameEvent& fe);

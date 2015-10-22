@@ -4,9 +4,9 @@ cmake_minimum_required(VERSION 2.6)
 project(EndOfYearProject)
 
 # Specify project files: header files and source files
-set(HDRS
-	./source/ogre_application.h ./source/ObjectImporter.h
-)
+#set(HDRS
+#	./source/ogre_application.h ./source/ObjectImporter.h
+#)
 FILE(GLOB HDRS "./source/*.h" "./source/*.hpp")
 
 FILE(GLOB SCS "./source/*.cpp")
@@ -42,7 +42,7 @@ if(WIN32)
 
     # Add executable based on the source files
     add_executable(TorusDemo ${HDRS} ${SRCS})
-
+	
     # Set up names of Ogre libraries
     target_link_libraries(TorusDemo
         "OgreMain_d.lib"
