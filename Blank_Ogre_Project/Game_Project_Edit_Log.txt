@@ -5,3 +5,16 @@
 - changed resource loading such that materials and models, source are all in seperate directories
 - base player ship model made and has been loaded
 - cmake file now works with any number of materials and source files
+
+10-21-2015:
+- skybox made, loaded and in materials directory
+- usesful classes in progress;
+      @ GameObject
+      @ GameObjectFactory
+      @ ObjectManager
+      @ SmallShip
+- classes that are there but not started;
+      @ InputInterface
+      
+- recently obsolete class;
+      @ ObjectImporter
