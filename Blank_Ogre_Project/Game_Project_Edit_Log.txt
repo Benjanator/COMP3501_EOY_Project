@@ -16,5 +16,5 @@
 - classes that are there but not started;
       @ InputInterface
       
-- recently obsolete class;
+- recently obsolete class, but still in source directory;
       @ ObjectImporter
