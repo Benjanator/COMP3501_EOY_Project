@@ -41,7 +41,8 @@ namespace ogre_application {
             OgreApplication(void);
             void Init(void); // Call Init() before running the main loop
 			void CreateTorus(Ogre::String object_name, Ogre::String material_name, float loop_radius = 0.6, float circle_radius = 0.2, int num_loop_samples = 90, int num_circle_samples = 30); // Create an object to show on the screen
-            void SetupAnimation(Ogre::String object_name); // Setup animation for an object
+            void Controls(	Ogre::Camera*,Ogre::SceneNode*);
+			void SetupAnimation(Ogre::String object_name); // Setup animation for an object
             void MainLoop(void); // Keep application active
 			void loadEntity(Ogre::String _fileName, Ogre::String _objectName);
 			void createLoadedEntity(Ogre::String _objectName);

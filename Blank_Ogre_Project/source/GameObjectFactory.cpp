@@ -19,12 +19,15 @@ GameObject* GameObjectFactory::createGameObject(GameObject::objectType _type)
 		newObject = new SmallShip(create_SAF());
 		break;
 	case GameObject::smallEnemy_fighter:
+		newObject = new SmallShip(create_SEF());
 		break;
 	case GameObject::smallAlly_bomber:
 		break;
 	case GameObject::smallEnemy_bomber:
+		newObject = new SmallShip(create_SEB());
 		break;
 	case GameObject::largeEnemy_cmd:
+		newObject = new SmallShip(create_LEC());
 		break;
 	case GameObject::largeAlly_cmd:
 		break;
@@ -124,4 +127,60 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	//
 
 	return node;
+}
+
+Ogre::SceneNode* GameObjectFactory::create_SEF()
+{
+	Ogre::String _objectName = "SEF_" + Ogre::StringConverter::toString(SEF_id);
+	SEF_id++;
+	Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+
+	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Enemy_Fighter.mesh");
+	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
+	entity->setMaterialName("ShinyMaterial");
+	node->attachObject(entity);
+
+	node->setPosition(10.0,0.0,0.0);
+	node->setScale(1.0,1.0,1.0);
+
+	return node;
+}
+
+
+
+Ogre::SceneNode* GameObjectFactory::create_SEB()
+{
+	Ogre::String _objectName = "SEB_" + Ogre::StringConverter::toString(SEB_id);
+	SEB_id++;
+	Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+
+	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Lancer.mesh");
+	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
+	entity->setMaterialName("ShinyMaterial");
+	node->attachObject(entity);
+
+	node->setPosition(50.0,0.0,0.0);
+	node->setScale(1.0,1.0,1.0);
+
+	return node;
+}
+
+
+
+Ogre::SceneNode* GameObjectFactory::create_LEC()
+{
+	Ogre::String _objectName = "LEC_" + Ogre::StringConverter::toString(LEC_id);
+	LEC_id++;
+	Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+
+	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Carrier.mesh");
+	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
+	entity->setMaterialName("ShinyMaterial");
+	node->attachObject(entity);
+
+	node->setPosition(100.0,0.0,0.0);
+	node->setScale(1.0,1.0,1.0);
+
+	return node;
+
 }

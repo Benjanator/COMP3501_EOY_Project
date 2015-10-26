@@ -24,5 +24,10 @@ private:
 	Ogre::SceneManager* scene_manager;
 
 	Ogre::SceneNode* create_SAF();
+	Ogre::SceneNode* create_SEF();
+	Ogre::SceneNode* create_SAB();
+	Ogre::SceneNode* create_SEB();
+	Ogre::SceneNode* create_LAC();
+	Ogre::SceneNode* create_LEC();
 };
 
