@@ -188,9 +188,9 @@ void OgreApplication::InitViewport(void){
 
 		camera->setPosition(camera_position_g);
 		camera->lookAt(camera_look_at_g);
-		camera->setFixedYawAxis(true, camera_up_g);
-		//camera->setFixedYawAxis(false);
-
+		//camera->setFixedYawAxis(true, camera_up_g);
+		camera->setFixedYawAxis(false);
+		camera_scene_node->setFixedYawAxis(false);
 		
 
         /* Create viewport */
@@ -359,45 +359,21 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 	/* This event is called after a frame is queued for rendering */
 	/* Do stuff in this event since the GPU is rendering and the CPU is idle */
 	Ogre::Camera* camera = ogre_root_->getSceneManager("MySceneManager")->getCamera("MyCamera");	
-	Ogre::SceneNode* cameraNode = ogre_root_->getSceneManager("MySceneManager")->getSceneNode("JACK");
+	Ogre::SceneNode* cameraNode = ogre_root_->getSceneManager("MySceneManager")->getSceneNode("MyCameraNode");
 
-	Controls(camera,cameraNode);
-	
-
-    return true;
-}
-
-void OgreApplication::Controls(	Ogre::Camera* camera,Ogre::SceneNode* cameraNode){
 	/* Capture input */
 	keyboard_->capture();
 	mouse_->capture();
 
-	/* Handle specific key events */
-	if (keyboard_->isKeyDown(OIS::KC_T)){
-		Ogre::SceneNode* node = ogre_root_->getSceneManager("MySceneManager")->getSceneNode("JACK_Engines");
-
-		cameraNode->rotate(Ogre::Quaternion(Ogre::Radian(0.001f), Ogre::Vector3(-1.0,0.0,0.0)));
-		change += 0.001f;
-	}
-	if (keyboard_->isKeyDown(OIS::KC_G)){
-		Ogre::SceneNode* node = ogre_root_->getSceneManager("MySceneManager")->getSceneNode("JACK_Engines");
-
-		cameraNode->rotate(Ogre::Quaternion(Ogre::Radian(0.001f), Ogre::Vector3(1.0,0.0,0.0)));
-		change -= 0.001f;
-	}
-
-	cameraNode->pitch(Ogre::Radian(mouse_->getMouseState().Y.rel * 0.01f),Ogre::Node::TS_LOCAL);
-	cameraNode->yaw(Ogre::Radian(mouse_->getMouseState().X.rel * -0.01f),Ogre::Node::TS_WORLD);
+	if(mouse_->getMouseState().buttonDown(OIS::MB_Right)){
+	cameraNode->pitch(Ogre::Radian(mouse_->getMouseState().Y.rel * -0.01f));
+	cameraNode->yaw(Ogre::Radian(mouse_->getMouseState().X.rel * -0.01f));
 	
+	}
 	
+
 	Ogre::Radian rot_factor(Ogre::Math::PI / 180); // Camera rotation with directional thrusters
 	
-	if(keyboard_->isKeyDown(OIS::KC_Q)){
-		cameraNode->pitch(rot_factor);
-	}
-	if(keyboard_->isKeyDown(OIS::KC_E)){
-		cameraNode->pitch(-rot_factor);
-	}
 
 	if(keyboard_->isKeyDown(OIS::KC_A)){
 		cameraNode->translate(camera->getDerivedRight() * -0.1);
@@ -418,23 +394,16 @@ void OgreApplication::Controls(	Ogre::Camera* camera,Ogre::SceneNode* cameraNode
 		cameraNode->translate(camera->getDerivedUp() * -0.1);
 	}
 	
-
-	if (keyboard_->isKeyDown(OIS::KC_SPACE)){
-		
-	}
-	if ((!keyboard_->isKeyDown(OIS::KC_SPACE)) && space_down_){
-	
-	}
-	if (keyboard_->isKeyDown(OIS::KC_RETURN)){
-		
-	}
 	if (keyboard_->isKeyDown(OIS::KC_ESCAPE)){
 		ogre_root_->shutdown();
 		ogre_window_->destroy();
 	}
 
 	
+
+    return true;
 }
+
 
 void OgreApplication::windowResized(Ogre::RenderWindow* rw){
 
@@ -531,10 +500,10 @@ void OgreApplication::createLoadedEntity(Ogre::String _objectName)
 
 	 //
 	 
-	 Ogre::SceneNode* camera = scene_manager->getSceneNode("MyCameraNode");
+	/* Ogre::SceneNode* camera = scene_manager->getSceneNode("MyCameraNode");
 	 Ogre::Camera* mCam = (Ogre::Camera*)camera->detachObject("MyCamera");
 	 scene_manager->destroySceneNode("MyCameraNode");
-
+	 */
 	
 	/*
 	 mCam->setPosition(child->_getDerivedPosition());
@@ -544,8 +513,8 @@ void OgreApplication::createLoadedEntity(Ogre::String _objectName)
 	 cout << mCam->getPosition() << endl;
 	 child->attachObject(mCam);
 	 */
-	child = child->createChildSceneNode("MyCameraNode");
-	child->attachObject(mCam);
+	//child = child->createChildSceneNode("MyCameraNode");
+	//child->attachObject(mCam);
 
 	child->rotate(Ogre::Quaternion(Ogre::Radian(3.14159f), Ogre::Vector3(-1.0, 0.0, 1.0)));
 	child->pitch(Ogre::Degree(95));
