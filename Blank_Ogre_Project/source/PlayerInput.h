@@ -28,6 +28,10 @@ public:
 	void updateCamera(void);
 	void handleInput(void);
 
+	Ogre::SceneNode* getFirstNode(){
+		return camera_first_person_node;
+	}
+
 };
 
 #endif 

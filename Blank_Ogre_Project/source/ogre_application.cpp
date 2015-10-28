@@ -434,14 +434,15 @@ void OgreApplication::createLoadedEntity(Ogre::String _objectName)
 
 	 
 	 Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Base_Ship.mesh");
-	 Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
+	 Ogre::SceneNode* node = player->getFirstNode()->createChildSceneNode(_objectName);
 	 entity->setMaterialName("ShinyMaterial");
 	 node->attachObject(entity);
 
-	 //node->setPosition(0.0,0.0,0.0);
+	 node->setPosition(0.0,0.0,2.0);
 	 node->setScale(1.0,1.0,1.0);
 	 node->showBoundingBox(true);
-
+	 node->yaw(Ogre::Degree(-90));
+	 
 	 //cockpit
 	 entity = scene_manager->createEntity(_objectName + "_Cockpit", "Cockpit.mesh");
 	 Ogre::SceneNode* child = node->createChildSceneNode(_objectName + "_Cockpit");
@@ -451,32 +452,11 @@ void OgreApplication::createLoadedEntity(Ogre::String _objectName)
 	 child->rotate(Ogre::Quaternion(Ogre::Radian(1.570797f), Ogre::Vector3(0.0,0.0,-1.0)));
 	 child->translate(-1.22, -0.17430, 0.0f);
 
-	 //
-	 
-	/* Ogre::SceneNode* camera = scene_manager->getSceneNode("MyCameraNode");
-	 Ogre::Camera* mCam = (Ogre::Camera*)camera->detachObject("MyCamera");
-	 scene_manager->destroySceneNode("MyCameraNode");
-	 */
-	
-	/*
-	 mCam->setPosition(child->_getDerivedPosition());
-	 mCam->setOrientation(child->_getDerivedOrientation());
-	 mCam->move(Ogre::Vector3(0.0, 0.5, 0.0));
-	 
-	 cout << mCam->getPosition() << endl;
-	 child->attachObject(mCam);
-	 */
-	//child = child->createChildSceneNode("MyCameraNode");
-	//child->attachObject(mCam);
-
-	child->rotate(Ogre::Quaternion(Ogre::Radian(3.14159f), Ogre::Vector3(-1.0, 0.0, 1.0)));
-	child->pitch(Ogre::Degree(95));
-	child->translate(0.0, -1.6, 0.0);
-
 
 	 //generators
 	 entity =  scene_manager->createEntity(_objectName + "_Generator", "Generator.mesh");
 	 child = node->createChildSceneNode(_objectName + "_Generator");
+	// child ->setInheritOrientation(true)
 	 entity->setMaterialName("ObjectMaterial");
 	 child->attachObject(entity);
 
@@ -514,14 +494,25 @@ void OgreApplication::createLoadedEntity(Ogre::String _objectName)
 	 child->attachObject(entity);
 
 	 child->translate(1.66224f, 0.21, 0.005);
+	 
 
 
 }
 
-void OgreApplication::test()
-{
+void OgreApplication::test(){
+	
+	Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
+     Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
 
+	 
+	 Ogre::Entity* entity = scene_manager->createEntity("Reference", "Carrier.mesh");
+	 Ogre::SceneNode* node =root_scene_node->createChildSceneNode("Reference");
+	 entity->setMaterialName("ShinyMaterial");
+	 node->attachObject(entity);
 
+	 node->setPosition(0.0,0.0,2.0);
+	 node->setScale(5.0,5.0,5.0);
 }
+
 
 } // namespace ogre_application;

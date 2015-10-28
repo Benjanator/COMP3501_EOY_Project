@@ -45,7 +45,7 @@ PlayerInput::PlayerInput(  Ogre::SceneManager* manager,OIS::Keyboard* _keyboard,
 
 		
 		camera_chase_node = camera_first_person_node->createChildSceneNode("MyChaseCameraNode");
-		camera_chase_node->setPosition(0.0, 0.0, 10.0);
+		camera_chase_node->setPosition(0.0, 2.0, 10.0);
 		camera_chase_node->setInheritOrientation(false);
 		camera_chase_node->setFixedYawAxis(false);
 }
@@ -80,8 +80,8 @@ void PlayerInput::handleInput(void){
 	/* Do stuff in this event since the GPU is rendering and the CPU is idle */	
 
 	if(playerMouse_->getMouseState().buttonDown(OIS::MB_Right)){
-		camera_first_person_node->pitch(Ogre::Radian(playerMouse_->getMouseState().Y.rel * -0.01f));
-		camera_first_person_node->yaw(Ogre::Radian(playerMouse_->getMouseState().X.rel * -0.01f));
+		camera_first_person_node->pitch(Ogre::Radian(playerMouse_->getMouseState().Y.rel * -0.01f),Ogre::Node::TS_LOCAL);
+		camera_first_person_node->yaw(Ogre::Radian(playerMouse_->getMouseState().X.rel * -0.01f),Ogre::Node::TS_WORLD);
 	
 	}
 	
@@ -105,10 +105,10 @@ void PlayerInput::handleInput(void){
 		camera_first_person_node->translate(player_camera->getDerivedRight() * 0.1);
 	}
 	if(playerKeyboard_->isKeyDown(OIS::KC_W)){
-		camera_first_person_node->translate(player_camera->getDerivedDirection() * 0.1);
+		camera_first_person_node->translate(player_camera->getDerivedDirection() * 0.5);
 	}
 	if(playerKeyboard_->isKeyDown(OIS::KC_S)){
-		camera_first_person_node->translate(player_camera->getDerivedDirection() * -0.1);
+		camera_first_person_node->translate(player_camera->getDerivedDirection() * -0.5);
 	}
 	if(playerKeyboard_->isKeyDown(OIS::KC_R)){
 		camera_first_person_node->translate(player_camera->getDerivedUp() * 0.1);

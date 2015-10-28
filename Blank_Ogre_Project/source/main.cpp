@@ -13,8 +13,9 @@ int main(void){
 	try {
 		application.Init();
 		//application.loadEntity("XWing.json", "Cube");
-		application.createLoadedEntity("MAN");
+		//application.createLoadedEntity("MAN");
 		application.createLoadedEntity("JACK");
+		application.test();
 		application.MainLoop();
 	}
 	catch (std::exception &e){

@@ -46,6 +46,7 @@ namespace ogre_application {
             void MainLoop(void); // Keep application active
 			void loadEntity(Ogre::String _fileName, Ogre::String _objectName);
 			void createLoadedEntity(Ogre::String _objectName);
+			void test(void);
 
 	
 
@@ -77,8 +78,7 @@ namespace ogre_application {
 			void LoadMaterials(void);
 			void LoadModels(void);
 			void LoadSkybox(void);
-			void test(void);
-
+			
 			/* Methods to handle events */
 			bool frameRenderingQueued(const Ogre::FrameEvent& fe);
 			void windowResized(Ogre::RenderWindow* rw);
