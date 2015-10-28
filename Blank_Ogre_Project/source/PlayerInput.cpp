@@ -80,8 +80,8 @@ void PlayerInput::handleInput(void){
 	/* Do stuff in this event since the GPU is rendering and the CPU is idle */	
 
 	if(playerMouse_->getMouseState().buttonDown(OIS::MB_Right)){
-		camera_first_person_node->pitch(Ogre::Radian(playerMouse_->getMouseState().Y.rel * -0.01f),Ogre::Node::TS_LOCAL);
-		camera_first_person_node->yaw(Ogre::Radian(playerMouse_->getMouseState().X.rel * -0.01f),Ogre::Node::TS_WORLD);
+		camera_first_person_node->pitch(Ogre::Radian(playerMouse_->getMouseState().Y.rel * -0.01f));
+		camera_first_person_node->yaw(Ogre::Radian(playerMouse_->getMouseState().X.rel * -0.01f));
 	
 	}
 	
