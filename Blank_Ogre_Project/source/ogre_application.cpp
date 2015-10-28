@@ -2,6 +2,7 @@
 #include "../bin/path_config.h"
 #include <OgreMeshManager.h>
 #include "ObjectImporter.h"
+#include "PlayerInput.h"
 
 namespace ogre_application {
 
@@ -37,8 +38,13 @@ Ogre::Vector3 camera_up_g(0.0, 1.0, 0.0);
 const Ogre::String material_directory_g = MATERIAL_DIRECTORY;
 
 //
-Ogre::SceneNode* player;
+bool camState = 0;
+
+//
 float change = 0.0f;
+
+//
+PlayerInput *player;
 
 ObjectManager objectManager;
 
@@ -64,9 +70,9 @@ void OgreApplication::Init(void){
     InitPlugins();
     InitRenderSystem();
     InitWindow();
-    InitViewport();
 	InitEvents();
 	InitOIS();
+	InitViewport();
 	LoadMaterials();
 	LoadModels();
 	LoadSkybox();
@@ -175,33 +181,18 @@ void OgreApplication::InitViewport(void){
         Ogre::SceneManager* scene_manager = ogre_root_->createSceneManager(Ogre::ST_GENERIC, "MySceneManager");
         Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
 
-        /* Create camera object */
-        Ogre::Camera* camera = scene_manager->createCamera("MyCamera");
-        Ogre::SceneNode* camera_scene_node = root_scene_node->createChildSceneNode("MyCameraNode");
-        camera_scene_node->attachObject(camera);
-		camera_scene_node->setPosition(0.0, 0.0, 0.0);
 
-		camera_scene_node->resetOrientation();
-
-        camera->setNearClipDistance(camera_near_clip_distance_g);
-        camera->setFarClipDistance(camera_far_clip_distance_g); 
-
-		camera->setPosition(camera_position_g);
-		camera->lookAt(camera_look_at_g);
-		//camera->setFixedYawAxis(true, camera_up_g);
-		camera->setFixedYawAxis(false);
-		camera_scene_node->setFixedYawAxis(false);
-		
+		player = new PlayerInput( scene_manager,keyboard_,mouse_);
 
         /* Create viewport */
-        Ogre::Viewport *viewport = ogre_window_->addViewport(camera, viewport_z_order_g, viewport_left_g, viewport_top_g, viewport_width_g, viewport_height_g);
-
+       // Ogre::Viewport *viewport = ogre_window_->addViewport(camera, viewport_z_order_g, viewport_left_g, viewport_top_g, viewport_width_g, viewport_height_g);
+		Ogre::Viewport *viewport = ogre_window_->addViewport(player->player_camera, viewport_z_order_g, viewport_left_g, viewport_top_g, viewport_width_g, viewport_height_g);
         viewport->setAutoUpdated(true);
         viewport->setBackgroundColour(viewport_background_color_g);
 
 		/* Set aspect ratio */
 		float ratio = float(viewport->getActualWidth()) / float(viewport->getActualHeight());
-        camera->setAspectRatio(ratio);
+        //camera->setAspectRatio(ratio);
 
     }
     catch (Ogre::Exception &e){
@@ -356,50 +347,12 @@ void OgreApplication::MainLoop(void){
 
 bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
   
-	/* This event is called after a frame is queued for rendering */
-	/* Do stuff in this event since the GPU is rendering and the CPU is idle */
-	Ogre::Camera* camera = ogre_root_->getSceneManager("MySceneManager")->getCamera("MyCamera");	
-	Ogre::SceneNode* cameraNode = ogre_root_->getSceneManager("MySceneManager")->getSceneNode("MyCameraNode");
+	player->updateCamera();
 
-	/* Capture input */
-	keyboard_->capture();
-	mouse_->capture();
-
-	if(mouse_->getMouseState().buttonDown(OIS::MB_Right)){
-	cameraNode->pitch(Ogre::Radian(mouse_->getMouseState().Y.rel * -0.01f));
-	cameraNode->yaw(Ogre::Radian(mouse_->getMouseState().X.rel * -0.01f));
-	
-	}
-	
-
-	Ogre::Radian rot_factor(Ogre::Math::PI / 180); // Camera rotation with directional thrusters
-	
-
-	if(keyboard_->isKeyDown(OIS::KC_A)){
-		cameraNode->translate(camera->getDerivedRight() * -0.1);
-	}
-	if(keyboard_->isKeyDown(OIS::KC_D)){
-		cameraNode->translate(camera->getDerivedRight() * 0.1);
-	}
-	if(keyboard_->isKeyDown(OIS::KC_W)){
-		cameraNode->translate(camera->getDerivedDirection() * 0.1);
-	}
-	if(keyboard_->isKeyDown(OIS::KC_S)){
-		cameraNode->translate(camera->getDerivedDirection() * -0.1);
-	}
-	if(keyboard_->isKeyDown(OIS::KC_R)){
-		cameraNode->translate(camera->getDerivedUp() * 0.1);
-	}
-	if(keyboard_->isKeyDown(OIS::KC_F)){
-		cameraNode->translate(camera->getDerivedUp() * -0.1);
-	}
-	
 	if (keyboard_->isKeyDown(OIS::KC_ESCAPE)){
 		ogre_root_->shutdown();
 		ogre_window_->destroy();
 	}
-
-	
 
     return true;
 }

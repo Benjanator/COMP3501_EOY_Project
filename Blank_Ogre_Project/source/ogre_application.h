@@ -13,6 +13,7 @@
 #include "OIS/OIS.h"
 
 #include "SmallShip.h"
+#include "PlayerInput.h"
 #include "ObjectManager.h"
 
 namespace ogre_application {
@@ -46,6 +47,8 @@ namespace ogre_application {
 			void loadEntity(Ogre::String _fileName, Ogre::String _objectName);
 			void createLoadedEntity(Ogre::String _objectName);
 
+	
+
         private:
 			// Create root that allows us to access Ogre commands
             std::auto_ptr<Ogre::Root> ogre_root_;
@@ -61,6 +64,7 @@ namespace ogre_application {
 			OIS::InputManager *input_manager_;
 			OIS::Mouse *mouse_;
 			OIS::Keyboard *keyboard_;
+
 
 			/* Methods to initialize the application */
 			void InitRootNode(void);
