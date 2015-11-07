@@ -24,7 +24,11 @@ public:
 	OIS::Mouse *playerMouse_;
 	OIS::Keyboard *playerKeyboard_;
 
-
+	Ogre::Vector3 upDir;
+	Ogre::Vector3 rightDir;
+	Ogre::Vector3 forwDir;
+	Ogre::Vector3 currentDir;
+	
 	void updateCamera(void);
 	void handleInput(void);
 
