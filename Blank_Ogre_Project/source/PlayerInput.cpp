@@ -19,6 +19,7 @@ PlayerInput::PlayerInput(  Ogre::SceneManager* manager,OIS::Keyboard* _keyboard,
 		root_scene_node = scene_manager->getRootSceneNode();
 
 		playerMouse_ = _mouse;
+		playerMouse_->setBuffered(true);
 		playerKeyboard_ = _keyboard;
 
 
@@ -78,7 +79,7 @@ void PlayerInput::updateCamera(void){
 void PlayerInput::handleInput(void){
 	/* This event is called after a frame is queued for rendering */
 	/* Do stuff in this event since the GPU is rendering and the CPU is idle */	
-
+	
 	if(playerMouse_->getMouseState().buttonDown(OIS::MB_Right)){
 		camera_first_person_node->pitch(Ogre::Radian(playerMouse_->getMouseState().Y.rel * -0.01f));
 		camera_first_person_node->yaw(Ogre::Radian(playerMouse_->getMouseState().X.rel * -0.01f));

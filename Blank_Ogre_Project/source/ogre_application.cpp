@@ -192,7 +192,7 @@ void OgreApplication::InitViewport(void){
 
 		/* Set aspect ratio */
 		float ratio = float(viewport->getActualWidth()) / float(viewport->getActualHeight());
-        //camera->setAspectRatio(ratio);
+		player->player_camera->setAspectRatio(ratio);
 
     }
     catch (Ogre::Exception &e){
