@@ -29,5 +29,7 @@ private:
 	Ogre::SceneNode* create_SEB();
 	Ogre::SceneNode* create_LAC();
 	Ogre::SceneNode* create_LEC();
+	Ogre::SceneNode* create_AP();
+	Ogre::SceneNode* create_EP();
 };
 

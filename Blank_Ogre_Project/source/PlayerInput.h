@@ -6,6 +6,8 @@
 #include <OGRE/OgreSceneManager.h>
 #include "OIS/OIS.h"
 
+#include "SmallShip.h"
+
 class PlayerInput
 {
 public:
@@ -19,7 +21,7 @@ public:
 	Ogre::SceneNode* camera_scene_node;
 	Ogre::SceneNode* camera_chase_node;
 	Ogre::SceneNode* camera_first_person_node;
-	Ogre::SceneNode* playerShip;
+	SmallShip* playerShip;
 
 
 	OIS::Mouse *playerMouse_;
@@ -32,7 +34,7 @@ public:
 	
 	void updateCamera(void);
 	void handleInput(void);
-	void bindCamera(Ogre::Node*);
+	void bindCamera(SmallShip*, Ogre::Node*);
 
 	Ogre::SceneNode* getFirstNode(){
 		return camera_first_person_node;

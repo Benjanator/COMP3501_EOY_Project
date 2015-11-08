@@ -8,13 +8,20 @@ public:
 	SmallShip(Ogre::SceneNode*);
 	~SmallShip(void);
 
+	void setTeam(int);
+	int getTeam();
+
+	Ogre::SceneNode& getNode();
+
 	void accelerate(int _abs);
+	void fullStop();
 	void verticalThrust(int _abs);
 	void horizontalThrust(int _abs);
 
-	void pitch(int _abs);
-	void yaw(int _abs);
-	void roll(int _abs);
+	void pitch(Ogre::Radian);
+	void yaw(Ogre::Radian);
+	void roll(Ogre::Quaternion);
+	void translate(Ogre::Vector3, Ogre::Vector3, Ogre::Vector3);
 
 	void update(void);
 
@@ -25,6 +32,7 @@ protected:
 	Ogre::SceneNode* m_pNode;
 	Ogre::Vector3 direction;
 	Ogre::Vector3 up;
+	Ogre::Vector3 right;
 
 	bool indestructable;
 	

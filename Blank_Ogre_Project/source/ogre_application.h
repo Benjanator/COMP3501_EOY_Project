@@ -15,6 +15,7 @@
 #include "SmallShip.h"
 #include "PlayerInput.h"
 #include "ObjectManager.h"
+#include "PhysicsManager.h"
 #include "GameObjectFactory.h"
 
 namespace ogre_application {
@@ -59,6 +60,7 @@ namespace ogre_application {
 
 			//Game Objects
 			ObjectManager *objectManager;
+			PhysicsManager* physicsManager;
 			GameObjectFactory *factory;
 
 			// For animating an object

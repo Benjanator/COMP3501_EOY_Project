@@ -12,9 +12,10 @@ public:
 	void addObject(GameObject*);
 	void updateObjects();
 
-	vector<GameObject*> objectList;
+	std::vector<GameObject*>& getObjectList();
+	int getListSize();
 
 private:
-	
+	std::vector<GameObject*> objectList;
 };
 

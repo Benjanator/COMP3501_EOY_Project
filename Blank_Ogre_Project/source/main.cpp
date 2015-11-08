@@ -13,7 +13,8 @@ int main(void){
 	try {
 		application.Init();
 		//application.createLoadedEntity("MAN");
-		application.createLoadedEntity("JACK");
+		application.createLoadedEntity("SAF");
+		application.createLoadedEntity("SAF");
 		//application.test();
 		application.MainLoop();
 	}

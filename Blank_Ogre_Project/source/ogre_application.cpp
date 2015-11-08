@@ -75,6 +75,7 @@ void OgreApplication::Init(void){
 
 	objectManager = new ObjectManager();
 	factory = new GameObjectFactory(ogre_root_->getSceneManager("MySceneManager"));
+	physicsManager = new PhysicsManager(objectManager);
 }
 
 
@@ -345,7 +346,9 @@ void OgreApplication::MainLoop(void){
 }
 
 bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
-  
+	
+	physicsManager->pollTotalEvents();
+
 	player->updateCamera();
 
 	if (keyboard_->isKeyDown(OIS::KC_ESCAPE)){
@@ -428,77 +431,34 @@ void OgreApplication::loadEntity(Ogre::String _fileName, Ogre::String _objectNam
 
 void OgreApplication::createLoadedEntity(Ogre::String _objectName)
 {
-	/*Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
-     Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+	GameObject* temp;
 
-	 
-	 Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Base_Ship.mesh");
-	 Ogre::SceneNode* node = player->getFirstNode()->createChildSceneNode(_objectName);
-	 entity->setMaterialName("ShinyMaterial");
-	 node->attachObject(entity);
+	if(_objectName.compare("empty") == 0 || _objectName.compare("") == 0 ){
+		return;
+	}
 
-	 node->setPosition(0.0,0.0,2.0);
-	 node->setScale(1.0,1.0,1.0);
-	 node->showBoundingBox(true);
-	 node->yaw(Ogre::Degree(-90));
-	 
-	 //cockpit
-	 entity = scene_manager->createEntity(_objectName + "_Cockpit", "Cockpit.mesh");
-	 Ogre::SceneNode* child = node->createChildSceneNode(_objectName + "_Cockpit");
-	 entity->setMaterialName("BlueMaterial");
-	 child->attachObject(entity);
-
-	 child->rotate(Ogre::Quaternion(Ogre::Radian(1.570797f), Ogre::Vector3(0.0,0.0,-1.0)));
-	 child->translate(-1.22, -0.17430, 0.0f);
-
-
-	 //generators
-	 entity =  scene_manager->createEntity(_objectName + "_Generator", "Generator.mesh");
-	 child = node->createChildSceneNode(_objectName + "_Generator");
-	// child ->setInheritOrientation(true)
-	 entity->setMaterialName("ObjectMaterial");
-	 child->attachObject(entity);
-
-	 child->translate(0.5f, 0.0f, 0.0f);
-
-	 //engines
-	 entity =  scene_manager->createEntity(_objectName + "_Engines", "Engines.mesh");
-	 child = node->createChildSceneNode(_objectName + "_Engines");
-	 entity->setMaterialName("ShinyBlueMaterial");
-	 child->attachObject(entity);
-
-	 child->rotate(Ogre::Quaternion(Ogre::Radian(3.01f), Ogre::Vector3(-1.0,0.0,0.0)));
-	 child->translate(-0.02796f, -0.92620f, -0.87242f);
-
-	 //
-	 entity =  scene_manager->createEntity(_objectName + "_Impulse", "Impule_Engine.mesh");
-	 child = node->createChildSceneNode(_objectName + "_Impulse");
-	 entity->setMaterialName("ObjectMaterial");
-	 child->attachObject(entity);
-
-	 child->translate(1.69124f, 0.31351f, 0.005f);
-
-	 //launchers
-	 entity =  scene_manager->createEntity(_objectName + "_Launcher", "Launcher_Weapon.mesh");
-	 child = node->createChildSceneNode(_objectName + "_Launcher");
-	 entity->setMaterialName("ShinyBlueMaterial");
-	 child->attachObject(entity);
-
-	 child->translate(1.64124f, 0.2, 0.005);
-
-	 //laser
-	 entity =  scene_manager->createEntity(_objectName + "_Laser", "Laser_Weapon.mesh");
-	 child = node->createChildSceneNode(_objectName + "_Laser");
-	 entity->setMaterialName("ShinyBlueMaterial");
-	 child->attachObject(entity);
-
-	 child->translate(1.66224f, 0.21, 0.005);
-	 */
-
-	GameObject* temp = factory->createGameObject(GameObject::objectType::smallAlly_fighter);
+	if(_objectName.compare("SAF") == 0 || _objectName.compare("smallAlly_fighter") == 0){
+		temp = factory->createGameObject(GameObject::objectType::smallAlly_fighter);
+	}
+	else if(_objectName.compare("SEF") == 0 || _objectName.compare("smallEnemy_fighter") == 0){
+		temp = factory->createGameObject(GameObject::objectType::smallEnemy_fighter);
+	}
+	else if(_objectName.compare("SAB") == 0 || _objectName.compare("smallAlly_bomber") == 0){
+		temp = factory->createGameObject(GameObject::objectType::smallAlly_bomber);
+	}
+	else if(_objectName.compare("SEB") == 0 || _objectName.compare("smallEnemy_bomber") == 0){
+		temp = factory->createGameObject(GameObject::objectType::smallEnemy_bomber);
+	}
+	else if(_objectName.compare("LAC") == 0 || _objectName.compare("largeAlly_cmd") == 0){
+		temp = factory->createGameObject(GameObject::objectType::largeAlly_cmd);
+	}
+	else if(_objectName.compare("LEC") == 0 || _objectName.compare("largeEnemy_cmd") == 0){
+		temp = factory->createGameObject(GameObject::objectType::largeEnemy_cmd);
+	}
 	
-	if(objectManager->objectList.size() == 0){
-		player->bindCamera(ogre_root_->getSceneManager("MySceneManager")->getRootSceneNode()->removeChild("SAF_0"));
+	
+	if(objectManager->getListSize() == 0){
+		player->bindCamera((SmallShip*)temp, ogre_root_->getSceneManager("MySceneManager")->getRootSceneNode()->getChild("SAF_0"));//ogre_root_->getSceneManager("MySceneManager")->getRootSceneNode()->removeChild("SAF_0"));
 	}
 	
 	objectManager->addObject(temp);

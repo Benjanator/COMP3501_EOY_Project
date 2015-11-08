@@ -31,6 +31,11 @@ GameObject* GameObjectFactory::createGameObject(GameObject::objectType _type)
 		break;
 	case GameObject::largeAlly_cmd:
 		break;
+	case GameObject::asteroid:
+		break;
+	case GameObject::platform:
+		newObject = new SmallShip(create_EP());
+		break;
 	default:
 		break;
 	}
@@ -49,7 +54,7 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	entity->setMaterialName("ShinyMaterial");
 	node->attachObject(entity);
 
-	//node->setPosition(0.0,0.0,0.0);
+	node->setPosition(0.0f,0.0f,0.0f);
 	node->setScale(1.0,1.0,1.0);
 	node->showBoundingBox(true);
 
@@ -59,8 +64,8 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	entity->setMaterialName("BlueMaterial");
 	child->attachObject(entity);
 
-	child->rotate(Ogre::Quaternion(Ogre::Radian(1.570797f), Ogre::Vector3(0.0,0.0,-1.0)));
-	child->translate(-1.22, -0.17430, 0.0f);
+	//child->rotate(Ogre::Quaternion(Ogre::Radian(1.570797f), Ogre::Vector3(0.0,0.0,-1.0)));
+	//child->translate(-1.22f, -0.17430f, 0.0f);
 
 	//
 
@@ -70,7 +75,7 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	entity->setMaterialName("ObjectMaterial");
 	child->attachObject(entity);
 
-	child->translate(0.5f, 0.0f, 0.0f);
+	//child->translate(0.5f, 0.0f, 0.0f);
 
 	//engines
 	entity =  scene_manager->createEntity(_objectName + "_Engines", "Engines.mesh");
@@ -78,8 +83,8 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	entity->setMaterialName("ShinyBlueMaterial");
 	child->attachObject(entity);
 
-	child->rotate(Ogre::Quaternion(Ogre::Radian(3.01f), Ogre::Vector3(-1.0,0.0,0.0)));
-	child->translate(-0.02796f, -0.92620f, -0.87242f);
+	//child->rotate(Ogre::Quaternion(Ogre::Radian(3.01f), Ogre::Vector3(-1.0,0.0,0.0)));
+	//child->translate(-0.02796f, -0.92620f, -0.87242f);
 
 	//
 	entity =  scene_manager->createEntity(_objectName + "_Impulse", "Impule_Engine.mesh");
@@ -87,7 +92,7 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	entity->setMaterialName("ObjectMaterial");
 	child->attachObject(entity);
 
-	child->translate(1.69124f, 0.31351f, 0.005f);
+	//child->translate(1.69124f, 0.31351f, 0.005f);
 
 	//launchers
 	entity =  scene_manager->createEntity(_objectName + "_Launcher", "Launcher_Weapon.mesh");
@@ -95,7 +100,7 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	entity->setMaterialName("ShinyBlueMaterial");
 	child->attachObject(entity);
 
-	child->translate(1.64124f, 0.2, 0.005);
+	//child->translate(1.64124f, 0.2f, 0.005f);
 
 	//laser
 	entity =  scene_manager->createEntity(_objectName + "_Laser", "Laser_Weapon.mesh");
@@ -103,13 +108,13 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	entity->setMaterialName("ShinyBlueMaterial");
 	child->attachObject(entity);
 
-	child->translate(1.66224f, 0.21, 0.005);
-
+	//child->translate(1.66224f, 0.21f, 0.005f);
+	
 	//
 	// reset Orientation
 	//
-	node->rotate(Ogre::Vector3(0.0, 1.0, 0.0), Ogre::Radian(-0.5 * Ogre::Math::PI));
-	node->translate(0.0f, 0.0f, 2.5f);
+	node->resetOrientation();
+	//node->translate(0.0f, 0.0f, 2.5f);
 
 	return node;
 }
@@ -153,6 +158,42 @@ Ogre::SceneNode* GameObjectFactory::create_SEB()
 
 
 Ogre::SceneNode* GameObjectFactory::create_LEC()
+{
+	Ogre::String _objectName = "LEC_" + Ogre::StringConverter::toString(LEC_id);
+	LEC_id++;
+	Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+
+	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Carrier.mesh");
+	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
+	entity->setMaterialName("ShinyMaterial");
+	node->attachObject(entity);
+
+	node->setPosition(100.0,0.0,0.0);
+	node->setScale(1.0,1.0,1.0);
+
+	return node;
+
+}
+
+Ogre::SceneNode* GameObjectFactory::create_AP()
+{
+	Ogre::String _objectName = "LEC_" + Ogre::StringConverter::toString(LEC_id);
+	LEC_id++;
+	Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+
+	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Carrier.mesh");
+	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
+	entity->setMaterialName("ShinyMaterial");
+	node->attachObject(entity);
+
+	node->setPosition(100.0,0.0,0.0);
+	node->setScale(1.0,1.0,1.0);
+
+	return node;
+
+}
+
+Ogre::SceneNode* GameObjectFactory::create_EP()
 {
 	Ogre::String _objectName = "LEC_" + Ogre::StringConverter::toString(LEC_id);
 	LEC_id++;

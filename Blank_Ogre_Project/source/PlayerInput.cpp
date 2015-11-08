@@ -10,6 +10,8 @@
 	Ogre::Vector3 camera_up_g(0.0, 1.0, 0.0);
 	bool space_down_ = false;
 	bool camState = true;
+	bool relativeMotion = true;
+	bool keyUp = true;
 
 PlayerInput::PlayerInput(  Ogre::SceneManager* manager,OIS::Keyboard* _keyboard, OIS::Mouse* _mouse)
 {
@@ -31,7 +33,7 @@ PlayerInput::PlayerInput(  Ogre::SceneManager* manager,OIS::Keyboard* _keyboard,
         camera_scene_node = root_scene_node->createChildSceneNode("MyCameraNode");
         camera_scene_node->attachObject(player_camera);
 		camera_scene_node->setPosition(0.0, 0.0, 0.0);
-
+		//camera_scene_node->setOrientation(Ogre::Quaternion(Ogre::Radian(Ogre::Math::PI), Ogre::Vector3(1.0f, 0.0f, 0.0f)));
 		camera_scene_node->resetOrientation();
 
         player_camera->setNearClipDistance(camera_near_clip_distance_g);
@@ -45,7 +47,7 @@ PlayerInput::PlayerInput(  Ogre::SceneManager* manager,OIS::Keyboard* _keyboard,
 
 
 		camera_first_person_node = root_scene_node->createChildSceneNode("MyFirstPersonCameraNode");
-		camera_first_person_node->setPosition(0,0,0);
+		camera_first_person_node->setPosition(0,1,0);
 		camera_first_person_node->setFixedYawAxis(false);
 
 		
@@ -58,6 +60,7 @@ PlayerInput::PlayerInput(  Ogre::SceneManager* manager,OIS::Keyboard* _keyboard,
 
 PlayerInput::~PlayerInput(void)
 {
+	playerShip = 0;
 }
 
 
@@ -74,7 +77,6 @@ void PlayerInput::updateCamera(void){
 	}else{
 		camera_scene_node->setPosition(camera_chase_node->_getDerivedPosition());
 		camera_scene_node->setOrientation(camera_first_person_node->getOrientation());
-		
 
 	}
 
@@ -83,7 +85,10 @@ void PlayerInput::updateCamera(void){
 void PlayerInput::handleInput(void){
 	/* This event is called after a frame is queued for rendering */
 	/* Do stuff in this event since the GPU is rendering and the CPU is idle */	
-	
+	upDir = Ogre::Vector3(0.0f);
+	rightDir = Ogre::Vector3(0.0f);
+	forwDir = Ogre::Vector3(0.0f);
+
 	if(playerMouse_->getMouseState().buttonDown(OIS::MB_Right)){
 		
 
@@ -93,7 +98,10 @@ void PlayerInput::handleInput(void){
 		//camera_first_person_node->rotate(pitchQuat,Ogre::Node::TS_LOCAL); //this allows us to have no roll when pitch and yaw are combined
 		//camera_first_person_node->rotate(yawQuat,Ogre::Node::TS_WORLD); //  this will also cause a forced lock
 
-		camera_first_person_node->rotate(rotQuat); // quaternion camera with rotations embedded from pitch and yaws
+		playerShip->pitch(Ogre::Radian(playerMouse_->getMouseState().Y.rel * -0.01f));
+		playerShip->yaw(Ogre::Radian(playerMouse_->getMouseState().X.rel * -0.01f));
+		
+		//camera_first_person_node->rotate(rotQuat); // quaternion camera with rotations embedded from pitch and yaws
 
 		//camera_first_person_node->pitch(Ogre::Radian(playerMouse_->getMouseState().Y.rel * -0.01f));
 		///camera_first_person_node->yaw(Ogre::Radian(playerMouse_->getMouseState().X.rel * -0.01f));
@@ -102,42 +110,81 @@ void PlayerInput::handleInput(void){
 	
 
 	Ogre::Radian rot_factor(Ogre::Math::PI / 180); // Camera rotation with directional thrusters
-	
+
+	if(playerKeyboard_->isKeyDown(OIS::KC_P)){
+		playerShip->fullStop();
+	}
+
+
 	if(playerKeyboard_->isKeyDown(OIS::KC_Q)){
-		camera_first_person_node->rotate(Ogre::Quaternion(rot_factor,Ogre::Vector3::UNIT_Z));
+		//camera_first_person_node->rotate(Ogre::Quaternion(rot_factor,Ogre::Vector3::UNIT_Z));
+		playerShip->roll(Ogre::Quaternion(rot_factor,Ogre::Vector3::UNIT_Z));
 	}
 	if(playerKeyboard_->isKeyDown(OIS::KC_E)){
-		camera_first_person_node->rotate(Ogre::Quaternion(-1*rot_factor,Ogre::Vector3::UNIT_Z));
+		//camera_first_person_node->rotate(Ogre::Quaternion(-1*rot_factor,Ogre::Vector3::UNIT_Z));
+		playerShip->roll(Ogre::Quaternion(-1*rot_factor,Ogre::Vector3::UNIT_Z));
 	}
 
 	
 	if(playerKeyboard_->isKeyDown(OIS::KC_A)){
-		Ogre::Vector3 newRightDir = player_camera->getDerivedRight() * -0.01;
-		rightDir= rightDir + newRightDir;
+		//Ogre::Vector3 newRightDir = player_camera->getDerivedRight() * -0.01;
+		//rightDir= rightDir + newRightDir;
+		rightDir = player_camera->getDerivedRight();
+		playerShip->horizontalThrust(-2);
 	}
 	if(playerKeyboard_->isKeyDown(OIS::KC_D)){
-		Ogre::Vector3 newRightDir = player_camera->getDerivedRight() * 0.01;
-		rightDir= rightDir + newRightDir;
+		//Ogre::Vector3 newRightDir = player_camera->getDerivedRight() * 0.01;
+		//rightDir= rightDir + newRightDir;
+		rightDir = player_camera->getDerivedRight();
+		playerShip->horizontalThrust(2);
 	}
 	if(playerKeyboard_->isKeyDown(OIS::KC_W)){
-		Ogre::Vector3 newForwardDir = player_camera->getDerivedDirection() * 0.01;
-		forwDir = forwDir + newForwardDir;
+		//Ogre::Vector3 newForwardDir = player_camera->getDerivedDirection() * 0.01;
+		//forwDir = forwDir + newForwardDir;
+		forwDir = player_camera->getDerivedDirection();
+		playerShip->accelerate(2);
 	}
 	if(playerKeyboard_->isKeyDown(OIS::KC_S)){
-		Ogre::Vector3 newForwardDir = player_camera->getDerivedDirection() * -0.01;
-		forwDir = forwDir + newForwardDir;
+		//Ogre::Vector3 newForwardDir = player_camera->getDerivedDirection() * -0.01;
+		//forwDir = forwDir + newForwardDir;
+		forwDir = player_camera->getDerivedDirection();
+		playerShip->accelerate(-2);
 	}
 	if(playerKeyboard_->isKeyDown(OIS::KC_R)){
-		Ogre::Vector3 newUpDir = player_camera->getDerivedUp() * 0.01;
-		upDir = upDir + newUpDir;
+		//Ogre::Vector3 newUpDir = player_camera->getDerivedUp() * 0.01;
+		//upDir = upDir + newUpDir;
+		upDir = player_camera->getDerivedUp();
+		playerShip->verticalThrust(2);
 	}
 	if(playerKeyboard_->isKeyDown(OIS::KC_F)){
-		Ogre::Vector3 newUpDir = player_camera->getDerivedUp() * -0.01;
-		upDir = upDir + newUpDir;
+		//Ogre::Vector3 newUpDir = player_camera->getDerivedUp() * -0.01;
+		//upDir = upDir + newUpDir;
+		upDir = player_camera->getDerivedUp();
+		playerShip->verticalThrust(-2);
 	}
 
-	currentDir = upDir + rightDir + forwDir;
-	camera_first_person_node->translate(currentDir);
+	if(playerKeyboard_->isKeyDown(OIS::KC_M)){
+		if(keyUp){
+			relativeMotion = !relativeMotion;
+			keyUp = false;
+		}
+	}
+	else{
+		keyUp = true;
+	}
+
+	if(relativeMotion){
+		//currentDir = upDir + rightDir + forwDir;
+		//camera_first_person_node->translate(currentDir);
+		
+		
+		//UNCOMMENT BELOW FOR SMOOTHER VELOCITY CHANGES
+		//upDir = player_camera->getDerivedUp();
+		//forwDir = player_camera->getDerivedDirection();
+		//rightDir = player_camera->getDerivedRight();
+
+		playerShip->translate(upDir, rightDir, forwDir);
+	}
 
 	if (playerKeyboard_->isKeyDown(OIS::KC_SPACE)){
 		space_down_ = true;
@@ -147,11 +194,13 @@ void PlayerInput::handleInput(void){
 		space_down_ = false;
 	}
 
-
+	camera_first_person_node->needUpdate();
+	camera_chase_node->needUpdate();
 }
 
-void PlayerInput::bindCamera(Ogre::Node* _node)
+void PlayerInput::bindCamera(SmallShip* _ship, Ogre::Node* _node)
 {
-	//playerShip = _node;
-	camera_scene_node->addChild(_node);
+	playerShip = _ship;
+
+	_node->addChild(root_scene_node->removeChild("MyCameraNode"));
 }
