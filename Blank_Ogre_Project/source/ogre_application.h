@@ -15,6 +15,7 @@
 #include "SmallShip.h"
 #include "PlayerInput.h"
 #include "ObjectManager.h"
+#include "GameObjectFactory.h"
 
 namespace ogre_application {
 
@@ -55,6 +56,10 @@ namespace ogre_application {
             std::auto_ptr<Ogre::Root> ogre_root_;
             // Main Ogre window
             Ogre::RenderWindow* ogre_window_;
+
+			//Game Objects
+			ObjectManager *objectManager;
+			GameObjectFactory *factory;
 
 			// For animating an object
 			Ogre::AnimationState *animation_state_; // Keep state of the animation

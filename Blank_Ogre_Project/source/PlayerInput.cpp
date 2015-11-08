@@ -149,3 +149,9 @@ void PlayerInput::handleInput(void){
 
 
 }
+
+void PlayerInput::bindCamera(Ogre::Node* _node)
+{
+	//playerShip = _node;
+	camera_scene_node->addChild(_node);
+}

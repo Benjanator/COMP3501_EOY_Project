@@ -63,25 +63,6 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	child->translate(-1.22, -0.17430, 0.0f);
 
 	//
-	/*
-	Ogre::SceneNode* camera = scene_manager->getSceneNode("MyCameraNode");
-	Ogre::Camera* mCam = (Ogre::Camera*)camera->detachObject("MyCamera");
-	scene_manager->destroySceneNode("MyCameraNode");
-	
-	mCam->setPosition(child->_getDerivedPosition());
-	mCam->setOrientation(child->_getDerivedOrientation());
-	mCam->move(Ogre::Vector3(0.0, 0.5, 0.0));
-
-	cout << mCam->getPosition() << endl;
-	child->attachObject(mCam);
-	
-	child = child->createChildSceneNode("MyCameraNode");
-	child->attachObject(mCam);
-
-	child->rotate(Ogre::Quaternion(Ogre::Radian(3.14159f), Ogre::Vector3(-1.0, 0.0, 1.0)));
-	child->pitch(Ogre::Degree(95));
-	child->translate(0.0, -1.6, 0.0);
-	*/
 
 	//generators
 	entity =  scene_manager->createEntity(_objectName + "_Generator", "Generator.mesh");
@@ -125,6 +106,10 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	child->translate(1.66224f, 0.21, 0.005);
 
 	//
+	// reset Orientation
+	//
+	node->rotate(Ogre::Vector3(0.0, 1.0, 0.0), Ogre::Radian(-0.5 * Ogre::Math::PI));
+	node->translate(0.0f, 0.0f, 2.5f);
 
 	return node;
 }

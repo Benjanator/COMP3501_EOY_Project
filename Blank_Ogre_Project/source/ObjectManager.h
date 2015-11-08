@@ -13,5 +13,8 @@ public:
 	void updateObjects();
 
 	vector<GameObject*> objectList;
+
+private:
+	
 };
 

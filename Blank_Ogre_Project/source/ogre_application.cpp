@@ -1,8 +1,6 @@
 #include "ogre_application.h"
 #include "../bin/path_config.h"
 #include <OgreMeshManager.h>
-#include "ObjectImporter.h"
-#include "PlayerInput.h"
 
 namespace ogre_application {
 
@@ -46,8 +44,6 @@ float change = 0.0f;
 //
 PlayerInput *player;
 
-ObjectManager objectManager;
-
 
 OgreApplication::OgreApplication(void){
 
@@ -76,6 +72,9 @@ void OgreApplication::Init(void){
 	LoadMaterials();
 	LoadModels();
 	LoadSkybox();
+
+	objectManager = new ObjectManager();
+	factory = new GameObjectFactory(ogre_root_->getSceneManager("MySceneManager"));
 }
 
 
@@ -382,9 +381,9 @@ void OgreApplication::windowResized(Ogre::RenderWindow* rw){
 }
 
 void OgreApplication::loadEntity(Ogre::String _fileName, Ogre::String _objectName){
-	ObjectImporter modeler;
+	/*//ObjectImporter modeler;
 
-	vector<ObjectImporter::Face> faceList;
+	//vector<ObjectImporter::Face> faceList;
 	vector<Ogre::Vector3> verticeList;
 	vector<Ogre::Vector3> normalList;
 	vector<Ogre::Vector2> uvList;
@@ -424,12 +423,12 @@ void OgreApplication::loadEntity(Ogre::String _fileName, Ogre::String _objectNam
     }
     catch(std::exception &e){
         throw(OgreAppException(std::string("std::Exception: ") + std::string(e.what())));
-    }
+    }*/
 }
 
 void OgreApplication::createLoadedEntity(Ogre::String _objectName)
 {
-	Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
+	/*Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
      Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
 
 	 
@@ -494,8 +493,15 @@ void OgreApplication::createLoadedEntity(Ogre::String _objectName)
 	 child->attachObject(entity);
 
 	 child->translate(1.66224f, 0.21, 0.005);
-	 
+	 */
 
+	GameObject* temp = factory->createGameObject(GameObject::objectType::smallAlly_fighter);
+	
+	if(objectManager->objectList.size() == 0){
+		player->bindCamera(ogre_root_->getSceneManager("MySceneManager")->getRootSceneNode()->removeChild("SAF_0"));
+	}
+	
+	objectManager->addObject(temp);
 
 }
 
@@ -505,7 +511,9 @@ void OgreApplication::test(){
      Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
 
 	 
-	 Ogre::Entity* entity = scene_manager->createEntity("Reference", "Carrier.mesh");
+	 //Ogre::Entity* entity = scene_manager->createEntity("Reference", "Carrier.mesh");
+	 Ogre::Entity* entity = scene_manager->createEntity("Reference", "Platform.mesh");
+	 
 	 Ogre::SceneNode* node =root_scene_node->createChildSceneNode("Reference");
 	 entity->setMaterialName("ShinyMaterial");
 	 node->attachObject(entity);

@@ -3,7 +3,6 @@
 
 ObjectManager::ObjectManager(void)
 {
-
 }
 
 

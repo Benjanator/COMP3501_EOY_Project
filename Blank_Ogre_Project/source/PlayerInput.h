@@ -19,6 +19,7 @@ public:
 	Ogre::SceneNode* camera_scene_node;
 	Ogre::SceneNode* camera_chase_node;
 	Ogre::SceneNode* camera_first_person_node;
+	Ogre::SceneNode* playerShip;
 
 
 	OIS::Mouse *playerMouse_;
@@ -31,6 +32,7 @@ public:
 	
 	void updateCamera(void);
 	void handleInput(void);
+	void bindCamera(Ogre::Node*);
 
 	Ogre::SceneNode* getFirstNode(){
 		return camera_first_person_node;
