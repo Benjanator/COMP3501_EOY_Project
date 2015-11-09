@@ -34,6 +34,10 @@ protected:
 	Ogre::Vector3 up;
 	Ogre::Vector3 right;
 
+	Ogre::Vector3 currentDirection;
+	Ogre::Vector3 currentUp;
+	Ogre::Vector3 currentRight;
+
 	bool indestructable;
 	
 	float accel_Rate;   // rate of acceleration 

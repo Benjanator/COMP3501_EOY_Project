@@ -4,12 +4,13 @@
 SmallShip::SmallShip(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 {
 	this->type = smallAlly_fighter;
-	velocity = Ogre::Vector3(0.0f, 0.0f, 0.1f);//Ogre::Vector3::ZERO;
+	//velocity = Ogre::Vector3(0.0f, 0.0f, 0.1f);//Ogre::Vector3::ZERO;
+	velocity = Ogre::Vector3(0.0f, 0.0f, 0.0f);//Ogre::Vector3::ZERO;
 	
-	direction = newShip->_getDerivedOrientation() * Ogre::Vector3(0.0f, 0.0f, -1.0f);
-	up = newShip->_getDerivedOrientation() * Ogre::Vector3(0.0f, 1.0f, 0.0f);
-	right = direction.crossProduct(up);
-	
+	direction = newShip->_getDerivedOrientation() * Ogre::Vector3::NEGATIVE_UNIT_Z;
+	up = newShip->_getDerivedOrientation() * Ogre::Vector3::UNIT_Y;
+	//right = direction.crossProduct(up);
+	right = newShip->_getDerivedOrientation() * Ogre::Vector3::UNIT_X;
 	m_pNode = newShip;
 
 	accel_Rate = 0.01;
@@ -48,7 +49,13 @@ void SmallShip::accelerate(int _abs)
 
 void SmallShip::fullStop()
 {
-	velocity = Ogre::Vector3(0.0f);
+	velocity = Ogre::Vector3::ZERO;
+	velocity.x = 0;
+	velocity.y = 0;
+	velocity.z = 0;
+	up = Ogre::Vector3::ZERO;
+	right = Ogre::Vector3::ZERO;
+	direction = Ogre::Vector3::ZERO;
 }
 
 void SmallShip::verticalThrust(int _abs)

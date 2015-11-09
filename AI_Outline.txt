@@ -1,0 +1,68 @@
+Enemy AI Outline:
+
+Carrier:
+
+
+	-Fly in a circle at a fixed distance around the center point of game space
+	-throw flak cannon at repeated intervals
+
+	
+
+Fighter:
+
+if(distance btween fighter and player is less than [accaptable distance]){
+	apply thrust towards player
+
+	//maybe variable based on the distance bertween the player and the fighter() greater distance = more thrust applied towards
+	
+	
+}
+
+	look toward the player
+	fire laser at player
+
+
+
+
+Sniper?:
+
+if(distance between ship and player is less than [risk value] and not charging laser){
+	teleport behind player at distance riskvalue*2
+	
+	Ogre::Quaternion turnandface = player_camera->getOrientation // get direction so we can set the turret to face the player right away
+	Ogre::Vector 3 position = camera_first_person_node-> getPosition() -  riskvalue*2;
+
+	-show fancy explostion at current position and at new position for x amount of time
+	-shipposition = new position
+	-shiporentation = turnandface;
+	
+
+
+
+}
+
+if(distance between ship and player is greater than [risk value]){
+
+	turn slightly towards the players position
+//EXAMPLE
+/*
+	Ogre::Vector3 enemyPos = m_fightEnemy->getSceneNode()->getPosition();
+	Ogre::Vector3 playerPos = m_player->getSceneNode()->getPosition();
+
+	Ogre::Vector3 lookDir = enemyPos;
+	lookDir.y = playerPos.y;
+   
+	m_player->getSceneNode()->lookAt(lookDir, Ogre::Node::TransformSpace::TS_WORLD);
+	m_player->getSceneNode()->yaw(Ogre::Degree(180));
+*/
+
+	increase chargeInt
+		if(chargInt >  maxCharge){
+			stay put for one second (no rotating to face the player)
+			fire laser
+			chargInt = 0;
+		}
+	
+
+
+}
