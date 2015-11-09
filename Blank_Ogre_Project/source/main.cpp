@@ -15,6 +15,7 @@ int main(void){
 		//application.createLoadedEntity("MAN");
 		application.createLoadedEntity("SAF");
 		application.createLoadedEntity("SAF");
+		//application.createLoadedEntity("LEC");
 		//application.test();
 		application.MainLoop();
 	}

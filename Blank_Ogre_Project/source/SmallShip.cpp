@@ -111,9 +111,12 @@ void SmallShip::update(void)
 
 void SmallShip::move(void)
 {
-	m_pNode->translate(direction * velocity.z);
-	m_pNode->translate(up*velocity.y);
-	m_pNode->translate(right * velocity.x);
+	//m_pNode->translate(direction * velocity.z);
+	//m_pNode->translate(up*velocity.y);
+	//m_pNode->translate(right * velocity.x);
+
+	m_pNode->translate((direction * velocity.z)+(up*velocity.y)+(right * velocity.x)); //combining translations seems to remove inconsistnecies
+	//multiple translate calls can give us controls that dont move the way we would expect due to order motion
 	m_pNode->needUpdate();
 	
 }

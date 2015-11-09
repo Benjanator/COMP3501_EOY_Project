@@ -179,9 +179,9 @@ void PlayerInput::handleInput(void){
 		
 		
 		//UNCOMMENT BELOW FOR SMOOTHER VELOCITY CHANGES
-		//upDir = player_camera->getDerivedUp();
-		//forwDir = player_camera->getDerivedDirection();
-		//rightDir = player_camera->getDerivedRight();
+		upDir = player_camera->getDerivedUp();
+		forwDir = player_camera->getDerivedDirection();
+		rightDir = player_camera->getDerivedRight();
 
 		playerShip->translate(upDir, rightDir, forwDir);
 	}
