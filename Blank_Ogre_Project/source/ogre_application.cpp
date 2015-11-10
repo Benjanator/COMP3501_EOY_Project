@@ -429,6 +429,7 @@ void OgreApplication::loadEntity(Ogre::String _fileName, Ogre::String _objectNam
     }*/
 }
 
+
 void OgreApplication::createLoadedEntity(Ogre::String _objectName)
 {
 	GameObject* temp;

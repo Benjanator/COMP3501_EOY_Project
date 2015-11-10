@@ -4,12 +4,22 @@
 SmallShip::SmallShip(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 {
 	this->type = smallAlly_fighter;
+
 	velocity = Ogre::Vector3(0.0f, 0.0f, 0.1f);//Ogre::Vector3::ZERO;
 	
 	direction = newShip->_getDerivedOrientation() * Ogre::Vector3(0.0f, 0.0f, -1.0f);
 	drift_Direction = direction;
 	up = newShip->_getDerivedOrientation() * Ogre::Vector3(0.0f, 1.0f, 0.0f);
 	right = direction.crossProduct(up);
+
+
+	//velocity = Ogre::Vector3(0.0f, 0.0f, 0.1f);//Ogre::Vector3::ZERO;
+	//velocity = Ogre::Vector3(0.0f, 0.0f, 0.0f);//Ogre::Vector3::ZERO;
+	
+	//direction = newShip->_getDerivedOrientation() * Ogre::Vector3::NEGATIVE_UNIT_Z;
+	//up = newShip->_getDerivedOrientation() * Ogre::Vector3::UNIT_Y;
+	//right = direction.crossProduct(up);
+	//right = newShip->_getDerivedOrientation() * Ogre::Vector3::UNIT_X;
 
 	m_pNode = newShip;
 
@@ -44,6 +54,15 @@ void SmallShip::accelerate(int _abs)
 void SmallShip::fullStop()
 {
 	drift_Direction = Ogre::Vector3(0.0f);
+
+	//velocity = Ogre::Vector3::ZERO;
+	//velocity.x = 0;
+	//velocity.y = 0;
+	//velocity.z = 0;
+	//up = Ogre::Vector3::ZERO;
+	//right = Ogre::Vector3::ZERO;
+	//direction = Ogre::Vector3::ZERO;
+
 }
 
 void SmallShip::verticalThrust(int _abs)
@@ -111,6 +130,13 @@ void SmallShip::move(void)
 {
 	m_pNode->translate(drift_Direction);
 	
+	//m_pNode->translate(direction * velocity.z);
+	//m_pNode->translate(up*velocity.y);
+	//m_pNode->translate(right * velocity.x);
+
+	//m_pNode->translate((direction * velocity.z)+(up*velocity.y)+(right * velocity.x)); //combining translations seems to remove inconsistnecies
+	//multiple translate calls can give us controls that dont move the way we would expect due to order motion
+
 	m_pNode->needUpdate();
 	
 }

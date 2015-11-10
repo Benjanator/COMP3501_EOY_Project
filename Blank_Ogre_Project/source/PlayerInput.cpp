@@ -1,5 +1,5 @@
 #include "PlayerInput.h"
-
+#include "Rocket.h"
 
 
 
@@ -163,6 +163,20 @@ void PlayerInput::handleInput(void){
 		keyUp = true;
 	}
 
+/*
+	if(relativeMotion){
+		//currentDir = upDir + rightDir + forwDir;
+		//camera_first_person_node->translate(currentDir);
+		
+		
+		//UNCOMMENT BELOW FOR SMOOTHER VELOCITY CHANGES
+		upDir = player_camera->getDerivedUp();
+		forwDir = player_camera->getDerivedDirection();
+		rightDir = player_camera->getDerivedRight();
+
+		playerShip->translate(upDir, rightDir, forwDir);
+	}
+*/
 	if (playerKeyboard_->isKeyDown(OIS::KC_SPACE)){
 		space_down_ = true;
 	}
