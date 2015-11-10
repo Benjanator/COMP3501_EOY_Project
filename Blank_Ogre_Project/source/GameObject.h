@@ -18,10 +18,26 @@ public:
 	GameObject(objectType);
 	~GameObject(void);
 	virtual void update() = 0;
-	virtual int getTeam() = 0;
 	virtual Ogre::SceneNode& getNode() = 0;
 
+	Ogre::Vector3 getMotionDirection();
+	bool isIndestructable();
+	int getTeam();
+	void setTeam(int);
+
+	Ogre::Vector3 getAABBCenter();
+	Ogre::Vector3 getAABBSize();
+
 protected:
+	Ogre::SceneNode* m_pNode;
+
 	objectType type;
+	int team;
+
+	bool indestructable;
+	Ogre::Vector3 drift_Direction;
+
+	Ogre::Vector3 aabbCenter;
+	Ogre::Vector3 aabbSize;
 };
 

@@ -7,28 +7,23 @@ SmallShip::SmallShip(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 	velocity = Ogre::Vector3(0.0f, 0.0f, 0.1f);//Ogre::Vector3::ZERO;
 	
 	direction = newShip->_getDerivedOrientation() * Ogre::Vector3(0.0f, 0.0f, -1.0f);
+	drift_Direction = direction;
 	up = newShip->_getDerivedOrientation() * Ogre::Vector3(0.0f, 1.0f, 0.0f);
 	right = direction.crossProduct(up);
-	
+
 	m_pNode = newShip;
 
 	accel_Rate = 0.01;
+
+
+	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
+	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
 
 }
 
 
 SmallShip::~SmallShip(void)
 {
-}
-
-void SmallShip::setTeam(int _team)
-{
-	team = _team;
-}
-
-int SmallShip::getTeam()
-{
-	return team;
 }
 
 Ogre::SceneNode& SmallShip::getNode()
@@ -48,7 +43,7 @@ void SmallShip::accelerate(int _abs)
 
 void SmallShip::fullStop()
 {
-	velocity = Ogre::Vector3(0.0f);
+	drift_Direction = Ogre::Vector3(0.0f);
 }
 
 void SmallShip::verticalThrust(int _abs)
@@ -93,14 +88,17 @@ void SmallShip::translate(Ogre::Vector3 _up, Ogre::Vector3 _right, Ogre::Vector3
 {
 	if(!_up.isZeroLength()){
 		up = _up;
+		drift_Direction += _up * accel_Rate;
 	}
 	if(!_right.isZeroLength()){
 		right = _right;
+		drift_Direction += _right * accel_Rate;
 	}
 	if(!_forward.isZeroLength()){
 		direction = _forward;
+		drift_Direction += _forward * accel_Rate;
 	}
-
+	
 	m_pNode->needUpdate();
 }
 
@@ -111,9 +109,9 @@ void SmallShip::update(void)
 
 void SmallShip::move(void)
 {
-	m_pNode->translate(direction * velocity.z);
-	m_pNode->translate(up*velocity.y);
-	m_pNode->translate(right * velocity.x);
+	m_pNode->translate(drift_Direction);
+	
 	m_pNode->needUpdate();
 	
 }
+

@@ -18,20 +18,21 @@ void PhysicsManager::pollTotalEvents()
 	
 	for(unsigned int i = 0; i < tempList.size(); i++)
 	{
-		for(unsigned int j = i; j < tempList.size(); j++){
+		for(unsigned int j = 0; j < tempList.size(); j++){
 			bool collide = false;
 			
 			if(i != j){
-				collide = testcollidableDistance(tempList.at(i)->getNode(), tempList.at(j)->getNode());
+				collide = testcollidableDistance(tempList.at(i), tempList.at(j));
 			}
 
 			if(collide){
-
+				elasticCollision(tempList.at(i), tempList.at(j));
 			}
 			else{
-				tempList.at(i)->update();
+				
 			}
 		}
+		tempList.at(i)->update();
 	}
 }
 
@@ -44,11 +45,34 @@ void PhysicsManager::pollTotalEvents()
 /*	
 *	sphere test // not fully calibrated, i shall blame shields
 */
-bool PhysicsManager::testcollidableDistance(SceneNode& _focus, SceneNode& _collidie)
+bool PhysicsManager::testcollidableDistance(GameObject* _focus, GameObject* _collidie)
 {	
-	if( _focus._getWorldAABB().getCenter().squaredDistance(_collidie._getWorldAABB().getCenter()) < Math::Sqr(_focus._getWorldAABB().getHalfSize().length()) + Math::Sqr(_collidie._getWorldAABB().getHalfSize().length())){
+	static int i = 0;
+
+	if( _focus->getAABBCenter().squaredDistance(_collidie->getAABBCenter()) < Math::Sqr((_focus->getAABBSize() * 0.5).length()) + Math::Sqr((_collidie->getAABBSize() * 0.5).length())){
+		//std::cout << "collide" + std::to_string(i) << std::endl;
+		i++;
 		return true;
 	}
 	
 	return false;
+}
+
+void PhysicsManager::elasticCollision(GameObject* _focus, GameObject* _collidie)
+{
+	Vector3 pos1 = _focus->getNode()._getDerivedPosition();
+	Vector3 pos2 = _collidie->getNode()._getDerivedPosition();
+
+	Vector3 vel1 = _focus->getMotionDirection();
+	Vector3 vel2 = _collidie->getMotionDirection();
+
+	Vector3 dif = pos1 - pos2;
+	Vector3 half = pos1 - (0.5 * dif);
+
+	std::cout << "old:: " << dif << std::endl;
+
+	vel1 = vel1.dotProduct(dif);
+
+	std::cout << "new:: " << vel1 << std::endl;
+
 }

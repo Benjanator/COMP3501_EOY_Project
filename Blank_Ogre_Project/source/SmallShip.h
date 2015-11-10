@@ -8,9 +8,6 @@ public:
 	SmallShip(Ogre::SceneNode*);
 	~SmallShip(void);
 
-	void setTeam(int);
-	int getTeam();
-
 	Ogre::SceneNode& getNode();
 
 	void accelerate(int _abs);
@@ -28,13 +25,9 @@ public:
 protected:
 	void move();
 
-
-	Ogre::SceneNode* m_pNode;
 	Ogre::Vector3 direction;
 	Ogre::Vector3 up;
 	Ogre::Vector3 right;
-
-	bool indestructable;
 	
 	float accel_Rate;   // rate of acceleration 
 	float roll_Rate;
@@ -42,7 +35,5 @@ protected:
 	float pitch_Rate;
 
 	Ogre::Vector3 velocity;
-
-	int team;
 };
 

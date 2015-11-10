@@ -12,8 +12,8 @@ public:
 	void pollTotalEvents();
 
 private:
-	bool testcollidableDistance(SceneNode& _focus, SceneNode& _collidie);
-
+	bool testcollidableDistance(GameObject* _focus, GameObject* _collidie);
+	void elasticCollision(GameObject* _focus, GameObject* _collidie);
 
 
 	ObjectManager* objectManager;
