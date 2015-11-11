@@ -3,10 +3,19 @@
 #include <OGRE/OgreSceneNode.h>
 
 
-class Bomber
+class Bomber: public GameObject
 {
 public:
-	Bomber(void);
+	Bomber(Ogre::SceneNode*);
 	~Bomber(void);
+
+	Ogre::SceneNode& getNode();
+
+	void update(void);
+
+	protected:
+
+
+	void move();
 };
 

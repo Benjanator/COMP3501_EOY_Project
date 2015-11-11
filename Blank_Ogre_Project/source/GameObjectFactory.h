@@ -5,6 +5,9 @@
 #include <OGRE/OgreEntity.h>
 #include "SmallShip.h"
 #include "Rocket.h"
+#include "Carrier.h"
+#include "Fighter.h"
+#include "Bomber.h"
 
 class GameObjectFactory
 {

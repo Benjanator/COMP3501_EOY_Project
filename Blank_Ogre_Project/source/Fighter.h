@@ -3,10 +3,17 @@
 #include <OGRE/OgreSceneNode.h>
 
 
-class Fighter
+class Fighter: public GameObject
 {
 public:
-	Fighter(void);
+	Fighter(Ogre::SceneNode*);
 	~Fighter(void);
+
+	Ogre::SceneNode& getNode();
+
+	void update(void);
+
+	protected:
+	void move();
 };
 

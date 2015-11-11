@@ -3,10 +3,17 @@
 #include <OGRE/OgreSceneNode.h>
 
 
-class Carrier
+class Carrier: public GameObject
 {
 public:
-	Carrier(void);
+	Carrier(Ogre::SceneNode*);
 	~Carrier(void);
+
+	Ogre::SceneNode& getNode();
+
+	void update(void);
+
+	protected:
+	void move();
 };
 

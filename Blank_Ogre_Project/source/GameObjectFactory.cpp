@@ -20,14 +20,17 @@ GameObject* GameObjectFactory::createGameObject(GameObject::objectType _type)
 		break;
 	case GameObject::smallEnemy_fighter:
 		newObject = new SmallShip(create_SEF());
+		//newObject = new Fighter(create_SEF());
 		break;
 	case GameObject::smallAlly_bomber:
 		break;
 	case GameObject::smallEnemy_bomber:
 		newObject = new SmallShip(create_SEB());
+		//newObject = new Bomber(create_SEB());
 		break;
 	case GameObject::largeEnemy_cmd:
 		newObject = new SmallShip(create_LEC());
+		//newObject = new Carrier(create_LEC());
 		break;
 	case GameObject::largeAlly_cmd:
 		break;
