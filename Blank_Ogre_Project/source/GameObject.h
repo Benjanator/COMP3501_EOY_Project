@@ -13,7 +13,8 @@ public:
 					largeEnemy_cmd = 20, 
 					largeAlly_cmd, 
 					asteroid = 100,
-					platform};
+					platform,
+					rocket};
 
 	GameObject(objectType);
 	~GameObject(void);

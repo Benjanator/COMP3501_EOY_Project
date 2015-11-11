@@ -39,6 +39,7 @@ material ShinyMaterial
             fragment_program_ref shiny_material_shader/fs
             {
             }
+			
         } 
     }
 }

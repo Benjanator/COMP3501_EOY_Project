@@ -4,6 +4,7 @@
 #include <OGRE\OgreSceneManager.h>
 #include <OGRE/OgreEntity.h>
 #include "SmallShip.h"
+#include "Rocket.h"
 
 class GameObjectFactory
 {
@@ -20,6 +21,7 @@ private:
 	int SEB_id; // small enemy bomber
 	int LAC_id; // large ally cmd
 	int LEC_id; // large enemy cmd
+	int RCKT_id; // rocket
 
 	Ogre::SceneManager* scene_manager;
 
@@ -31,5 +33,6 @@ private:
 	Ogre::SceneNode* create_LEC();
 	Ogre::SceneNode* create_AP();
 	Ogre::SceneNode* create_EP();
+	Ogre::SceneNode* create_RCKT();
 };
 

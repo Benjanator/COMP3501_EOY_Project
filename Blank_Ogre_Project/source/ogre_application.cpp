@@ -468,19 +468,23 @@ void OgreApplication::createLoadedEntity(Ogre::String _objectName)
 
 void OgreApplication::test(){
 	
-	Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
-     Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
 
-	 
-	 //Ogre::Entity* entity = scene_manager->createEntity("Reference", "Carrier.mesh");
-	 Ogre::Entity* entity = scene_manager->createEntity("Reference", "Platform.mesh");
-	 
-	 Ogre::SceneNode* node =root_scene_node->createChildSceneNode("Reference");
-	 entity->setMaterialName("ShinyMaterial");
-	 node->attachObject(entity);
+	 GameObject* temp;
+	 for(int i=0;i<3;i++){
+		temp = factory->createGameObject(GameObject::objectType::smallEnemy_fighter);
+		objectManager->addObject(temp);
+	 }
 
-	 node->setPosition(0.0,0.0,2.0);
-	 node->setScale(5.0,5.0,5.0);
+	  for(int j=0;j<3;j++){
+		temp = factory->createGameObject(GameObject::objectType::smallEnemy_bomber);
+		objectManager->addObject(temp);
+	 }
+
+	  	temp = factory->createGameObject(GameObject::objectType::largeEnemy_cmd);
+		objectManager->addObject(temp);
+
+		temp = factory->createGameObject(GameObject::objectType::rocket);
+		objectManager->addObject(temp);
 }
 
 

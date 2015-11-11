@@ -1,7 +1,7 @@
 #include "GameObjectFactory.h"
 
 
-GameObjectFactory::GameObjectFactory(Ogre::SceneManager* _sm): SAF_id(0), SEF_id(0), SAB_id(0), SEB_id(0), LAC_id(0), LEC_id(0)
+GameObjectFactory::GameObjectFactory(Ogre::SceneManager* _sm): SAF_id(0), SEF_id(0), SAB_id(0), SEB_id(0), LAC_id(0), LEC_id(0), RCKT_id(0)
 {
 	scene_manager = _sm;
 }
@@ -36,6 +36,8 @@ GameObject* GameObjectFactory::createGameObject(GameObject::objectType _type)
 	case GameObject::platform:
 		newObject = new SmallShip(create_EP());
 		break;
+	case GameObject::rocket:
+		newObject = new Rocket(create_RCKT());
 	default:
 		break;
 	}
@@ -130,7 +132,8 @@ Ogre::SceneNode* GameObjectFactory::create_SEF()
 	entity->setMaterialName("ShinyMaterial");
 	node->attachObject(entity);
 
-	node->setPosition(10.0,0.0,0.0);
+	
+	node->setPosition(0.0,0.0 + 20.0 * SEF_id,-50.0);
 	node->setScale(1.0,1.0,1.0);
 
 	return node;
@@ -144,13 +147,16 @@ Ogre::SceneNode* GameObjectFactory::create_SEB()
 	SEB_id++;
 	Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
 
-	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Lancer.mesh");
+	//Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Lancer.mesh");
+	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Platform.mesh");
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
 	entity->setMaterialName("ShinyMaterial");
 	node->attachObject(entity);
 
-	node->setPosition(50.0,0.0,0.0);
-	node->setScale(1.0,1.0,1.0);
+	node->setPosition(0.0,0.0 + 20 * SEB_id,-100.0);
+	//node->setScale(1.0,1.0,1.0);
+
+	node->setScale(0.5,1.0,0.5);
 
 	return node;
 }
@@ -168,11 +174,12 @@ Ogre::SceneNode* GameObjectFactory::create_LEC()
 	entity->setMaterialName("ShinyMaterial");
 	node->attachObject(entity);
 
-	node->setPosition(100.0,0.0,0.0);
-	node->setScale(1.0,1.0,1.0);
+
+	node->setPosition(0.0,0.0 + 5.0 * LEC_id,-150);
+	node->setScale(10.0,10.0,10.0);
 
 	return node;
-
+	
 }
 
 Ogre::SceneNode* GameObjectFactory::create_AP()
@@ -206,6 +213,26 @@ Ogre::SceneNode* GameObjectFactory::create_EP()
 
 	node->setPosition(100.0,0.0,0.0);
 	node->setScale(1.0,1.0,1.0);
+
+	return node;
+
+}
+
+
+Ogre::SceneNode* GameObjectFactory::create_RCKT()
+{
+	Ogre::String _objectName = "RCKT_" + Ogre::StringConverter::toString(RCKT_id);
+	RCKT_id++;
+	Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+
+	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Rocket.mesh");
+	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
+	entity->setMaterialName("ShinyMaterial");
+	node->attachObject(entity);
+	
+
+	node->setPosition(100.0,0.0,0.0);
+	node->setScale(0.5,0.5,0.5);
 
 	return node;
 

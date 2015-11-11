@@ -8,7 +8,8 @@ SmallShip::SmallShip(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 	velocity = Ogre::Vector3(0.0f, 0.0f, 0.1f);//Ogre::Vector3::ZERO;
 	
 	direction = newShip->_getDerivedOrientation() * Ogre::Vector3(0.0f, 0.0f, -1.0f);
-	drift_Direction = direction;
+	//drift_Direction = direction;
+	drift_Direction = Ogre::Vector3(0.0f);
 	up = newShip->_getDerivedOrientation() * Ogre::Vector3(0.0f, 1.0f, 0.0f);
 	right = direction.crossProduct(up);
 
