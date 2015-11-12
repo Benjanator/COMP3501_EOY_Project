@@ -22,6 +22,9 @@ public:
 
 	void update(void);
 
+	Ogre::Quaternion getOrientation();
+	Ogre::Vector3 getPosition();
+
 protected:
 	void move();
 

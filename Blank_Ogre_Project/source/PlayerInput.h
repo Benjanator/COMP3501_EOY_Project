@@ -7,14 +7,20 @@
 #include "OIS/OIS.h"
 
 #include "SmallShip.h"
+#include "ObjectManager.h"
+#include "GameObjectFactory.h"
 
 class PlayerInput
 {
 public:
-	PlayerInput(Ogre::SceneManager*,OIS::Keyboard*, OIS::Mouse*);
+	PlayerInput(Ogre::SceneManager*,OIS::Keyboard*, OIS::Mouse*, GameObjectFactory* ,ObjectManager* );
 	~PlayerInput(void);
 
 	Ogre::SceneManager* scene_manager;
+	GameObjectFactory* factory;
+	ObjectManager* objectManager;
+
+
 
 	Ogre::Camera* player_camera;
 	Ogre::SceneNode* root_scene_node;
@@ -39,6 +45,7 @@ public:
 	Ogre::SceneNode* getFirstNode(){
 		return camera_first_person_node;
 	}
+
 
 };
 

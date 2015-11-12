@@ -16,6 +16,8 @@ public:
 	~GameObjectFactory(void);
 
 	GameObject* createGameObject(GameObject::objectType);
+	GameObject* createGameRocket(Ogre::Quaternion ,Ogre::Vector3 , Ogre::Vector3 );
+
 
 private:
 	int SAF_id; // small ally fighter
@@ -36,6 +38,6 @@ private:
 	Ogre::SceneNode* create_LEC();
 	Ogre::SceneNode* create_AP();
 	Ogre::SceneNode* create_EP();
-	Ogre::SceneNode* create_RCKT();
+	Ogre::SceneNode* create_RCKT(Ogre::Quaternion,Ogre::Vector3 );
 };
 

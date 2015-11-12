@@ -137,8 +137,15 @@ void SmallShip::move(void)
 
 	//m_pNode->translate((direction * velocity.z)+(up*velocity.y)+(right * velocity.x)); //combining translations seems to remove inconsistnecies
 	//multiple translate calls can give us controls that dont move the way we would expect due to order motion
-
 	m_pNode->needUpdate();
 	
+}
+
+Ogre::Quaternion SmallShip::getOrientation(){
+	return m_pNode->getOrientation();
+}
+
+Ogre::Vector3 SmallShip::getPosition(){
+	return m_pNode->getPosition();
 }
 

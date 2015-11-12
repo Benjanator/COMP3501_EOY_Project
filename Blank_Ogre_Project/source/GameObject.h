@@ -37,6 +37,7 @@ protected:
 
 	bool indestructable;
 	Ogre::Vector3 drift_Direction;
+	Ogre::Vector3 forward_Direction;
 
 	Ogre::Vector3 aabbCenter;
 	Ogre::Vector3 aabbSize;

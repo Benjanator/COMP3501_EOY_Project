@@ -53,6 +53,7 @@ OgreApplication::OgreApplication(void){
 
 void OgreApplication::Init(void){
 
+
 	/* Set default values for the variables */
 	animating_ = false;
 	space_down_ = false;
@@ -73,9 +74,9 @@ void OgreApplication::Init(void){
 	LoadModels();
 	LoadSkybox();
 
-	objectManager = new ObjectManager();
-	factory = new GameObjectFactory(ogre_root_->getSceneManager("MySceneManager"));
-	physicsManager = new PhysicsManager(objectManager);
+	
+
+	
 }
 
 
@@ -182,7 +183,11 @@ void OgreApplication::InitViewport(void){
         Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
 
 
-		player = new PlayerInput( scene_manager,keyboard_,mouse_);
+		objectManager = new ObjectManager();
+		factory = new GameObjectFactory(ogre_root_->getSceneManager("MySceneManager"));
+		physicsManager = new PhysicsManager(objectManager);
+
+		player = new PlayerInput( scene_manager,keyboard_,mouse_,factory,objectManager);
 
         /* Create viewport */
        // Ogre::Viewport *viewport = ogre_window_->addViewport(camera, viewport_z_order_g, viewport_left_g, viewport_top_g, viewport_width_g, viewport_height_g);
@@ -482,9 +487,8 @@ void OgreApplication::test(){
 
 	  	temp = factory->createGameObject(GameObject::objectType::largeEnemy_cmd);
 		objectManager->addObject(temp);
-
-		temp = factory->createGameObject(GameObject::objectType::rocket);
-		objectManager->addObject(temp);
+		
+	
 }
 
 

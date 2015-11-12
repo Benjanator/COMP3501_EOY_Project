@@ -5,19 +5,19 @@
 class Rocket: public GameObject
 {
 public:
-	//Rocket(Ogre::SceneNode*,Ogre::Quaternion, Ogre::Vector3);
-	Rocket(Ogre::SceneNode*);
+	Rocket(Ogre::SceneNode*,Ogre::Quaternion, Ogre::Vector3, Ogre::Vector3);
+	//Rocket(Ogre::SceneNode* );
 	~Rocket(void);
 	Ogre::SceneNode& getNode();
 
-	void fly();
+	void move();
 	void collide();
 	void explode();
 
 private:
 	
 	int countdown;
-
+	float accel_Rate; 
 	void update(void);
 
 };

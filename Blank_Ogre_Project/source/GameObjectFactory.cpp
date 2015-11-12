@@ -19,18 +19,18 @@ GameObject* GameObjectFactory::createGameObject(GameObject::objectType _type)
 		newObject = new SmallShip(create_SAF());
 		break;
 	case GameObject::smallEnemy_fighter:
-		newObject = new SmallShip(create_SEF());
-		//newObject = new Fighter(create_SEF());
+		//newObject = new SmallShip(create_SEF());
+		newObject = new Fighter(create_SEF());
 		break;
 	case GameObject::smallAlly_bomber:
 		break;
 	case GameObject::smallEnemy_bomber:
-		newObject = new SmallShip(create_SEB());
-		//newObject = new Bomber(create_SEB());
+		//newObject = new SmallShip(create_SEB());
+		newObject = new Bomber(create_SEB());
 		break;
 	case GameObject::largeEnemy_cmd:
-		newObject = new SmallShip(create_LEC());
-		//newObject = new Carrier(create_LEC());
+		//newObject = new SmallShip(create_LEC());
+		newObject = new Carrier(create_LEC());
 		break;
 	case GameObject::largeAlly_cmd:
 		break;
@@ -39,13 +39,18 @@ GameObject* GameObjectFactory::createGameObject(GameObject::objectType _type)
 	case GameObject::platform:
 		newObject = new SmallShip(create_EP());
 		break;
-	case GameObject::rocket:
-		newObject = new Rocket(create_RCKT());
 	default:
 		break;
 	}
 
 	return newObject;
+}
+
+
+GameObject* GameObjectFactory::createGameRocket(Ogre::Quaternion shipOrientation,Ogre::Vector3 shipPosition, Ogre::Vector3 shipDirection){
+		GameObject* newObject = nullptr;
+		newObject = new Rocket(create_RCKT(shipOrientation,shipPosition),shipOrientation,shipPosition,shipDirection);
+		return newObject;
 }
 
 Ogre::SceneNode* GameObjectFactory::create_SAF()
@@ -222,7 +227,7 @@ Ogre::SceneNode* GameObjectFactory::create_EP()
 }
 
 
-Ogre::SceneNode* GameObjectFactory::create_RCKT()
+Ogre::SceneNode* GameObjectFactory::create_RCKT(Ogre::Quaternion shipOrientation,Ogre::Vector3 shipPosition)
 {
 	Ogre::String _objectName = "RCKT_" + Ogre::StringConverter::toString(RCKT_id);
 	RCKT_id++;
@@ -232,11 +237,7 @@ Ogre::SceneNode* GameObjectFactory::create_RCKT()
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
 	entity->setMaterialName("ShinyMaterial");
 	node->attachObject(entity);
-	
-
-	node->setPosition(100.0,0.0,0.0);
 	node->setScale(0.5,0.5,0.5);
-
 	return node;
 
 }
