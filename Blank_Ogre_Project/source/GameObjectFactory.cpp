@@ -1,7 +1,7 @@
 #include "GameObjectFactory.h"
 
 
-GameObjectFactory::GameObjectFactory(Ogre::SceneManager* _sm): SAF_id(0), SEF_id(0), SAB_id(0), SEB_id(0), LAC_id(0), LEC_id(0), RCKT_id(0)
+GameObjectFactory::GameObjectFactory(Ogre::SceneManager* _sm): SAF_id(0), SEF_id(0), SAB_id(0), SEB_id(0), LAC_id(0), LEC_id(0), RCKT_id(0), LSR_id(0)
 {
 	scene_manager = _sm;
 }
@@ -50,6 +50,12 @@ GameObject* GameObjectFactory::createGameObject(GameObject::objectType _type)
 GameObject* GameObjectFactory::createGameRocket(Ogre::Quaternion shipOrientation,Ogre::Vector3 shipPosition, Ogre::Vector3 shipDirection){
 		GameObject* newObject = nullptr;
 		newObject = new Rocket(create_RCKT(shipOrientation,shipPosition),shipOrientation,shipPosition,shipDirection);
+		return newObject;
+}
+
+GameObject* GameObjectFactory::createGameLaser(Ogre::Quaternion shipOrientation,Ogre::Vector3 shipPosition,bool LasrLR){
+		GameObject* newObject = nullptr;
+		newObject = new Laser(create_LSR(shipOrientation,shipPosition),shipOrientation,shipPosition, LasrLR);
 		return newObject;
 }
 
@@ -238,6 +244,21 @@ Ogre::SceneNode* GameObjectFactory::create_RCKT(Ogre::Quaternion shipOrientation
 	entity->setMaterialName("ShinyMaterial");
 	node->attachObject(entity);
 	node->setScale(0.5,0.5,0.5);
+	return node;
+
+}
+
+Ogre::SceneNode* GameObjectFactory::create_LSR(Ogre::Quaternion shipOrientation,Ogre::Vector3 shipPosition)
+{
+	Ogre::String _objectName = "LSR_" + Ogre::StringConverter::toString(LSR_id);
+	LSR_id++;
+	Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+
+	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Laser.mesh");
+	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
+	entity->setMaterialName("BlueMaterial");
+	node->attachObject(entity);
+	node->setScale(0.5,0.5,2.0);
 	return node;
 
 }

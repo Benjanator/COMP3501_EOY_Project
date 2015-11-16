@@ -14,7 +14,9 @@ public:
 					largeAlly_cmd, 
 					asteroid = 100,
 					platform,
-					rocket};
+					rocket,
+					laser,
+					scattershot};
 
 	GameObject(objectType);
 	~GameObject(void);

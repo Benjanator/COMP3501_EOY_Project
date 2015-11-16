@@ -8,6 +8,8 @@
 #include "Carrier.h"
 #include "Fighter.h"
 #include "Bomber.h"
+#include "Laser.h"
+#include "Scattershot.h"
 
 class GameObjectFactory
 {
@@ -17,7 +19,7 @@ public:
 
 	GameObject* createGameObject(GameObject::objectType);
 	GameObject* createGameRocket(Ogre::Quaternion ,Ogre::Vector3 , Ogre::Vector3 );
-
+	GameObject* createGameLaser(Ogre::Quaternion ,Ogre::Vector3, bool );
 
 private:
 	int SAF_id; // small ally fighter
@@ -26,7 +28,9 @@ private:
 	int SEB_id; // small enemy bomber
 	int LAC_id; // large ally cmd
 	int LEC_id; // large enemy cmd
-	int RCKT_id; // rocket
+	int RCKT_id;// rocket
+	int LSR_id; //lasers
+
 
 	Ogre::SceneManager* scene_manager;
 
@@ -39,5 +43,7 @@ private:
 	Ogre::SceneNode* create_AP();
 	Ogre::SceneNode* create_EP();
 	Ogre::SceneNode* create_RCKT(Ogre::Quaternion,Ogre::Vector3 );
+	Ogre::SceneNode* create_LSR(Ogre::Quaternion,Ogre::Vector3 );
+	
 };
 

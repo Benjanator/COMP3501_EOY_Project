@@ -5,10 +5,13 @@ Rocket::Rocket(Ogre::SceneNode * newRocket,Ogre::Quaternion shipOrientation,Ogre
 {
 	
 	m_pNode = newRocket;
-	m_pNode->setPosition(shipPosition);
+	
 	m_pNode->setOrientation(shipOrientation*(Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_Y)));
 	drift_Direction = shipDirection;
 	forward_Direction = shipOrientation *  Ogre::Vector3::NEGATIVE_UNIT_Z;
+	Ogre::Vector3 down_Direction = shipOrientation *  Ogre::Vector3::NEGATIVE_UNIT_Y;
+
+	m_pNode->setPosition(shipPosition + (forward_Direction *10) + (down_Direction*2));
 	
 	accel_Rate = 0.03;
 
@@ -35,11 +38,11 @@ void Rocket::move(){
 }
 
 void Rocket::collide(){
-
+	//add these for anything that could collide
 }
 
 void Rocket::explode(){
-
+	//run explosion particle effect
 }
 
 Ogre::SceneNode& Rocket::getNode()

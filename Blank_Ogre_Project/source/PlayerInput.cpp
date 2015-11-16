@@ -12,7 +12,9 @@
 	bool camState = true;
 	bool relativeMotion = true;
 	bool keyUp = true;
+	bool ckeyUp = true;
 	bool mouseLeft = true;
+	bool lasrLR = true;
 	GameObject* temp;
 
 	PlayerInput::PlayerInput(  Ogre::SceneManager* manager,OIS::Keyboard* _keyboard, OIS::Mouse* _mouse, GameObjectFactory* oFactory, ObjectManager* oManager)
@@ -116,13 +118,27 @@ void PlayerInput::handleInput(void){
 
 	if(playerMouse_->getMouseState().buttonDown(OIS::MB_Left)){
 		if(mouseLeft == true){
-			temp = factory->createGameRocket(playerShip->getOrientation(),playerShip->getPosition(),playerShip->getMotionDirection());
+			temp = factory->createGameLaser(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
 			objectManager->addObject(temp);
 			mouseLeft = false;
+			lasrLR = !lasrLR;
 		}
 	}else{
 		mouseLeft = true;
 	}
+
+	if(playerKeyboard_->isKeyDown(OIS::KC_C)){
+		if(ckeyUp == true){
+			temp = factory->createGameRocket(playerShip->getOrientation(),playerShip->getPosition(),playerShip->getMotionDirection());
+			objectManager->addObject(temp);
+			ckeyUp = false;
+			
+		}
+	}else{
+		ckeyUp = true;
+	}
+	
+
 	
 
 	Ogre::Radian rot_factor(Ogre::Math::PI / 180); // Camera rotation with directional thrusters
