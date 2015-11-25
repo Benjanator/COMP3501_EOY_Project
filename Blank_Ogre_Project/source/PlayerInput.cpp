@@ -60,7 +60,7 @@
 
 		
 		camera_chase_node = camera_first_person_node->createChildSceneNode("MyChaseCameraNode");
-		camera_chase_node->setPosition(0.0, 2.0, 10.0);
+		camera_chase_node->setPosition(0.0, 2.0, 15.0);
 		camera_chase_node->setInheritOrientation(false);
 		camera_chase_node->setFixedYawAxis(false);
 }

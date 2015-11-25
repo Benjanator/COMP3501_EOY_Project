@@ -5,6 +5,7 @@ GameObjectFactory::GameObjectFactory(Ogre::SceneManager* _sm): SAF_id(0), SEF_id
 {
 	scene_manager = _sm;
 	factory = new ParticleFactory(scene_manager);
+	factory->CreateThrusterParticleGeometry("Thruster", 200000);
 }
 
 
@@ -125,6 +126,26 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	entity->setMaterialName("ShinyBlueMaterial");
 	child->attachObject(entity);
 
+
+	child = factory->CreateParticleEntity("Thruster","FireMaterial",node, Ogre::Vector3(0.5,0.5,0.5));
+	child->setOrientation((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Y)));
+	child->translate(-2.4f,-0.5f,3.0f);
+
+	child = factory->CreateParticleEntity("Thruster","FireMaterial",node, Ogre::Vector3(0.5,0.5,0.5));
+	child->setOrientation((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Y)));
+	child->translate(-1.5f,0.7f,3.0f);
+
+	child = factory->CreateParticleEntity("Thruster","FireMaterial",node, Ogre::Vector3(0.5,0.5,0.5));
+	child->setOrientation((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Y)));
+	child->translate(1.5f,0.7f,3.0f);
+
+	child = factory->CreateParticleEntity("Thruster","FireMaterial",node, Ogre::Vector3(0.5,0.5,0.5));
+	child->setOrientation((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Y)));
+	child->translate(2.4f,-0.5f,3.0f);
+
+	//child = factory->CreateParticleEntity("Thruster","FireMaterial",node, Ogre::Vector3(2.0,2.0,0.5));
+	//child->translate(0.05,0.05,3);
+
 	//child->translate(1.66224f, 0.21f, 0.005f);
 	
 	//
@@ -150,6 +171,15 @@ Ogre::SceneNode* GameObjectFactory::create_SEF()
 	
 	node->setPosition(0.0,0.0 + 20.0 * SEF_id,-50.0);
 	node->setScale(1.0,1.0,1.0);
+
+		
+	Ogre::SceneNode* child = factory->CreateParticleEntity("Thruster","FireMaterial",node, Ogre::Vector3(1,1,1));
+	child->setOrientation((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Y)));
+	child->translate(-3.5,-2,5.5);
+
+	child = factory->CreateParticleEntity("Thruster","FireMaterial",node, Ogre::Vector3(1,1,1));
+	child->setOrientation((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Y)));
+	child->translate(3.5,-2,5.5);
 
 	return node;
 }
@@ -227,6 +257,7 @@ Ogre::SceneNode* GameObjectFactory::create_EP()
 	node->attachObject(entity);
 
 	node->setPosition(100.0,0.0,0.0);
+	
 	node->setScale(1.0,1.0,1.0);
 
 	return node;
@@ -245,6 +276,15 @@ Ogre::SceneNode* GameObjectFactory::create_RCKT(Ogre::Quaternion shipOrientation
 	entity->setMaterialName("ShinyMaterial");
 	node->attachObject(entity);
 	node->setScale(0.5,0.5,0.5);
+
+	Ogre::SceneNode* child = factory->CreateParticleEntity("Thruster","FireMaterial",node, Ogre::Vector3(1,1,1));
+	child->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_Y)));
+	child->translate(5,0,0);
+
+	
+	
+
+
 	return node;
 
 }
@@ -259,7 +299,9 @@ Ogre::SceneNode* GameObjectFactory::create_LSR(Ogre::Quaternion shipOrientation,
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
 	entity->setMaterialName("BlueMaterial");
 	node->attachObject(entity);
-	node->setScale(0.5,0.5,2.0);
+	node->setScale(0.5,0.5,3.0);
+
+
 	return node;
 
 }

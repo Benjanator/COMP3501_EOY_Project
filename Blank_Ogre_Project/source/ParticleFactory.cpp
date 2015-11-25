@@ -4,6 +4,7 @@
 ParticleFactory::ParticleFactory(Ogre::SceneManager* _sm)
 {
 	scene_manager = _sm;
+	numMaterials = 0;
 }
 
 
@@ -11,8 +12,34 @@ ParticleFactory::~ParticleFactory(void)
 {
 }
 
-void ParticleFactory::CreateParticleType(Ogre::SceneNode* ){
 
+
+Ogre::SceneNode* ParticleFactory::CreateParticleEntity(Ogre::String object_name, Ogre::String material_name,Ogre::SceneNode* parent, Ogre::Vector3 size){
+
+		/* Create one instance of the torus (one entity) */
+		/* The same object can have multiple instances or entities */
+
+		/* Create entity */
+        Ogre::Entity* entity = scene_manager->createEntity(object_name);
+
+
+		Ogre::MaterialPtr mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(material_name));
+		mat = mat->clone(material_name.append(Ogre::StringConverter::toString(numMaterials)));
+		/* Apply a material to the entity */
+		entity->setMaterialName(mat->getName());
+		materialArray[numMaterials] = mat->getName();
+		numMaterials++;
+
+		/* Create a scene node for the entity */
+		/* The scene node keeps track of the entity's position */
+        Ogre::SceneNode* scene_node = parent->createChildSceneNode(mat->getName());
+        scene_node->attachObject(entity);
+		//scene_node->translate(0.5,0.5,-1);
+		
+
+		/* Scale the entity */
+		scene_node->scale(size);
+		return scene_node;
 }
 
 
@@ -85,35 +112,4 @@ void ParticleFactory::CreateThrusterParticleGeometry(Ogre::String object_name, i
 }
 
 
-void ParticleFactory::CreateParticleEntity(Ogre::String entity_name, Ogre::String object_name, Ogre::String material_name,Ogre::SceneNode* parent, Ogre::Vector3 size){
 
-	//try {
-		/* Create one instance of the torus (one entity) */
-		/* The same object can have multiple instances or entities */
-
-		/* Retrieve scene manager and root scene node */
-        //Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
-        Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
-
-		/* Create entity */
-        Ogre::Entity* entity = scene_manager->createEntity(object_name);
-
-		/* Apply a material to the entity */
-		entity->setMaterialName(material_name);
-		//particle_material_name_ = material_name;
-		
-		/* Create a scene node for the entity */
-		/* The scene node keeps track of the entity's position */
-        Ogre::SceneNode* scene_node = parent->createChildSceneNode(entity_name);
-        scene_node->attachObject(entity);
-
-		/* Scale the entity */
-		scene_node->scale(size);
-	/*}
-    catch (Ogre::Exception &e){
-        throw(OgreAppException(std::string("Ogre::Exception: ") + std::string(e.what())));
-    }
-    catch(std::exception &e){
-        throw(OgreAppException(std::string("std::Exception: ") + std::string(e.what())));
-    }*/
-}
