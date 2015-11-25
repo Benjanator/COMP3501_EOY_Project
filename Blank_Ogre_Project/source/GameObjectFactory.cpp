@@ -4,6 +4,7 @@
 GameObjectFactory::GameObjectFactory(Ogre::SceneManager* _sm): SAF_id(0), SEF_id(0), SAB_id(0), SEB_id(0), LAC_id(0), LEC_id(0), RCKT_id(0), LSR_id(0)
 {
 	scene_manager = _sm;
+	factory = new ParticleFactory(scene_manager);
 }
 
 

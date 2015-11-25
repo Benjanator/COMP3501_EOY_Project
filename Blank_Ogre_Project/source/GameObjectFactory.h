@@ -10,6 +10,7 @@
 #include "Bomber.h"
 #include "Laser.h"
 #include "Scattershot.h"
+#include "ParticleFactory.h"
 
 class GameObjectFactory
 {
@@ -33,6 +34,8 @@ private:
 
 
 	Ogre::SceneManager* scene_manager;
+
+	ParticleFactory* factory;
 
 	Ogre::SceneNode* create_SAF();
 	Ogre::SceneNode* create_SEF();
