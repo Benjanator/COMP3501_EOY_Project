@@ -23,13 +23,12 @@ SmallShip::SmallShip(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 	//right = newShip->_getDerivedOrientation() * Ogre::Vector3::UNIT_X;
 
 	m_pNode = newShip;
-
 	accel_Rate = 0.01;
 
 
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
-
+	numMaterials = 4;
 }
 
 
@@ -122,8 +121,16 @@ void SmallShip::translate(Ogre::Vector3 _up, Ogre::Vector3 _right, Ogre::Vector3
 	m_pNode->needUpdate();
 }
 
-void SmallShip::update(void)
+void SmallShip::update(float timer_)
 {
+	Ogre::MaterialPtr mat;
+	//Ogre::Entity* mEntity =(Ogre::Entity*) m_pNode->getChild("");
+	
+	for(int i = 1; i<=numMaterials; i++){
+		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Thruster_FireMaterial_"+ Ogre::StringConverter::toString(i)));
+		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_);
+	}
+	
 	move();
 }
 

@@ -12,7 +12,7 @@ PhysicsManager::~PhysicsManager(void)
 	objectManager = 0;
 }
 
-void PhysicsManager::pollTotalEvents()
+void PhysicsManager::pollTotalEvents(float timer)
 {
 	std::vector<GameObject*> tempList = objectManager->getObjectList();
 	
@@ -32,7 +32,7 @@ void PhysicsManager::pollTotalEvents()
 				
 			}
 		}
-		tempList.at(i)->update();
+		tempList.at(i)->update(timer);
 	}
 }
 

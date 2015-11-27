@@ -7,6 +7,7 @@ Carrier::Carrier(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 		
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
+	numMaterials = 1;
 }
 
 
@@ -19,7 +20,7 @@ Ogre::SceneNode& Carrier::getNode()
 	return *m_pNode;
 }
 
-void Carrier::update(void)
+void Carrier::update(float _timer)
 {
 	move();
 }

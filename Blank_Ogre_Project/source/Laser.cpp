@@ -22,7 +22,7 @@ Laser::Laser(Ogre::SceneNode * newLaser,Ogre::Quaternion shipOrientation,Ogre::V
 	drift_Direction = Ogre::Vector3(0.0f);
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
-
+	numMaterials = 1;
 }
 
 
@@ -30,7 +30,7 @@ Laser::~Laser(void)
 {
 }
 
-void Laser::update(void)
+void Laser::update(float _timer)
 {
 	move();
 }

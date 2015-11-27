@@ -11,7 +11,7 @@ public:
 
 	Ogre::SceneNode& getNode();
 
-	void update(void);
+	void update(float _timer);
 
 	protected:
 

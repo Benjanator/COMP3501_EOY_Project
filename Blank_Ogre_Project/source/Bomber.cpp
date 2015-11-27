@@ -20,7 +20,7 @@ Ogre::SceneNode& Bomber::getNode()
 	return *m_pNode;
 }
 
-void Bomber::update(void)
+void Bomber::update(float _timer)
 {
 	move();
 }

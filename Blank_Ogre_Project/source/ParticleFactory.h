@@ -6,6 +6,7 @@
 #include "OGRE/OgreManualObject.h"
 #include <exception>
 #include <string>
+#include <vector>
 
 
 class ParticleFactory
@@ -16,16 +17,17 @@ public:
 
 	Ogre::SceneNode* CreateParticleEntity(Ogre::String , Ogre::String ,Ogre::SceneNode*, Ogre::Vector3 ); // Create an entity of an object
 	void CreateThrusterParticleGeometry(Ogre::String , int ,float loop_radius = 0.6, float circle_radius = 0.2); // Create Thruster Fire (torus) particles
-
+	void resetCounter();
 private:
 
 	
 	Ogre::SceneManager* scene_manager;
-	int numMaterials;
-	Ogre::String materialArray[5000];
+	int materialCounter;
+	std::vector<Ogre::String> materialArray;
 
-
+	void incrementCounter();
 	
+	//need to make a partcile instance counter methods so we can count the number of particles generated for a particular object type, perhaps assign the numparticle counter to the object.h and loop through it in update
 
 	
 	

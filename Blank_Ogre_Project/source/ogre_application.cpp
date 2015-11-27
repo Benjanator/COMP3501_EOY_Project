@@ -35,6 +35,7 @@ Ogre::Vector3 camera_up_g(0.0, 1.0, 0.0);
 /* Materials */
 const Ogre::String material_directory_g = MATERIAL_DIRECTORY;
 
+
 //
 bool camState = 0;
 
@@ -61,7 +62,7 @@ void OgreApplication::Init(void){
 	input_manager_ = NULL;
 	keyboard_ = NULL;
 	mouse_ = NULL;
-
+	timer_ = 0.0f;
 	/* Run all initialization steps */
     InitRootNode();
     InitPlugins();
@@ -351,9 +352,11 @@ void OgreApplication::MainLoop(void){
 }
 
 bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
-	
-	physicsManager->pollTotalEvents();
 
+
+	timer_ += fe.timeSinceLastFrame;
+
+	physicsManager->pollTotalEvents(timer_);
 	player->updateCamera();
 
 	if (keyboard_->isKeyDown(OIS::KC_ESCAPE)){
@@ -388,51 +391,6 @@ void OgreApplication::windowResized(Ogre::RenderWindow* rw){
 	ogre_window_->update();
 }
 
-void OgreApplication::loadEntity(Ogre::String _fileName, Ogre::String _objectName){
-	/*//ObjectImporter modeler;
-
-	//vector<ObjectImporter::Face> faceList;
-	vector<Ogre::Vector3> verticeList;
-	vector<Ogre::Vector3> normalList;
-	vector<Ogre::Vector2> uvList;
-
-	modeler.loadJSONModel(_fileName, faceList, verticeList, normalList, uvList);
-
-	if(verticeList.size() != normalList.size() && faceList.size() == 0){
-		cout << "ERROR: Problem in Format" << endl;
-		return;
-	}
-
-
-	try{
-		Ogre::ManualObject* object = NULL;
-
-		object = ogre_root_->getSceneManager("MySceneManager")->createManualObject(_objectName);
-		object->setDynamic(false);
-
-		object->begin("ObjectMaterial", Ogre::RenderOperation::OT_TRIANGLE_LIST);
-
-		for(int i = 0; i < verticeList.size(); i++){
-			object->position(verticeList[i]);
-			//object->normal(normalList[i]);
-			//object->textureCoord((uvList.size() == 0)? (0,0): (uvList[i].x, uvList[i].y));
-			object->colour(Ogre::ColourValue(0.0,1.0,0.0));
-		}
-
-		for(int i = 0; i < faceList.size(); i++){
-			object->triangle(faceList[i].vertex[0], faceList[i].vertex[1], faceList[i].vertex[2]);
-		}
-
-		object->end();
-		object->convertToMesh(_objectName);
-	}
-	catch (Ogre::Exception &e){
-        throw(OgreAppException(std::string("Ogre::Exception: ") + std::string(e.what())));
-    }
-    catch(std::exception &e){
-        throw(OgreAppException(std::string("std::Exception: ") + std::string(e.what())));
-    }*/
-}
 
 
 void OgreApplication::createLoadedEntity(Ogre::String _objectName)

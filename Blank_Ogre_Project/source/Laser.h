@@ -18,7 +18,7 @@ private:
 	
 	int countdown;
 	float accel_Rate; 
-	void update(void);
+	void update(float _timer);
 
 };
 

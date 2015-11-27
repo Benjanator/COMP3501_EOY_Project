@@ -4,7 +4,7 @@
 ParticleFactory::ParticleFactory(Ogre::SceneManager* _sm)
 {
 	scene_manager = _sm;
-	numMaterials = 0;
+	materialCounter = 1;
 }
 
 
@@ -13,6 +13,13 @@ ParticleFactory::~ParticleFactory(void)
 }
 
 
+void ParticleFactory::incrementCounter(){
+	 materialCounter++;
+}
+
+void ParticleFactory::resetCounter(){
+	materialCounter = 1;
+}
 
 Ogre::SceneNode* ParticleFactory::CreateParticleEntity(Ogre::String object_name, Ogre::String material_name,Ogre::SceneNode* parent, Ogre::Vector3 size){
 
@@ -20,23 +27,28 @@ Ogre::SceneNode* ParticleFactory::CreateParticleEntity(Ogre::String object_name,
 		/* The same object can have multiple instances or entities */
 
 		/* Create entity */
-        Ogre::Entity* entity = scene_manager->createEntity(object_name);
-
+		Ogre::String name = parent->getName()+ "_Thruster";
+        //Ogre::Entity* entity = scene_manager->createEntity(object_name);
+		Ogre::Entity* entity = scene_manager->createEntity("_Thruster");
 
 		Ogre::MaterialPtr mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(material_name));
-		mat = mat->clone(material_name.append(Ogre::StringConverter::toString(numMaterials)));
+		//mat = mat->clone(object_name.append("_" +material_name.append("_" + Ogre::StringConverter::toString(materialCounter))));
+		mat = mat->clone(name.append("_" +material_name.append("_" + Ogre::StringConverter::toString(materialCounter))));
+
+		std::cout << "NAME: " << name << std::endl;
+		//mat = mat->clone(object_name.append(material_name));
 		/* Apply a material to the entity */
 		entity->setMaterialName(mat->getName());
-		materialArray[numMaterials] = mat->getName();
-		numMaterials++;
+		//materialArray[numMaterials] = mat->getName();
+		materialArray.push_back(mat->getName());
+		
 
 		/* Create a scene node for the entity */
 		/* The scene node keeps track of the entity's position */
         Ogre::SceneNode* scene_node = parent->createChildSceneNode(mat->getName());
         scene_node->attachObject(entity);
 		//scene_node->translate(0.5,0.5,-1);
-		
-
+		incrementCounter();
 		/* Scale the entity */
 		scene_node->scale(size);
 		return scene_node;
@@ -110,6 +122,8 @@ void ParticleFactory::CreateThrusterParticleGeometry(Ogre::String object_name, i
         throw(OgreAppException(std::string("std::Exception: ") + std::string(e.what())));
     }*/
 }
+
+
 
 
 

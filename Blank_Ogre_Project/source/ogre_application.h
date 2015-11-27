@@ -46,7 +46,6 @@ namespace ogre_application {
 			void CreateTorus(Ogre::String object_name, Ogre::String material_name, float loop_radius = 0.6, float circle_radius = 0.2, int num_loop_samples = 90, int num_circle_samples = 30); // Create an object to show on the screen
 			void SetupAnimation(Ogre::String object_name); // Setup animation for an object
             void MainLoop(void); // Keep application active
-			void loadEntity(Ogre::String _fileName, Ogre::String _objectName);
 			void createLoadedEntity(Ogre::String _objectName);
 			void test(void);
 
@@ -67,6 +66,9 @@ namespace ogre_application {
 			Ogre::AnimationState *animation_state_; // Keep state of the animation
 			bool animating_; // Whether animation is on or off
 			bool space_down_; // Whether space key was pressed
+
+			// For particles
+			float timer_;
 
 			// Input managers
 			OIS::InputManager *input_manager_;

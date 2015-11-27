@@ -10,7 +10,7 @@ public:
 	~ObjectManager(void);
 
 	void addObject(GameObject*);
-	void updateObjects();
+	//void updateObjects();
 
 	std::vector<GameObject*>& getObjectList();
 	int getListSize();

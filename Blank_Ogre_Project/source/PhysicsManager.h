@@ -9,7 +9,7 @@ public:
 	PhysicsManager(ObjectManager*);
 	~PhysicsManager(void);
 
-	void pollTotalEvents();
+	void pollTotalEvents(float);
 
 private:
 	bool testcollidableDistance(GameObject* _focus, GameObject* _collidie);

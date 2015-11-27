@@ -1,6 +1,9 @@
 #pragma once
 
 #include "OGRE\OgreSceneNode.h"
+#include <OgreMaterialManager.h>
+#include "OGRE/OgreRoot.h"
+#include "OGRE/OgreEntity.h"
 
 class GameObject
 {
@@ -20,7 +23,10 @@ public:
 
 	GameObject(objectType);
 	~GameObject(void);
-	virtual void update() = 0;
+
+	int numMaterials;
+
+	virtual void update(float) = 0;
 	virtual Ogre::SceneNode& getNode() = 0;
 
 	Ogre::Vector3 getMotionDirection();

@@ -20,12 +20,14 @@ public:
 	void roll(Ogre::Quaternion);
 	void translate(Ogre::Vector3, Ogre::Vector3, Ogre::Vector3);
 
-	void update(void);
+	void update(float _timer);
 
 	Ogre::Quaternion getOrientation();
 	Ogre::Vector3 getPosition();
 
 protected:
+
+
 	void move();
 
 	Ogre::Vector3 direction;
