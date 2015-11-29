@@ -17,7 +17,7 @@ Laser::Laser(Ogre::SceneNode * newLaser,Ogre::Quaternion shipOrientation,Ogre::V
 	}else{
 		m_pNode->setPosition(shipPosition + (forward_Direction *12) + (right_Direction * 1.2) + (down_Direction*0.6));
 	}
-
+	hasExploded = false;
 	accel_Rate = 0.15;
 	drift_Direction = Ogre::Vector3(0.0f);
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
@@ -44,11 +44,15 @@ void Laser::move(){
 
 void Laser::collide(){
 	//add these for anything that could collide
+	m_pNode->setVisible(false);
+	//std::cout << "HIT " << std::endl;
 }
 
 void Laser::particle(){
 	//add these for anything that could collide
 }
+
+
 Ogre::SceneNode& Laser::getNode()
 {
 	return *m_pNode;

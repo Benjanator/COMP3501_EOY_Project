@@ -12,6 +12,7 @@ public:
 	Ogre::SceneNode& getNode();
 
 	void update(float _timer);
+	void collide();
 
 	protected:
 	void move();

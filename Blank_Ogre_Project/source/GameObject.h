@@ -27,6 +27,7 @@ public:
 	int numMaterials;
 
 	virtual void update(float) = 0;
+	virtual void collide() = 0;
 	virtual Ogre::SceneNode& getNode() = 0;
 
 	Ogre::Vector3 getMotionDirection();
@@ -44,6 +45,7 @@ protected:
 	int team;
 
 	bool indestructable;
+	bool hasExploded;
 	Ogre::Vector3 drift_Direction;
 	Ogre::Vector3 forward_Direction;
 

@@ -21,6 +21,7 @@ public:
 	void translate(Ogre::Vector3, Ogre::Vector3, Ogre::Vector3);
 
 	void update(float _timer);
+	void collide();
 
 	Ogre::Quaternion getOrientation();
 	Ogre::Vector3 getPosition();

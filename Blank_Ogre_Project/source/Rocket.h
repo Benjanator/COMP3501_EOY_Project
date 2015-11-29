@@ -11,13 +11,16 @@ public:
 	Ogre::SceneNode& getNode();
 
 	void move();
-	void collide();
 	void explode();
+	void collide();
+	void update(float _timer);
 
 private:
 	
 	int countdown;
+	bool hasExploded;
 	float accel_Rate; 
-	void update(float _timer);
+	float personalTimer;
+	
 
 };

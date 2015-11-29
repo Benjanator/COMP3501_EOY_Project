@@ -75,4 +75,7 @@ void PhysicsManager::elasticCollision(GameObject* _focus, GameObject* _collidie)
 
 	std::cout << "new:: " << vel1 << std::endl;
 
+	_focus->collide();
+	_collidie->collide();
+
 }

@@ -13,8 +13,9 @@ Rocket::Rocket(Ogre::SceneNode * newRocket,Ogre::Quaternion shipOrientation,Ogre
 
 	m_pNode->setPosition(shipPosition + (forward_Direction *10) + (down_Direction*2));
 	
-	accel_Rate = 0.03;
-
+	accel_Rate = 0.04;
+	personalTimer = 0;
+	hasExploded = false;
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
 	numMaterials = 1;
@@ -27,24 +28,35 @@ Rocket::~Rocket(void)
 
 void Rocket::update(float timer_)
 {
+
+
 	Ogre::MaterialPtr mat;
-	for(int i = 1; i<=numMaterials; i++){
-		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Thruster_FireMaterial_"+ Ogre::StringConverter::toString(i)));
-		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_);
+	mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Thruster_FireMaterial_"+ Ogre::StringConverter::toString(1)));
+	mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_);
+
+	if(hasExploded){
+		personalTimer += 1;
+		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Explosion_ParticleMaterial_"+ Ogre::StringConverter::toString(2)));
+		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", personalTimer);
+
+		if(personalTimer >= 15){
+			m_pNode->setVisible(false);
+		}
 	}
 	move();
 }
 
 void Rocket::move(){
 
-
-	drift_Direction = drift_Direction += forward_Direction * accel_Rate;
-	m_pNode->translate(drift_Direction);
-	m_pNode->needUpdate();
+	  drift_Direction = drift_Direction += forward_Direction * accel_Rate;
+	  m_pNode->translate(drift_Direction);
+	  m_pNode->needUpdate();
+	
 }
 
 void Rocket::collide(){
-	//add these for anything that could collide
+	hasExploded = true;
+	
 }
 
 void Rocket::explode(){

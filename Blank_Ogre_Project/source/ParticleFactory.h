@@ -17,6 +17,7 @@ public:
 
 	Ogre::SceneNode* CreateParticleEntity(Ogre::String , Ogre::String ,Ogre::SceneNode*, Ogre::Vector3 ); // Create an entity of an object
 	void CreateThrusterParticleGeometry(Ogre::String , int ,float loop_radius = 0.6, float circle_radius = 0.2); // Create Thruster Fire (torus) particles
+	void CreateExplosionParticleGeometry(Ogre::String object_name, int num_particles);
 	void resetCounter();
 private:
 

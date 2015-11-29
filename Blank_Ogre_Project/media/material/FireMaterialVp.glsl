@@ -60,7 +60,6 @@ void main()
 	float distY = abs(position.y - center.y) / 7.0;
 	float distZ = abs(position.z - center.z) / 4.0;
 
-	float alpha = 0.5 - circtime*circtime;
+	float alpha = 1.0 - circtime*circtime;
 	particle_colour = vec4(distX, distY, distZ, alpha);
-	//particle_colour = vec4(1.0, 1.0, 1.0, alpha);
 }

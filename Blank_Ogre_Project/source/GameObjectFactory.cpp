@@ -6,6 +6,7 @@ GameObjectFactory::GameObjectFactory(Ogre::SceneManager* _sm): SAF_id(0), SEF_id
 	scene_manager = _sm;
 	factory = new ParticleFactory(scene_manager);
 	factory->CreateThrusterParticleGeometry("_Thruster", 200000);
+	factory->CreateExplosionParticleGeometry("_Explosion",2000000);
 }
 
 
@@ -286,6 +287,7 @@ Ogre::SceneNode* GameObjectFactory::create_RCKT(Ogre::Quaternion shipOrientation
 	child->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_Y)));
 	child->translate(5,0,0);
 
+	child = factory->CreateParticleEntity("_Explosion","ParticleMaterial",node, Ogre::Vector3(0.5,0.5,0.5));
 	
 	
 
