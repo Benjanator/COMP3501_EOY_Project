@@ -90,7 +90,7 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Base_Ship.mesh");
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
 	//entity->setMaterialName("ShinyMaterial");
-	entity->setMaterialName("ShinyTextureMaterial");
+	entity->setMaterialName("ShinyShipTextureMaterial");
 	node->attachObject(entity);
 
 	node->setPosition(0.0f,0.0f,0.0f);
@@ -100,7 +100,7 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	//cockpit
 	entity = scene_manager->createEntity(_objectName + "_Cockpit", "Cockpit.mesh");
 	Ogre::SceneNode* child = node->createChildSceneNode(_objectName + "_Cockpit");
-	entity->setMaterialName("BlueMaterial");
+	entity->setMaterialName("ShinyCockpitTextureMaterial");
 	child->attachObject(entity);
 
 	//child->rotate(Ogre::Quaternion(Ogre::Radian(1.570797f), Ogre::Vector3(0.0,0.0,-1.0)));
@@ -111,7 +111,7 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	//generators
 	entity =  scene_manager->createEntity(_objectName + "_Generator", "Generator.mesh");
 	child = node->createChildSceneNode(_objectName + "_Generator");
-	entity->setMaterialName("ObjectMaterial");
+	entity->setMaterialName("ShinyGeneratorTextureMaterial");
 	child->attachObject(entity);
 
 	//child->translate(0.5f, 0.0f, 0.0f);
@@ -119,7 +119,7 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	//engines
 	entity =  scene_manager->createEntity(_objectName + "_Engines", "Engines.mesh");
 	child = node->createChildSceneNode(_objectName + "_Engines");
-	entity->setMaterialName("ShinyBlueMaterial");
+	entity->setMaterialName("ShinyEngineTextureMaterial");
 	child->attachObject(entity);
 
 	//child->rotate(Ogre::Quaternion(Ogre::Radian(3.01f), Ogre::Vector3(-1.0,0.0,0.0)));
@@ -128,7 +128,7 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	//
 	entity =  scene_manager->createEntity(_objectName + "_Impulse", "Impule_Engine.mesh");
 	child = node->createChildSceneNode(_objectName + "_Impulse");
-	entity->setMaterialName("ObjectMaterial");
+	entity->setMaterialName("ShinyImpulseTextureMaterial");
 	child->attachObject(entity);
 
 	//child->translate(1.69124f, 0.31351f, 0.005f);
@@ -136,7 +136,7 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	//launchers
 	entity =  scene_manager->createEntity(_objectName + "_Launcher", "Launcher_Weapon.mesh");
 	child = node->createChildSceneNode(_objectName + "_Launcher");
-	entity->setMaterialName("ShinyBlueMaterial");
+	entity->setMaterialName("ShinyGunTextureMaterial");
 	child->attachObject(entity);
 
 	//child->translate(1.64124f, 0.2f, 0.005f);
@@ -144,7 +144,7 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	//laser
 	entity =  scene_manager->createEntity(_objectName + "_Laser", "Laser_Weapon.mesh");
 	child = node->createChildSceneNode(_objectName + "_Laser");
-	entity->setMaterialName("ShinyBlueMaterial");
+	entity->setMaterialName("ShinyGunTextureMaterial");
 	child->attachObject(entity);
 
 
@@ -246,7 +246,7 @@ Ogre::SceneNode* GameObjectFactory::create_LEC()
 
 	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Carrier.mesh");
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
-	entity->setMaterialName("ShinyTextureMaterial");
+	entity->setMaterialName("ShinyCarrierTextureMaterial");
 	node->attachObject(entity);
 
 

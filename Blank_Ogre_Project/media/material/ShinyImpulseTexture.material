@@ -33,7 +33,7 @@ fragment_program shiny_texture_shader/fs glsl
 }
 
 
-material ShinyTextureMaterial
+material ShinyImpulseTextureMaterial
 {
     technique
     {
@@ -48,7 +48,7 @@ material ShinyTextureMaterial
             }
 
 			texture_unit {
-				texture default_texture.png 2d
+				texture generator_plasma.jpg 2d
 			}
         } 
     }
