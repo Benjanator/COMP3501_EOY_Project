@@ -25,9 +25,9 @@ float viewport_height_g = 1.0f;
 float viewport_left_g = (1.0f - viewport_width_g) * 0.5f;
 float viewport_top_g = (1.0f - viewport_height_g) * 0.5f;
 unsigned short viewport_z_order_g = 300;
-const Ogre::ColourValue viewport_background_color_g(0.3, 0.7, 0.05);
+const Ogre::ColourValue viewport_background_color_g(0.3f, 0.7f, 0.05f);
 float camera_near_clip_distance_g = 0.001f;
-float camera_far_clip_distance_g = 10000.0;
+float camera_far_clip_distance_g = 9000.0;
 Ogre::Vector3 camera_position_g(0.0, 0.0, 0.0);
 Ogre::Vector3 camera_look_at_g(0.0, 0.0, 0.0);
 Ogre::Vector3 camera_up_g(0.0, 1.0, 0.0);
@@ -184,7 +184,7 @@ void OgreApplication::InitViewport(void){
         Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
 
 
-		objectManager = new ObjectManager();
+		objectManager = new ObjectManager(ogre_root_->getSceneManager("MySceneManager"));
 		factory = new GameObjectFactory(ogre_root_->getSceneManager("MySceneManager"));
 		physicsManager = new PhysicsManager(objectManager);
 
@@ -315,11 +315,11 @@ void OgreApplication::LoadSkybox(void){
 	//skybox
 	Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
 
-	scene_manager->setSkyBox(true, "Skybox", 400.0f, false);
+	scene_manager->setSkyBox(true, "Skybox", 3000.0f, true);
 
 	//distance fog
-	Ogre::ColourValue fadeColour(81.0/255.0, 22.0/255.0, 70.0/255.0);
-	ogre_window_->getViewport(0)->setBackgroundColour(fadeColour);
+	//Ogre::ColourValue fadeColour(81.0/255.0, 22.0/255.0, 70.0/255.0);
+	//ogre_window_->getViewport(0)->setBackgroundColour(fadeColour);
 
 	//scene_manager->setFog(Ogre::FOG_LINEAR, fadeColour, 0, 50, 100);
 	//scene_manager->setFog(Ogre::FOG_EXP, fadeColour, 0.0003);
@@ -341,6 +341,8 @@ void OgreApplication::MainLoop(void){
             ogre_root_->renderOneFrame();
 
             Ogre::WindowEventUtilities::messagePump();
+
+			objectManager->cleanDestroyedObjects();
         }
     }
     catch (Ogre::Exception &e){
