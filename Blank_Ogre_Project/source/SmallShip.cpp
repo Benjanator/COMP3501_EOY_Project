@@ -29,6 +29,7 @@ SmallShip::SmallShip(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
 	numMaterials = 4;
+	
 }
 
 
@@ -130,7 +131,17 @@ void SmallShip::update(float timer_)
 		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Thruster_FireMaterial_"+ Ogre::StringConverter::toString(i)));
 		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_);
 	}
+
+
+	//std::cout << "MATNAME:: " << m_pNode->getName()+"SField_SplineParticleMaterial_"+ Ogre::StringConverter::toString(5) << std::endl;
+	//"_SField","SplineParticleMaterial"
+	for(int i = 5; i<=30; i++){
 	
+		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_SField_SplineParticleMaterial_"+ Ogre::StringConverter::toString(i)));
+		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_ - i);
+	}
+
+	//SAF_0_SField_SplineParticleMaterial_5
 	move();
 }
 

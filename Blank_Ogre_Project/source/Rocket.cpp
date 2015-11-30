@@ -48,7 +48,7 @@ void Rocket::update(float timer_)
 
 void Rocket::move(){
 
-	  drift_Direction = drift_Direction += forward_Direction * accel_Rate;
+	  drift_Direction += forward_Direction * accel_Rate;
 	  m_pNode->translate(drift_Direction);
 	  m_pNode->needUpdate();
 	

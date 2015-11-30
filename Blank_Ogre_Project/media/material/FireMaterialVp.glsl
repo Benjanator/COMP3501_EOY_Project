@@ -62,4 +62,5 @@ void main()
 
 	float alpha = 1.0 - circtime*circtime;
 	particle_colour = vec4(distX, distY, distZ, alpha);
+	//particle_colour = vec4(distX, distY, distZ, 1);
 }
