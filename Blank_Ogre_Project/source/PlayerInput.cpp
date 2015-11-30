@@ -119,6 +119,7 @@ void PlayerInput::handleInput(void){
 	if(playerMouse_->getMouseState().buttonDown(OIS::MB_Left)){
 		if(mouseLeft == true){
 			temp = factory->createGameLaser(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
+			temp->setTeam(0);
 			objectManager->addObject(temp);
 			mouseLeft = false;
 			lasrLR = !lasrLR;
@@ -130,6 +131,7 @@ void PlayerInput::handleInput(void){
 	if(playerKeyboard_->isKeyDown(OIS::KC_C)){
 		if(ckeyUp == true){
 			temp = factory->createGameRocket(playerShip->getOrientation(),playerShip->getPosition(),playerShip->getMotionDirection());
+			temp->setTeam(0);
 			objectManager->addObject(temp);
 			ckeyUp = false;
 			

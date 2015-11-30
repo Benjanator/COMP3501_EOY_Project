@@ -107,6 +107,10 @@ void ParticleFactory::CreateThrusterParticleGeometry(Ogre::String object_name, i
 			object->normal(wander);
 		}
 
+		object->position(Ogre::Vector3(0.0f, 0.0f, -30.0f));
+		object->colour(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
+		object->textureCoord(Ogre::Vector2(0.0f, 0.0f));
+		object->normal(Ogre::Vector3(0.0f, 0.0f, -30.0f));
 
         object->end();
 		

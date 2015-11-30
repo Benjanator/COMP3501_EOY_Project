@@ -18,9 +18,14 @@ void PhysicsManager::pollTotalEvents(float timer)
 	
 	for(unsigned int i = 0; i < tempList.size(); i++)
 	{
+		if(tempList.at(i)->isDead())
+		{
+			objectManager->removeObject(tempList.at(i));
+			continue;
+		}
 		for(unsigned int j = 0; j < tempList.size(); j++){
 			bool collide = false;
-			
+
 			if(i != j){
 				collide = testcollidableDistance(tempList.at(i), tempList.at(j));
 			}
@@ -48,6 +53,15 @@ void PhysicsManager::pollTotalEvents(float timer)
 bool PhysicsManager::testcollidableDistance(GameObject* _focus, GameObject* _collidie)
 {	
 	static int i = 0;
+
+	if(_focus->getType() == GameObject::objectType::rocket && _collidie->getType() == GameObject::objectType::rocket ||
+		_focus->getType() == GameObject::objectType::laser && _collidie->getType() == GameObject::objectType::laser){
+		return false;
+	}
+	if(_focus->getTeam() == _collidie->getTeam())
+	{
+		return false;
+	}
 
 	if( _focus->getAABBCenter().squaredDistance(_collidie->getAABBCenter()) < Math::Sqr((_focus->getAABBSize() * 0.5).length()) + Math::Sqr((_collidie->getAABBSize() * 0.5).length())){
 		//std::cout << "collide" + std::to_string(i) << std::endl;

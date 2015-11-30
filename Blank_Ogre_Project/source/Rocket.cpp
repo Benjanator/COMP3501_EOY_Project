@@ -15,9 +15,10 @@ Rocket::Rocket(Ogre::SceneNode * newRocket,Ogre::Quaternion shipOrientation,Ogre
 	
 	accel_Rate = 0.04;
 	personalTimer = 0;
+	flyTime = 1000.0f;
 	hasExploded = false;
-	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
-	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
+	aabbCenter = Ogre::Vector3(0.0f, 0.0f, 0.0f);
+	aabbSize = Ogre::Vector3(0.1f, 0.1f, 0.1f);
 	numMaterials = 1;
 }
 
@@ -28,8 +29,6 @@ Rocket::~Rocket(void)
 
 void Rocket::update(float timer_)
 {
-
-
 	Ogre::MaterialPtr mat;
 	mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Thruster_FireMaterial_"+ Ogre::StringConverter::toString(1)));
 	mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_);
@@ -41,14 +40,21 @@ void Rocket::update(float timer_)
 
 		if(personalTimer >= 15){
 			m_pNode->setVisible(false);
+			dead = true;
 		}
+		return;
 	}
 	move();
+
+	flyTime -= 0.75f;
+	if(flyTime < 0.0f){
+		dead = true;
+	}
 }
 
 void Rocket::move(){
 
-	  drift_Direction = drift_Direction += forward_Direction * accel_Rate;
+	  drift_Direction += forward_Direction * accel_Rate;
 	  m_pNode->translate(drift_Direction);
 	  m_pNode->needUpdate();
 	

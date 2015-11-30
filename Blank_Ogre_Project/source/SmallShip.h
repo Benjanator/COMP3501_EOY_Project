@@ -26,6 +26,7 @@ public:
 	Ogre::Quaternion getOrientation();
 	Ogre::Vector3 getPosition();
 
+
 protected:
 
 

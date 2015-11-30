@@ -20,8 +20,8 @@ Laser::Laser(Ogre::SceneNode * newLaser,Ogre::Quaternion shipOrientation,Ogre::V
 	hasExploded = false;
 	accel_Rate = 0.15;
 	drift_Direction = Ogre::Vector3(0.0f);
-	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
-	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
+	aabbCenter = Ogre::Vector3(0.0f, 0.0f, 0.0f);
+	aabbSize = Ogre::Vector3(0.1f, 0.1f, 0.1f);
 	numMaterials = 1;
 }
 

@@ -28,12 +28,14 @@ public:
 
 	virtual void update(float) = 0;
 	virtual void collide() = 0;
-	virtual Ogre::SceneNode& getNode() = 0;
+	Ogre::SceneNode& getNode();
 
 	Ogre::Vector3 getMotionDirection();
 	bool isIndestructable();
+	bool isDead();
 	int getTeam();
 	void setTeam(int);
+	objectType getType();
 
 	Ogre::Vector3 getAABBCenter();
 	Ogre::Vector3 getAABBSize();
@@ -46,6 +48,7 @@ protected:
 
 	bool indestructable;
 	bool hasExploded;
+	bool dead;
 	Ogre::Vector3 drift_Direction;
 	Ogre::Vector3 forward_Direction;
 

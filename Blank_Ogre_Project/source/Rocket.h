@@ -21,6 +21,6 @@ private:
 	bool hasExploded;
 	float accel_Rate; 
 	float personalTimer;
-	
+	float flyTime;
 
 };
