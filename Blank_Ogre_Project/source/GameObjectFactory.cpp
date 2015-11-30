@@ -8,7 +8,7 @@ GameObjectFactory::GameObjectFactory(Ogre::SceneManager* _sm): SAF_id(0), SEF_id
 	factory->CreateThrusterParticleGeometry("_Thruster", 200000);
 	factory->CreateExplosionParticleGeometry("_Explosion",2000000);
 
-	factory->CreateSplineParticleGeometry("_SField", 30);
+	factory->CreateSplineParticleGeometry("_SField", 20000);
 
 
 }
@@ -167,11 +167,11 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	child->translate(2.4f,-0.5f,3.0f);
 
 	
-	for(int i = 0; i <= 25; i++){
-	 factory ->CreateSplineControlPoints("ControlPoints"+ Ogre::StringConverter::toString(i), 64, "SplineParticleMaterial");
-	 child = factory->CreateParticleEntity("_SField","SplineParticleMaterial",node, Ogre::Vector3(0.2,0.2,0.2));
-	 child->translate(0.0f,0.0f,-2.0f);
-	}
+	//for(int i = 0; i <= 25; i++){
+	 //factory ->CreateSplineControlPoints("ControlPoints"+ Ogre::StringConverter::toString(i), 64, "SplineParticleMaterial");
+	 //child = factory->CreateParticleEntity("_SField","SplineParticleMaterial",node, Ogre::Vector3(0.2,0.2,0.2));
+	 //child->translate(0.0f,0.0f,-2.0f);
+	//}
 
 
 	//child->translate(1.66224f, 0.21f, 0.005f);
@@ -202,14 +202,14 @@ Ogre::SceneNode* GameObjectFactory::create_SEF()
 
 	//factory->CreateThrusterParticleGeometry(_objectName + "_Thruster", 200000);
 		
-	Ogre::SceneNode* child = factory->CreateParticleEntity("_Thruster","FireMaterial",node, Ogre::Vector3(1,1,1));
+	Ogre::SceneNode* child = factory->CreateParticleEntity("_Thruster","FireMaterial",node, Ogre::Vector3(1,1,0.1));
 	child->setOrientation((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Y)));
-	child->translate(-3.3f,-1.8f,5.5f);
+	child->translate(-3.3f,-1.7f,4.2f);
 	//child->showBoundingBox(true);
 
-	child = factory->CreateParticleEntity("_Thruster","FireMaterial",node, Ogre::Vector3(1,1,1));
+	child = factory->CreateParticleEntity("_Thruster","FireMaterial",node, Ogre::Vector3(1,1,0.1));
 	child->setOrientation((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Y)));
-	child->translate(3.3f,-1.7f,5.5f);
+	child->translate(3.3f,-1.7f,4.2f);
 	factory->resetCounter();
 	return node;
 }
@@ -252,6 +252,27 @@ Ogre::SceneNode* GameObjectFactory::create_LEC()
 
 	node->setPosition(0.0,0.0 + 5.0 * LEC_id,-150);
 	node->setScale(10.0,10.0,10.0);
+
+	Ogre::SceneNode* child ;
+
+
+	child = factory->CreateParticleEntity("_Thruster","FireMaterial",node, Ogre::Vector3(0.5,0.5,0.1));
+	child->setOrientation((Ogre::Quaternion(Ogre::Degree(90),Ogre::Vector3::UNIT_Y)));
+	child->translate(-5.1f,1.6f,2.7f);
+
+	child = factory->CreateParticleEntity("_Thruster","FireMaterial",node, Ogre::Vector3(1.15,1.15,0.08));
+	child->setOrientation((Ogre::Quaternion(Ogre::Degree(90),Ogre::Vector3::UNIT_Y)));
+	child->translate(-5.1f,-0.02f,2.7f);
+
+	child = factory->CreateParticleEntity("_Thruster","FireMaterial",node, Ogre::Vector3(0.5,0.5,0.1));
+	child->setOrientation((Ogre::Quaternion(Ogre::Degree(90),Ogre::Vector3::UNIT_Y)));
+	child->translate(-5.1f,-1.7f,2.7f);
+
+	for(int i = 0; i <= 25; i++){
+	 factory ->CreateSplineControlPoints("ControlPoints"+ Ogre::StringConverter::toString(i), 64, "SplineParticleMaterial");
+	 child = factory->CreateParticleEntity("_SField","SplineParticleMaterial",node, Ogre::Vector3(0.18,0.05,0.05));
+	 child->translate(7.1f,-0.02f,2.7f);
+	}
 	factory->resetCounter();
 	return node;
 	

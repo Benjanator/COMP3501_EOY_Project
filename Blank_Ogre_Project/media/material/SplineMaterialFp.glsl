@@ -12,7 +12,7 @@ void main (void)
 {
 	// Apply texture and color it according to the color supplied in the material file
 	vec4 outval = texture(tex_samp, tex_coord);
-    //outval = vec4(outval.r*particle_colour.r, outval.g*particle_colour.g, outval.b*particle_colour.b,sqrt(sqrt(outval.r))));
-	outval = vec4(outval.g, outval.g, outval.g, 0.05);
+      outval = vec4(outval.r*particle_colour.r, outval.g*particle_colour.g, outval.b*particle_colour.b, sqrt(sqrt(outval.r)));
+	//outval = vec4(outval.g, outval.g, outval.g, 0.1);
 	gl_FragColor = outval;
 }

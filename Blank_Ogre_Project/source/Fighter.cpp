@@ -8,7 +8,7 @@ Fighter::Fighter(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 	hasExploded = false;
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
-	numMaterials - 2;
+	numMaterials = 2;
 }
 
 
@@ -29,6 +29,8 @@ void Fighter::update(float timer_)
 		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Thruster_FireMaterial_"+ Ogre::StringConverter::toString(i)));
 		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_);
 	}
+
+	
 	move();
 }
 

@@ -135,11 +135,10 @@ void SmallShip::update(float timer_)
 
 	//std::cout << "MATNAME:: " << m_pNode->getName()+"SField_SplineParticleMaterial_"+ Ogre::StringConverter::toString(5) << std::endl;
 	//"_SField","SplineParticleMaterial"
-	for(int i = 5; i<=30; i++){
-	
-		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_SField_SplineParticleMaterial_"+ Ogre::StringConverter::toString(i)));
-		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_ - i);
-	}
+	//for(int i = 5; i<=30; i++){
+		//mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_SField_SplineParticleMaterial_"+ Ogre::StringConverter::toString(i)));
+		//mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_ - i);
+	//}
 
 	//SAF_0_SField_SplineParticleMaterial_5
 	move();
