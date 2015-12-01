@@ -4,11 +4,14 @@
 Carrier::Carrier(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 {
 		m_pNode = newShip;
-		
+
+
+	degree = 0.0f;
 	hasExploded = false;
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
 	numMaterials = 3;
+	velocity = Ogre::Vector3(0.0f, 0.0f, 0.0f);
 }
 
 
@@ -44,8 +47,25 @@ void Carrier::collide(){
 	
 }
 
+void Carrier::turn_right(Ogre::Degree _degree)
+{
+	m_pNode->roll(-1 * _degree);
+	m_pNode->needUpdate();
+}
+
+void Carrier::turn_left(Ogre::Degree _degree)
+{
+	m_pNode->roll(1 * _degree);
+	m_pNode->needUpdate();
+}
+
 void Carrier::move(void)
 {
-	
-	
+	velocity.x = cos(degree);
+	velocity.z = sin(degree);
+	turn_right(Ogre::Degree(0.3f));
+	degree = degree + 0.005f;
+	m_pNode->translate(velocity);
+	m_pNode->needUpdate();
 }
+
