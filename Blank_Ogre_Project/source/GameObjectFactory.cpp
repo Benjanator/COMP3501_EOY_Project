@@ -237,7 +237,7 @@ Ogre::SceneNode* GameObjectFactory::create_SEB()
 
 	for(int i = 0; i <= 25; i++){
 	 factory ->CreateSplineControlPoints(_objectName+ "ControlPoints"+ Ogre::StringConverter::toString(i), 64, "SplineParticleMaterial");
-	 child = factory->CreateParticleEntity("_SField","SplineParticleMaterial",node, Ogre::Vector3(0.4,0.03,0.03));
+	 child = factory->CreateParticleEntity("_SField","SplineParticleMaterial",node, Ogre::Vector3(0.4,0.08,0.08));
 	  child->translate(2.0f, -5.4f,-0.2f);
 	}
 
