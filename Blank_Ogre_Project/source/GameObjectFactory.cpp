@@ -9,7 +9,7 @@ GameObjectFactory::GameObjectFactory(Ogre::SceneManager* _sm): SAF_id(0), SEF_id
 	factory->CreateExplosionParticleGeometry("_Explosion",2000000);
 
 	factory->CreateSplineParticleGeometry("_SField", 20000);
-
+	factory->CreateSplineParticleGeometry("_SFieldC", 20000);
 
 }
 
@@ -240,6 +240,7 @@ Ogre::SceneNode* GameObjectFactory::create_SEB()
 
 Ogre::SceneNode* GameObjectFactory::create_LEC()
 {
+
 	Ogre::String _objectName = "LEC_" + Ogre::StringConverter::toString(LEC_id);
 	LEC_id++;
 	Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
@@ -249,30 +250,32 @@ Ogre::SceneNode* GameObjectFactory::create_LEC()
 	entity->setMaterialName("ShinyCarrierTextureMaterial");
 	node->attachObject(entity);
 
-
-	node->setPosition(0.0,0.0 + 5.0 * LEC_id,-150);
+	node->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_X)));
+	node->setPosition(0.0,0.0 + 5.0 * LEC_id,-200);
 	node->setScale(10.0,10.0,10.0);
+
 
 	Ogre::SceneNode* child ;
 
 
 	child = factory->CreateParticleEntity("_Thruster","FireMaterial",node, Ogre::Vector3(0.5,0.5,0.1));
 	child->setOrientation((Ogre::Quaternion(Ogre::Degree(90),Ogre::Vector3::UNIT_Y)));
-	child->translate(-5.1f,1.6f,2.7f);
+	child->translate(-5.1f,-2.7f,1.6f);
 
 	child = factory->CreateParticleEntity("_Thruster","FireMaterial",node, Ogre::Vector3(1.15,1.15,0.08));
 	child->setOrientation((Ogre::Quaternion(Ogre::Degree(90),Ogre::Vector3::UNIT_Y)));
-	child->translate(-5.1f,-0.02f,2.7f);
+	child->translate(-5.1f,-2.7f,-0.02f);
 
 	child = factory->CreateParticleEntity("_Thruster","FireMaterial",node, Ogre::Vector3(0.5,0.5,0.1));
 	child->setOrientation((Ogre::Quaternion(Ogre::Degree(90),Ogre::Vector3::UNIT_Y)));
-	child->translate(-5.1f,-1.7f,2.7f);
+	child->translate(-5.1f,-2.7f,-1.7f);
 
 	for(int i = 0; i <= 25; i++){
 	 factory ->CreateSplineControlPoints("ControlPoints"+ Ogre::StringConverter::toString(i), 64, "SplineParticleMaterial");
 	 child = factory->CreateParticleEntity("_SField","SplineParticleMaterial",node, Ogre::Vector3(0.18,0.05,0.05));
-	 child->translate(7.1f,-0.02f,2.7f);
+	 child->translate(7.1f, -2.7f,0.0f);
 	}
+
 	factory->resetCounter();
 	return node;
 	
