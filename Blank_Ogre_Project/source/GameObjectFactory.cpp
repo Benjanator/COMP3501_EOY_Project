@@ -9,7 +9,7 @@ GameObjectFactory::GameObjectFactory(Ogre::SceneManager* _sm): SAF_id(0), SEF_id
 	factory->CreateExplosionParticleGeometry("_Explosion",2000000);
 
 	factory->CreateSplineParticleGeometry("_SField", 20000);
-	factory->CreateSplineParticleGeometry("_SFieldC", 20000);
+	factory->CreateSplineParticleGeometry("_SFieldP", 20000);
 
 }
 
@@ -232,6 +232,15 @@ Ogre::SceneNode* GameObjectFactory::create_SEB()
 	//node->setScale(1.0,1.0,1.0);
 
 	node->setScale(0.5,1.0,0.5);
+
+	Ogre::SceneNode* child;
+
+	for(int i = 0; i <= 25; i++){
+	 factory ->CreateSplineControlPoints(_objectName+ "ControlPoints"+ Ogre::StringConverter::toString(i), 64, "SplineParticleMaterial");
+	 child = factory->CreateParticleEntity("_SField","SplineParticleMaterial",node, Ogre::Vector3(0.4,0.03,0.03));
+	  child->translate(2.0f, -5.4f,-0.2f);
+	}
+
 	factory->resetCounter();
 	return node;
 }
@@ -271,7 +280,7 @@ Ogre::SceneNode* GameObjectFactory::create_LEC()
 	child->translate(-5.1f,-2.7f,-1.7f);
 
 	for(int i = 0; i <= 25; i++){
-	 factory ->CreateSplineControlPoints("ControlPoints"+ Ogre::StringConverter::toString(i), 64, "SplineParticleMaterial");
+	 factory ->CreateSplineControlPoints(_objectName+ "ControlPoints"+ Ogre::StringConverter::toString(i), 64, "SplineParticleMaterial");
 	 child = factory->CreateParticleEntity("_SField","SplineParticleMaterial",node, Ogre::Vector3(0.18,0.05,0.05));
 	 child->translate(7.1f, -2.7f,0.0f);
 	}

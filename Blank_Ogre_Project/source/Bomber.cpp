@@ -21,8 +21,13 @@ Ogre::SceneNode& Bomber::getNode()
 	return *m_pNode;
 }
 
-void Bomber::update(float _timer)
+void Bomber::update(float timer_)
 {
+	Ogre::MaterialPtr mat;
+	for(int i = 1; i<=26; i++){
+		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_SField_SplineParticleMaterial_"+ Ogre::StringConverter::toString(i)));
+		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_ - i);
+	}
 	move();
 }
 
