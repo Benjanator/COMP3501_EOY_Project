@@ -12,7 +12,7 @@ ScatterShot::ScatterShot(Ogre::SceneNode * newScatterShot,Ogre::Quaternion shipO
 	down_Direction = shipOrientation *  Ogre::Vector3::NEGATIVE_UNIT_Y;
 
 
-	m_pNode->setPosition(shipPosition + (forward_Direction *12) + (down_Direction*0.6));
+	m_pNode->setPosition(shipPosition + (forward_Direction *15) + (down_Direction*0.6));
 	
 	hasExploded = false;
 	accel_Rate = 0.15;
@@ -22,7 +22,7 @@ ScatterShot::ScatterShot(Ogre::SceneNode * newScatterShot,Ogre::Quaternion shipO
 	numMaterials = 1;
 
 
-	generateCP(100);
+	generateCP(1000);
 
 }
 
@@ -79,18 +79,18 @@ void ScatterShot::generateCP(int num_control_points){
 				controlPoints.push_back( 2.0*controlPoints.at(i-2) - controlPoints.at(i-3));
 			} else {
 
-				u= Ogre::Math::RangeRandom(-0.5,2.5);
-				v= Ogre::Math::RangeRandom(-10,10);
-				w= Ogre::Math::RangeRandom(-10,10);
+				u= Ogre::Math::RangeRandom(-0.5,3.5);
+				v= Ogre::Math::RangeRandom(-5,5);
+				w= Ogre::Math::RangeRandom(-5,5);
 
 				controlPoints.push_back(controlPoints.at(i-1) + (forward_Direction *u) + (left_Direction * v) + (down_Direction*w));
 
 			}
 		}
 
-		for(int x=0; x<= controlPoints.size()-1;x++){
+		/*for(int x=0; x<= controlPoints.size()-1;x++){
 			std::cout << "Control Point:: " << controlPoints.at(x) << std::endl;
-		}
+		}*/
 
 }
 
@@ -106,8 +106,8 @@ void ScatterShot::splinetraj(float _timer){
 	// The phase of the particle repeats in a cyclic manner and is dependent of the particle id
 	
 	//float phase = two_pi*particle_id;
-	float circtime = (static_cast<int>(_timer / 1.5 )% 16); // A cycle lasts 16 seconds
-	std::cout << "Time:: " << circtime << std::endl;
+	float circtime = (static_cast<int>(_timer / 1.5 )% 56); // A cycle lasts 16 seconds
+	//std::cout << "Time:: " << circtime << std::endl;
 	// Change position of the particle based on a spline
 	
 	float t = circtime - floor(circtime); // Fractional part, 0-1
@@ -120,9 +120,13 @@ void ScatterShot::splinetraj(float _timer){
     float p4w = t*t*t; 
     int wsec = int(floor(circtime))*4; // Picks which set of control points are used           
 	Ogre::Vector3 Bt = p1w*controlPoints.at(0+wsec) + p2w*controlPoints.at(1+wsec) + p3w*controlPoints.at(2+wsec) + p4w*controlPoints.at(3+wsec);
-	std::cout << "BT:: " << Bt << std::endl;
-	m_pNode->setPosition(Bt);
+	//std::cout << "BT:: " << Bt << std::endl;
+	//m_pNode->setPosition(Bt);
+
+	m_pNode->lookAt(m_pNode->getPosition() + Bt, Ogre::Node::TS_WORLD, Ogre::Vector3::UNIT_Z);
+	m_pNode->translate(0.5 * (m_pNode->getOrientation() * Ogre::Vector3::UNIT_Z));
 	
+	m_pNode->needUpdate();
 }
 
 void ScatterShot::collide(){

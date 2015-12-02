@@ -119,8 +119,8 @@ void PlayerInput::handleInput(void){
 	if(playerMouse_->getMouseState().buttonDown(OIS::MB_Left)){
 		if(mouseLeft == true){
 //<<<<<<< HEAD
-			temp = factory->createGameLaser(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
-			//temp = factory->createGameScatterShot(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
+			//temp = factory->createGameLaser(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
+			temp = factory->createGameScatterShot(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
 //=======
 			//temp = factory->createGameLaser(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
 			temp->setTeam(0);
