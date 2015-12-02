@@ -195,7 +195,7 @@ Ogre::SceneNode* GameObjectFactory::create_SEF()
 
 	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Enemy_Fighter.mesh");
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
-	entity->setMaterialName("ShinyMaterial");
+	entity->setMaterialName("ShinyFighterTextureMaterial");
 	node->attachObject(entity);
 
 	
@@ -227,7 +227,7 @@ Ogre::SceneNode* GameObjectFactory::create_SEB()
 	//Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Lancer.mesh");
 	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Platform.mesh");
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
-	entity->setMaterialName("ShinyMaterial");
+	entity->setMaterialName("ShinyPlatformTextureMaterial");
 	node->attachObject(entity);
 
 	node->setPosition(0.0,0.0 + 40 * SEB_id,-100.0);
@@ -340,7 +340,7 @@ Ogre::SceneNode* GameObjectFactory::create_RCKT(Ogre::Quaternion shipOrientation
 
 	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Rocket.mesh");
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
-	entity->setMaterialName("ShinyMaterial");
+	entity->setMaterialName("ShinyRocketTextureMaterial");
 	node->attachObject(entity);
 	node->setScale(0.5,0.5,0.5);
 
@@ -368,7 +368,7 @@ Ogre::SceneNode* GameObjectFactory::create_LSR(Ogre::Quaternion shipOrientation,
 
 	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Laser.mesh");
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
-	entity->setMaterialName("BlueMaterial");
+	entity->setMaterialName("ShinyLaserTextureMaterial");
 	node->attachObject(entity);
 	node->setScale(0.5,0.5,3.0);
 
