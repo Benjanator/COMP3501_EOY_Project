@@ -193,23 +193,24 @@ Ogre::SceneNode* GameObjectFactory::create_SEF()
 
 	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Enemy_Fighter.mesh");
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
-	entity->setMaterialName("ShinyMaterial");
+	//entity->setMaterialName("ShinyMaterial");
+	entity->setMaterialName("ShinyCarrierTextureMaterial");
 	node->attachObject(entity);
 
 	
-	node->setPosition(0.0,0.0 + 20.0 * SEF_id,-50.0);
+	node->setPosition(0.0,0.0 + 40.0 * SEF_id,-50.0);
 	node->setScale(1.0,1.0,1.0);
 
 	//factory->CreateThrusterParticleGeometry(_objectName + "_Thruster", 200000);
 		
 	Ogre::SceneNode* child = factory->CreateParticleEntity("_Thruster","FireMaterial",node, Ogre::Vector3(1,1,0.1));
-	child->setOrientation((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Y)));
-	child->translate(-3.3f,-1.7f,4.2f);
+	child->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_X)));
+	child->translate(-3.3f,-3.9f,-1.6f);
 	//child->showBoundingBox(true);
 
 	child = factory->CreateParticleEntity("_Thruster","FireMaterial",node, Ogre::Vector3(1,1,0.1));
-	child->setOrientation((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Y)));
-	child->translate(3.3f,-1.7f,4.2f);
+	child->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_X)));
+	child->translate(3.3f,-3.9f,-1.6f);
 	factory->resetCounter();
 	return node;
 }
@@ -228,17 +229,19 @@ Ogre::SceneNode* GameObjectFactory::create_SEB()
 	entity->setMaterialName("ShinyMaterial");
 	node->attachObject(entity);
 
-	node->setPosition(0.0,0.0 + 20 * SEB_id,-100.0);
-	//node->setScale(1.0,1.0,1.0);
+	node->setPosition(0.0,0.0 + 40 * SEB_id,-100.0);
+	node->setScale(0.5,0.5,1.0);
 
-	node->setScale(0.5,1.0,0.5);
+	//node->setScale(0.5,1.0,0.5);
 
 	Ogre::SceneNode* child;
 
 	for(int i = 0; i <= 25; i++){
 	 factory ->CreateSplineControlPoints(_objectName+ "ControlPoints"+ Ogre::StringConverter::toString(i), 64, "SplineParticleMaterial");
 	 child = factory->CreateParticleEntity("_SField","SplineParticleMaterial",node, Ogre::Vector3(0.4,0.08,0.08));
-	  child->translate(2.0f, -5.4f,-0.2f);
+	 child->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_Y)));
+	  child->translate(0.0f, 0.0f,-5.4f);
+	  child->setScale(0.05,0.1,0.2);
 	}
 
 	factory->resetCounter();

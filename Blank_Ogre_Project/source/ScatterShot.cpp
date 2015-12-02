@@ -79,9 +79,9 @@ void ScatterShot::generateCP(int num_control_points){
 				controlPoints.push_back( 2.0*controlPoints.at(i-2) - controlPoints.at(i-3));
 			} else {
 
-				u= Ogre::Math::RangeRandom(0.5,5);
-				v= Ogre::Math::RangeRandom(-2,2);
-				w= Ogre::Math::RangeRandom(-2,2);
+				u= Ogre::Math::RangeRandom(-0.5,2.5);
+				v= Ogre::Math::RangeRandom(-10,10);
+				w= Ogre::Math::RangeRandom(-10,10);
 
 				controlPoints.push_back(controlPoints.at(i-1) + (forward_Direction *u) + (left_Direction * v) + (down_Direction*w));
 
@@ -102,8 +102,27 @@ void ScatterShot::move(){
 }
 
 void ScatterShot::splinetraj(float _timer){
-	
 
+	// The phase of the particle repeats in a cyclic manner and is dependent of the particle id
+	
+	//float phase = two_pi*particle_id;
+	float circtime = (static_cast<int>(_timer / 1.5 )% 16); // A cycle lasts 16 seconds
+	std::cout << "Time:: " << circtime << std::endl;
+	// Change position of the particle based on a spline
+	
+	float t = circtime - floor(circtime); // Fractional part, 0-1
+	
+	// Spline evaluation
+	
+    float p1w = (1 - t)*(1 - t)*(1 - t);
+    float p2w = 3 * t*(1 - t)*(1 - t);
+    float p3w = 3 * t*t*(1 - t);
+    float p4w = t*t*t; 
+    int wsec = int(floor(circtime))*4; // Picks which set of control points are used           
+	Ogre::Vector3 Bt = p1w*controlPoints.at(0+wsec) + p2w*controlPoints.at(1+wsec) + p3w*controlPoints.at(2+wsec) + p4w*controlPoints.at(3+wsec);
+	std::cout << "BT:: " << Bt << std::endl;
+	m_pNode->setPosition(Bt);
+	
 }
 
 void ScatterShot::collide(){
