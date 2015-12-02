@@ -22,5 +22,7 @@ public:
 
 private:
 	int health;
+	bool hasExploded;
+	float personalTimer;
 };
 

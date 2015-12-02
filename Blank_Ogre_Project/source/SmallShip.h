@@ -54,5 +54,7 @@ protected:
 private:
 
 	int health;
+	bool hasExploded;
+	float personalTimer;
 };
 

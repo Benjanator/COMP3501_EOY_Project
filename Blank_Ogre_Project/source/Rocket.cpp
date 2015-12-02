@@ -14,10 +14,10 @@ Rocket::Rocket(Ogre::SceneNode * newRocket,Ogre::Quaternion shipOrientation,Ogre
 
 	m_pNode->setPosition(shipPosition + (forward_Direction *10) + (down_Direction*2));
 	
-	accel_Rate = 0.04;
+	accel_Rate = 0.02;
 	personalTimer = 0;
-	flyTime = 1000.0f;
 	hasExploded = false;
+	flyTime = 1000.0f;
 	aabbCenter = Ogre::Vector3(0.0f, 0.0f, 0.0f);
 	aabbSize = Ogre::Vector3(0.1f, 0.1f, 0.1f);
 	numMaterials = 1;

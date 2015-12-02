@@ -98,6 +98,7 @@ void PlayerInput::handleInput(void){
 	rightDir = Ogre::Vector3(0.0f);
 	forwDir = Ogre::Vector3(0.0f);
 
+
 	if(playerMouse_->getMouseState().buttonDown(OIS::MB_Right)){
 		
 
@@ -149,7 +150,7 @@ void PlayerInput::handleInput(void){
 		if(playerKeyboard_->isKeyDown(OIS::KC_X)){
 		if(xkeyUp == true){
 			temp = factory->createGameScatterShot(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
-			temp->setTeam(0);
+			//temp->setTeam(0);
 			objectManager->addObject(temp);
 			xkeyUp = false;
 			

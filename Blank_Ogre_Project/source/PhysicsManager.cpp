@@ -108,7 +108,8 @@ void PhysicsManager::elasticCollision(GameObject* _focus, GameObject* _collidie)
 				std::cout << "HIT WITH LASER: " << std::endl;
 	}else if(_focus->getType() == GameObject::objectType::scattershot && _collidie->getType() == GameObject::objectType::smallEnemy_fighter || _focus->getType() == GameObject::objectType::smallEnemy_fighter && _collidie->getType() == GameObject::objectType::scattershot ||
 		_focus->getType() == GameObject::objectType::scattershot && _collidie->getType() == GameObject::objectType::smallEnemy_bomber || _focus->getType() == GameObject::objectType::smallEnemy_bomber && _collidie->getType() == GameObject::objectType::scattershot||
-		_focus->getType() == GameObject::objectType::scattershot && _collidie->getType() == GameObject::objectType::largeEnemy_cmd|| _focus->getType() == GameObject::objectType::largeEnemy_cmd && _collidie->getType() == GameObject::objectType::scattershot){
+		_focus->getType() == GameObject::objectType::scattershot && _collidie->getType() == GameObject::objectType::largeEnemy_cmd|| _focus->getType() == GameObject::objectType::largeEnemy_cmd && _collidie->getType() == GameObject::objectType::scattershot ||
+		_focus->getType() == GameObject::objectType::scattershot && _collidie->getType() == GameObject::objectType::smallAlly_fighter|| _focus->getType() == GameObject::objectType::smallAlly_fighter && _collidie->getType() == GameObject::objectType::scattershot){
 				_focus->collide(2);
 				_collidie->collide(2);
 				std::cout << "HIT WITH SCATTERSHOT: " << std::endl;

@@ -14,6 +14,7 @@ Carrier::Carrier(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 	numMaterials = 3;
 	velocity = Ogre::Vector3(0.0f, 0.0f, 0.0f);
 	health = 10;
+	personalTimer = 0;
 }
 
 
@@ -42,7 +43,19 @@ void Carrier::update(float timer_)
 		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_SField_SplineParticleMaterial_"+ Ogre::StringConverter::toString(i)));
 		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_ - i);
 	}
-	move();
+
+	if(hasExploded){
+		personalTimer += 1;
+		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Explosion_ParticleMaterial_"+ Ogre::StringConverter::toString(30)));
+		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", personalTimer);
+
+		if(personalTimer >= 15){
+			m_pNode->setVisible(false);
+			dead = true;
+		}
+	}
+		move();
+		return;
 }
 
 void Carrier::collide(){
@@ -52,8 +65,8 @@ void Carrier::collide(){
 void Carrier::collide(int damage){
 	health-=damage;
 	if(health <= 0){
-		m_pNode->setVisible(false);
-		dead = true;
+		
+		hasExploded = true;
 	}
 }
 

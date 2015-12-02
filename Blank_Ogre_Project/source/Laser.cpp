@@ -19,7 +19,7 @@ Laser::Laser(Ogre::SceneNode * newLaser,Ogre::Quaternion shipOrientation,Ogre::V
 		m_pNode->setPosition(shipPosition + (forward_Direction *12) + (right_Direction * 1.2) + (down_Direction*0.6));
 	}
 	hasExploded = false;
-	accel_Rate = 0.15;
+	accel_Rate = 0.3;
 	drift_Direction = Ogre::Vector3(0.0f);
 	aabbCenter = Ogre::Vector3(0.0f, 0.0f, 0.0f);
 	aabbSize = Ogre::Vector3(0.1f, 0.1f, 0.1f);

@@ -19,8 +19,8 @@ public:
 private:
 	
 	int countdown;
-	bool hasExploded;
 	float accel_Rate; 
+	bool hasExploded;
 	float personalTimer;
 	float flyTime;
 

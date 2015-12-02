@@ -181,6 +181,11 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	//
 	// reset Orientation
 	//
+
+	
+	child = factory->CreateParticleEntity("_Explosion","ParticleMaterial",node, Ogre::Vector3(1,1,1));
+
+
 	node->resetOrientation();
 	//node->translate(0.0f, 0.0f, 2.5f);
 	factory->resetCounter();
@@ -212,6 +217,10 @@ Ogre::SceneNode* GameObjectFactory::create_SEF()
 	child = factory->CreateParticleEntity("_Thruster","FireMaterial",node, Ogre::Vector3(1,1,0.1));
 	child->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_X)));
 	child->translate(3.3f,-3.9f,-1.6f);
+
+
+	
+	child = factory->CreateParticleEntity("_Explosion","ParticleMaterial",node, Ogre::Vector3(1,1,1));
 	factory->resetCounter();
 	return node;
 }
@@ -244,6 +253,10 @@ Ogre::SceneNode* GameObjectFactory::create_SEB()
 	  child->translate(0.0f, 0.0f,-5.4f);
 	  child->setScale(0.05,0.1,0.2);
 	}
+
+	
+	child = factory->CreateParticleEntity("_Explosion","ParticleMaterial",node, Ogre::Vector3(1,1,1));
+	child->translate(0.0f, -5.0f,-5.4f);
 
 	factory->resetCounter();
 	return node;
@@ -288,6 +301,10 @@ Ogre::SceneNode* GameObjectFactory::create_LEC()
 	 child = factory->CreateParticleEntity("_SField","SplineParticleMaterial",node, Ogre::Vector3(0.18,0.05,0.05));
 	 child->translate(7.1f, -2.7f,0.0f);
 	}
+
+	
+	child = factory->CreateParticleEntity("_Explosion","ParticleMaterial",node, Ogre::Vector3(1,1,1));
+	child->translate(7.1f, -2.7f,0.0f);
 
 	factory->resetCounter();
 	return node;
@@ -351,7 +368,7 @@ Ogre::SceneNode* GameObjectFactory::create_RCKT(Ogre::Quaternion shipOrientation
 	child->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_Y)));
 	child->translate(5,0,0);
 
-	child = factory->CreateParticleEntity("_Explosion","ParticleMaterial",node, Ogre::Vector3(0.5,0.5,0.5));
+	child = factory->CreateParticleEntity("_Explosion","ParticleMaterial",node, Ogre::Vector3(1,1,1));
 	
 	
 
@@ -392,6 +409,7 @@ Ogre::SceneNode* GameObjectFactory::create_SCTR(Ogre::Quaternion shipOrientation
 	entity->setMaterialName("ShinyScatterShotTextureMaterial");
 	node->attachObject(entity);
 	node->setScale(0.5,0.5,0.5);
+
 
 	factory->resetCounter();
 	return node;

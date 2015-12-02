@@ -25,6 +25,7 @@ SmallShip::SmallShip(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 	m_pNode = newShip;
 	accel_Rate = 0.01;
 	hasExploded = false;
+	personalTimer = 0;
 
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
@@ -140,6 +141,18 @@ void SmallShip::update(float timer_)
 		//mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_ - i);
 	}
 
+
+	if(hasExploded){
+		personalTimer += 1;
+		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Explosion_ParticleMaterial_"+ Ogre::StringConverter::toString(5)));
+		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", personalTimer);
+
+		if(personalTimer >= 15){
+			m_pNode->setVisible(false);
+			dead = true;
+		}
+	}
+
 	//SAF_0_SField_SplineParticleMaterial_5
 	move();
 }
@@ -151,8 +164,7 @@ void SmallShip::collide(){
 void SmallShip::collide(int damage){
 	health-=damage;
 	if(health <= 0){
-		m_pNode->setVisible(false);
-		dead = true;
+		hasExploded = true;
 	}
 }
 

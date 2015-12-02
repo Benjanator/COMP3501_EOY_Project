@@ -7,6 +7,7 @@ Bomber::Bomber(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 		this->type = smallEnemy_bomber;
 		
 	hasExploded = false;
+	personalTimer = 0;
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
 	health = 5;
@@ -29,6 +30,17 @@ void Bomber::update(float timer_)
 		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_SField_SplineParticleMaterial_"+ Ogre::StringConverter::toString(i)));
 		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_ - i);
 	}
+
+	if(hasExploded){
+		personalTimer += 1;
+		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Explosion_ParticleMaterial_"+ Ogre::StringConverter::toString(27)));
+		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", personalTimer);
+
+		if(personalTimer >= 50){
+			m_pNode->setVisible(false);
+			dead = true;
+		}
+	}
 	move();
 }
 
@@ -39,8 +51,8 @@ void Bomber::collide(){
 void Bomber::collide(int damage){
 	health-=damage;
 	if(health <= 0){
-		m_pNode->setVisible(false);
-		dead = true;
+		//dead = true;
+		hasExploded = true;
 	}
 }
 

@@ -16,6 +16,7 @@ ScatterShot::ScatterShot(Ogre::SceneNode * newScatterShot,Ogre::Quaternion shipO
 	m_pNode->setPosition(shipPosition + (forward_Direction *15) + (down_Direction*0.6));
 	
 	hasExploded = false;
+	personalTimer = 0;
 	accel_Rate = 0.15;
 	drift_Direction = Ogre::Vector3(0.0f);
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
@@ -34,6 +35,8 @@ ScatterShot::~ScatterShot(void)
 
 void ScatterShot::update(float _timer)
 {
+	Ogre::MaterialPtr mat;
+	
 	splinetraj(_timer);
 }
 
@@ -137,6 +140,7 @@ void ScatterShot::collide(){
 	
 	m_pNode->setVisible(false);
 	dead = true;
+	//hasExploded = true;
 }
 
 void ScatterShot::collide(int damage){

@@ -29,6 +29,8 @@ private:
 	void splinetraj(float _timer);
 	int countdown;
 	float accel_Rate; 
+	bool hasExploded;
+	float personalTimer;
 	
 
 };
