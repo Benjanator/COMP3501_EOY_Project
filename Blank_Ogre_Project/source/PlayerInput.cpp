@@ -13,6 +13,7 @@
 	bool relativeMotion = true;
 	bool keyUp = true;
 	bool ckeyUp = true;
+	bool xkeyUp = true;
 	bool mouseLeft = true;
 	bool lasrLR = true;
 	GameObject* temp;
@@ -119,8 +120,8 @@ void PlayerInput::handleInput(void){
 	if(playerMouse_->getMouseState().buttonDown(OIS::MB_Left)){
 		if(mouseLeft == true){
 //<<<<<<< HEAD
-			//temp = factory->createGameLaser(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
-			temp = factory->createGameScatterShot(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
+			temp = factory->createGameLaser(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
+			//temp = factory->createGameScatterShot(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
 //=======
 			//temp = factory->createGameLaser(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
 			temp->setTeam(0);
@@ -143,6 +144,17 @@ void PlayerInput::handleInput(void){
 		}
 	}else{
 		ckeyUp = true;
+	}
+
+		if(playerKeyboard_->isKeyDown(OIS::KC_X)){
+		if(xkeyUp == true){
+			temp = factory->createGameScatterShot(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
+			objectManager->addObject(temp);
+			xkeyUp = false;
+			
+		}
+	}else{
+		xkeyUp = true;
 	}
 	
 

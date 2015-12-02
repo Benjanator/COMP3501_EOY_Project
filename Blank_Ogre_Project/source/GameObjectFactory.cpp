@@ -387,11 +387,11 @@ Ogre::SceneNode* GameObjectFactory::create_SCTR(Ogre::Quaternion shipOrientation
 	SCTR_id++;
 	Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
 
-	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Laser.mesh");
+	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "ScatterShot.mesh");
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
-	entity->setMaterialName("BlueMaterial");
+	entity->setMaterialName("ShinyScatterShotTextureMaterial");
 	node->attachObject(entity);
-	node->setScale(0.5,0.5,3.0);
+	node->setScale(0.5,0.5,0.5);
 
 	factory->resetCounter();
 	return node;
