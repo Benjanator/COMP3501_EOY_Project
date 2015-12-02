@@ -64,9 +64,44 @@ bool PhysicsManager::testcollidableDistance(GameObject* _focus, GameObject* _col
 	}
 
 	if( _focus->getAABBCenter().squaredDistance(_collidie->getAABBCenter()) < Math::Sqr((_focus->getAABBSize() * 0.5).length()) + Math::Sqr((_collidie->getAABBSize() * 0.5).length())){
-		//std::cout << "collide" + std::to_string(i) << std::endl;
-		i++;
-		return true;
+		Vector3 box1_center = _focus->getAABBCenter();
+		Vector3 box1_half = 0.5 * _focus->getAABBSize();
+
+		Vector3 box2_center = _collidie->getAABBCenter();
+		Vector3 box2_half = 0.5 * _collidie->getAABBSize();
+		
+		//box1
+		float box1_minX = box1_center.x - box1_half.x;
+		float box1_maxX = box1_center.x + box1_half.x;
+
+		float box1_minY = box1_center.y - box1_half.y;
+		float box1_maxY = box1_center.y + box1_half.y;
+
+		float box1_minZ = box1_center.z - box1_half.z;
+		float box1_maxZ = box1_center.z + box1_half.z;
+
+		//box2
+		float box2_minX = box2_center.x - box2_half.x;
+		float box2_maxX = box2_center.x + box2_half.x;
+
+		float box2_minY = box2_center.y - box2_half.y;
+		float box2_maxY = box2_center.y + box2_half.y;
+
+		float box2_minZ = box2_center.z - box2_half.z;
+		float box2_maxZ = box2_center.z + box2_half.z;
+
+
+		if(box1_maxX > box2_minX &&
+			box1_minX < box2_maxX &&
+			box1_maxY > box2_minY &&
+			box1_minY < box2_maxY &&
+			box1_maxZ > box2_minZ  &&
+			box1_minZ < box2_maxZ){
+				i++;
+				return true;
+		}
+		//i++;
+		//return true;
 	}
 	
 	return false;
