@@ -123,9 +123,12 @@ void ScatterShot::splinetraj(float _timer){
 	//std::cout << "BT:: " << Bt << std::endl;
 	//m_pNode->setPosition(Bt);
 
-	m_pNode->lookAt(m_pNode->getPosition() + Bt, Ogre::Node::TS_WORLD, Ogre::Vector3::UNIT_Z);
-	m_pNode->translate(0.5 * (m_pNode->getOrientation() * Ogre::Vector3::UNIT_Z));
+	//m_pNode->lookAt(m_pNode->getPosition() + Bt, Ogre::Node::TS_WORLD, Ogre::Vector3::UNIT_Z);
+	m_pNode->lookAt( Bt, Ogre::Node::TS_WORLD,   Ogre::Vector3::UNIT_Z);
 	
+	m_pNode->translate(0.25 * (m_pNode->getOrientation() *  Ogre::Vector3::UNIT_Z));
+
+	//forward_Direction = m_pNode->getOrientation() *  Ogre::Vector3::NEGATIVE_UNIT_Z;
 	m_pNode->needUpdate();
 }
 
