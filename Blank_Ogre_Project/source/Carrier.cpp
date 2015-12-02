@@ -3,6 +3,7 @@
 
 Carrier::Carrier(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 {
+	this->type = largeEnemy_cmd;
 		m_pNode = newShip;
 
 
@@ -12,6 +13,7 @@ Carrier::Carrier(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
 	numMaterials = 3;
 	velocity = Ogre::Vector3(0.0f, 0.0f, 0.0f);
+	health = 10;
 }
 
 
@@ -46,6 +48,15 @@ void Carrier::update(float timer_)
 void Carrier::collide(){
 	
 }
+
+void Carrier::collide(int damage){
+	health-=damage;
+	if(health <= 0){
+		m_pNode->setVisible(false);
+		dead = true;
+	}
+}
+
 
 void Carrier::turn_right(Ogre::Degree _degree)
 {

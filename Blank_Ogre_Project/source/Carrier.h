@@ -13,7 +13,7 @@ public:
 
 	void update(float _timer);
 	void collide();
-
+	void collide(int);
 	protected:
 	void move();
 
@@ -22,5 +22,8 @@ public:
 
 	float degree;
 	Ogre::Vector3 velocity;
+
+private:
+	int health;
 };
 

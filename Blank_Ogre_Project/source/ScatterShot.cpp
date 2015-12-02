@@ -5,6 +5,7 @@ ScatterShot::ScatterShot(Ogre::SceneNode * newScatterShot,Ogre::Quaternion shipO
 {
 	
 	m_pNode = newScatterShot;
+	this->type = scattershot;
 	m_pNode->setOrientation(shipOrientation);
 	forward_Direction = shipOrientation *  Ogre::Vector3::NEGATIVE_UNIT_Z;
 	left_Direction = shipOrientation *  Ogre::Vector3::NEGATIVE_UNIT_X;
@@ -135,8 +136,13 @@ void ScatterShot::splinetraj(float _timer){
 void ScatterShot::collide(){
 	
 	m_pNode->setVisible(false);
-	
+	dead = true;
 }
+
+void ScatterShot::collide(int damage){
+	collide();
+}
+
 
 void ScatterShot::particle(){
 	//add these for anything that could collide

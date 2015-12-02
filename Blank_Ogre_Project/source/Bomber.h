@@ -13,10 +13,14 @@ public:
 
 	void update(float _timer);
 	void collide();
+	void collide(int);
 
 	protected:
 
 
 	void move();
+
+private:
+	int health;
 };
 

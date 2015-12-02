@@ -29,7 +29,7 @@ SmallShip::SmallShip(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
 	numMaterials = 4;
-	
+	health = 5;
 }
 
 
@@ -147,6 +147,15 @@ void SmallShip::update(float timer_)
 void SmallShip::collide(){
 	
 }
+
+void SmallShip::collide(int damage){
+	health-=damage;
+	if(health <= 0){
+		m_pNode->setVisible(false);
+		dead = true;
+	}
+}
+
 
 void SmallShip::move(void)
 {

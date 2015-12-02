@@ -6,6 +6,7 @@ Rocket::Rocket(Ogre::SceneNode * newRocket,Ogre::Quaternion shipOrientation,Ogre
 	
 	m_pNode = newRocket;
 	
+	this->type = rocket ;
 	m_pNode->setOrientation(shipOrientation*(Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_Y)));
 	drift_Direction = shipDirection;
 	forward_Direction = shipOrientation *  Ogre::Vector3::NEGATIVE_UNIT_Z;
@@ -64,6 +65,12 @@ void Rocket::collide(){
 	hasExploded = true;
 	
 }
+
+void Rocket::collide(int damage){
+	collide();
+}
+
+
 
 void Rocket::explode(){
 	//run explosion particle effect

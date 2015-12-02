@@ -15,6 +15,7 @@ public:
 	void particle();
 	void update(float _timer);
 	void collide();
+	void collide(int);
 
 private:
 

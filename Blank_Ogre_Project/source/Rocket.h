@@ -13,6 +13,7 @@ public:
 	void move();
 	void explode();
 	void collide();
+	void collide(int);
 	void update(float _timer);
 
 private:

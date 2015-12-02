@@ -15,9 +15,11 @@ public:
 	void particle();
 	void update(float _timer);
 	void collide();
+	void collide(int);
 
 private:
 	
+	float flyTime;
 	int countdown;
 	float accel_Rate; 
 	

@@ -435,12 +435,12 @@ void OgreApplication::test(){
 	
 
 	 GameObject* temp;
-	 for(int i=0;i<3;i++){
+	 for(int i=0;i<6;i++){
 		temp = factory->createGameObject(GameObject::objectType::smallEnemy_fighter);
 		objectManager->addObject(temp);
 	 }
 
-	  for(int j=0;j<3;j++){
+	  for(int j=0;j<6;j++){
 		temp = factory->createGameObject(GameObject::objectType::smallEnemy_bomber);
 		objectManager->addObject(temp);
 	 }

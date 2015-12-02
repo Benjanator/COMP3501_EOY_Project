@@ -2,6 +2,7 @@
 
 Fighter::Fighter(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 {
+	this->type = smallEnemy_fighter;
 		m_pNode = newShip;
 	
 
@@ -9,6 +10,7 @@ Fighter::Fighter(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
 	numMaterials = 2;
+	health = 5;
 }
 
 
@@ -37,6 +39,15 @@ void Fighter::update(float timer_)
 void Fighter::collide(){
 	
 }
+
+void Fighter::collide(int damage){
+	health-=damage;
+	if(health <= 0){
+		m_pNode->setVisible(false);
+		dead = true;
+	}
+}
+
 
 void Fighter::move(void)
 {

@@ -4,11 +4,12 @@
 Bomber::Bomber(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 {
 		m_pNode = newShip;
+		this->type = smallEnemy_bomber;
 		
 	hasExploded = false;
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
-
+	health = 5;
 }
 
 
@@ -34,6 +35,15 @@ void Bomber::update(float timer_)
 void Bomber::collide(){
 	
 }
+
+void Bomber::collide(int damage){
+	health-=damage;
+	if(health <= 0){
+		m_pNode->setVisible(false);
+		dead = true;
+	}
+}
+
 
 void Bomber::move(void)
 {

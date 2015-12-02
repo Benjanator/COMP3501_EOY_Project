@@ -5,6 +5,7 @@ Laser::Laser(Ogre::SceneNode * newLaser,Ogre::Quaternion shipOrientation,Ogre::V
 {
 	
 	m_pNode = newLaser;
+	this->type = laser;
 	//m_pNode->setPosition(shipPosition + Ogre::Vector3(0,0,-2));
 	m_pNode->setOrientation(shipOrientation);
 	forward_Direction = shipOrientation *  Ogre::Vector3::NEGATIVE_UNIT_Z;
@@ -23,6 +24,7 @@ Laser::Laser(Ogre::SceneNode * newLaser,Ogre::Quaternion shipOrientation,Ogre::V
 	aabbCenter = Ogre::Vector3(0.0f, 0.0f, 0.0f);
 	aabbSize = Ogre::Vector3(0.1f, 0.1f, 0.1f);
 	numMaterials = 1;
+	flyTime = 1000.0f;
 }
 
 
@@ -37,6 +39,11 @@ void Laser::update(float timer_)
 	mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_);
 
 	move();
+
+	flyTime -= 2.75f;
+	if(flyTime < 0.0f){
+		dead = true;
+	}
 }
 
 void Laser::move(){
@@ -49,7 +56,13 @@ void Laser::move(){
 void Laser::collide(){
 	//add these for anything that could collide
 	m_pNode->setVisible(false);
+	dead = true;
 	//std::cout << "HIT " << std::endl;
+}
+
+
+void Laser::collide(int damage){
+	collide();
 }
 
 void Laser::particle(){

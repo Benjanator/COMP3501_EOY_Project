@@ -28,6 +28,7 @@ public:
 
 	virtual void update(float) = 0;
 	virtual void collide() = 0;
+	virtual void collide(int) = 0;
 	Ogre::SceneNode& getNode();
 
 	Ogre::Vector3 getMotionDirection();

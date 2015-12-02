@@ -26,9 +26,10 @@ public:
 	Ogre::Quaternion getOrientation();
 	Ogre::Vector3 getPosition();
 
+	
+
 
 protected:
-
 
 	void move();
 
@@ -46,7 +47,12 @@ protected:
 	float roll_Rate;
 	float yaw_Rate;
 	float pitch_Rate;
+	void collide(int);
 
 	Ogre::Vector3 velocity;
+
+private:
+
+	int health;
 };
 
