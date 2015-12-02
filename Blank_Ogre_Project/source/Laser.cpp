@@ -30,8 +30,12 @@ Laser::~Laser(void)
 {
 }
 
-void Laser::update(float _timer)
+void Laser::update(float timer_)
 {
+	
+	Ogre::MaterialPtr mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Laser_Fire2Material_"+ Ogre::StringConverter::toString(1)));
+	mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_);
+
 	move();
 }
 

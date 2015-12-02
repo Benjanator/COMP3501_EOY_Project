@@ -8,6 +8,8 @@ GameObjectFactory::GameObjectFactory(Ogre::SceneManager* _sm): SAF_id(0), SEF_id
 	factory->CreateThrusterParticleGeometry("_Thruster", 200000);
 	factory->CreateExplosionParticleGeometry("_Explosion",2000000);
 
+	factory->CreateExplosionParticleGeometry("_Laser",200000);
+
 	factory->CreateSplineParticleGeometry("_SField", 20000);
 	factory->CreateSplineParticleGeometry("_SFieldP", 20000);
 
@@ -193,8 +195,7 @@ Ogre::SceneNode* GameObjectFactory::create_SEF()
 
 	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Enemy_Fighter.mesh");
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
-	//entity->setMaterialName("ShinyMaterial");
-	entity->setMaterialName("ShinyCarrierTextureMaterial");
+	entity->setMaterialName("ShinyMaterial");
 	node->attachObject(entity);
 
 	
@@ -370,6 +371,9 @@ Ogre::SceneNode* GameObjectFactory::create_LSR(Ogre::Quaternion shipOrientation,
 	entity->setMaterialName("BlueMaterial");
 	node->attachObject(entity);
 	node->setScale(0.5,0.5,3.0);
+
+	Ogre::SceneNode* child = factory->CreateParticleEntity("_Laser","Fire2Material",node, Ogre::Vector3(10,10,2));
+	child->setScale(500,500,10);
 
 	factory->resetCounter();
 	return node;
