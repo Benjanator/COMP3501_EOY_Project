@@ -386,6 +386,10 @@ void OgreApplication::MainLoop(void){
             Ogre::WindowEventUtilities::messagePump();
 
 			objectManager->cleanDestroyedObjects();
+
+			if(physicsManager->spawnNextWave()){
+				loadNextWave();
+			}
         }
     }
     catch (Ogre::Exception &e){
@@ -439,7 +443,7 @@ void OgreApplication::windowResized(Ogre::RenderWindow* rw){
 
 
 
-void OgreApplication::createLoadedEntity(Ogre::String _objectName)
+void OgreApplication::createLoadedEntity(Ogre::String _objectName, Vector3 _spawnPoint)
 {
 	GameObject* temp;
 
@@ -448,22 +452,22 @@ void OgreApplication::createLoadedEntity(Ogre::String _objectName)
 	}
 
 	if(_objectName.compare("SAF") == 0 || _objectName.compare("smallAlly_fighter") == 0){
-		temp = factory->createGameObject(GameObject::objectType::smallAlly_fighter);
+		temp = factory->createGameObject(GameObject::objectType::smallAlly_fighter, _spawnPoint);
 	}
 	else if(_objectName.compare("SEF") == 0 || _objectName.compare("smallEnemy_fighter") == 0){
-		temp = factory->createGameObject(GameObject::objectType::smallEnemy_fighter);
+		temp = factory->createGameObject(GameObject::objectType::smallEnemy_fighter, _spawnPoint);
 	}
 	else if(_objectName.compare("SAB") == 0 || _objectName.compare("smallAlly_bomber") == 0){
-		temp = factory->createGameObject(GameObject::objectType::smallAlly_bomber);
+		temp = factory->createGameObject(GameObject::objectType::smallAlly_bomber, _spawnPoint);
 	}
 	else if(_objectName.compare("SEB") == 0 || _objectName.compare("smallEnemy_bomber") == 0){
-		temp = factory->createGameObject(GameObject::objectType::smallEnemy_bomber);
+		temp = factory->createGameObject(GameObject::objectType::smallEnemy_bomber, _spawnPoint);
 	}
 	else if(_objectName.compare("LAC") == 0 || _objectName.compare("largeAlly_cmd") == 0){
-		temp = factory->createGameObject(GameObject::objectType::largeAlly_cmd);
+		temp = factory->createGameObject(GameObject::objectType::largeAlly_cmd, _spawnPoint);
 	}
 	else if(_objectName.compare("LEC") == 0 || _objectName.compare("largeEnemy_cmd") == 0){
-		temp = factory->createGameObject(GameObject::objectType::largeEnemy_cmd);
+		temp = factory->createGameObject(GameObject::objectType::largeEnemy_cmd, _spawnPoint);
 	}
 	
 	
@@ -475,10 +479,60 @@ void OgreApplication::createLoadedEntity(Ogre::String _objectName)
 
 }
 
+void OgreApplication::loadFirstWave()
+{
+	/*Load MainPlayer*/
+	createLoadedEntity("SAF", Vector3(0.0f, 0.0f, 100.0f));
+
+	Ogre::Vector3 enemyPos = Ogre::Vector3(0.0f, 5.0f, -800.0f);
+
+	/*Load Enemy Carrier*/
+	createLoadedEntity("LEC", enemyPos);
+
+	int fighterAmount = rand() % 5 + 1;
+	float posX = -150.0f;
+
+	/*Load Enemy Fighters*/
+	for(int i = 0; i < fighterAmount; i++){
+		posX = (posX + 50.0f != 0.0f)? posX + 50.0f: posX + 100.0f;
+		createLoadedEntity("SEF", enemyPos + Vector3(posX, 0.0f, 0.0f));
+	}
+
+	int bomberAmount = rand() % 3 + 1;
+
+	/*Load Enemy Bomber/Platforms*/
+	for(int i = 0; i < bomberAmount; i++){
+		createLoadedEntity("SEB", enemyPos + Vector3(0.0f, 0.0f, 75.0f * i));
+	}
+}
+
+void OgreApplication::loadNextWave()
+{
+	cout << "Next Wave Has Appeared!" << endl;
+
+	Vector3 enemyPos = objectManager->getObjectList().at(1)->getNode().getPosition();
+
+	int fighterAmount = rand() % 5 + 1;
+	float posX = -150.0f;
+
+	/*Load Enemy Fighters*/
+	for(int i = 0; i < fighterAmount; i++){
+		posX = (posX + 50.0f != 0.0f)? posX + 50.0f: posX + 100.0f;
+		createLoadedEntity("SEF", enemyPos + Vector3(posX, 0.0f, 0.0f));
+	}
+
+	int bomberAmount = rand() % 3 + 1;
+
+	/*Load Enemy Bomber/Platforms*/
+	for(int i = 0; i < bomberAmount; i++){
+		createLoadedEntity("SEB", enemyPos + Vector3(0.0f, 0.0f, 75.0f * i));
+	}
+}
+
 void OgreApplication::test(){
 	
 
-	 GameObject* temp;
+	/* GameObject* temp;
 	 for(int i=0;i<3;i++){
 		temp = factory->createGameObject(GameObject::objectType::smallEnemy_fighter);
 		objectManager->addObject(temp);
@@ -492,7 +546,7 @@ void OgreApplication::test(){
 	  	temp = factory->createGameObject(GameObject::objectType::largeEnemy_cmd);
 		objectManager->addObject(temp);
 		
-	
+*/	
 }
 
 

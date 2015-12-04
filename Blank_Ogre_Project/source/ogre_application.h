@@ -50,7 +50,10 @@ namespace ogre_application {
 			void CreateTorus(Ogre::String object_name, Ogre::String material_name, float loop_radius = 0.6, float circle_radius = 0.2, int num_loop_samples = 90, int num_circle_samples = 30); // Create an object to show on the screen
 			void SetupAnimation(Ogre::String object_name); // Setup animation for an object
             void MainLoop(void); // Keep application active
-			void createLoadedEntity(Ogre::String _objectName);
+			
+
+			void loadFirstWave(void);
+			void loadNextWave(void);
 			void test(void);
 
 	
@@ -93,6 +96,9 @@ namespace ogre_application {
 			void LoadModels(void);
 			void LoadSkybox(void);
 			
+			/*Custom*/
+			void createLoadedEntity(Ogre::String _objectName, Vector3 _spawnPoint);
+
 			/* Methods to handle events */
 			bool frameRenderingQueued(const Ogre::FrameEvent& fe);
 			void windowResized(Ogre::RenderWindow* rw);

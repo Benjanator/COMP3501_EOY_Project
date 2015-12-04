@@ -12,11 +12,13 @@ public:
 
 	void pollTotalEvents(float);
 	void pollAiShots(GameObjectFactory * );
+	bool spawnNextWave();
+
 private:
 	bool testcollidableDistance(GameObject* _focus, GameObject* _collidie);
 	void elasticCollision(GameObject* _focus, GameObject* _collidie);
 	
-
 	ObjectManager* objectManager;
+	bool waveClear;
 };
 

@@ -35,7 +35,7 @@ Ogre::SceneNode* ParticleFactory::CreateParticleEntity(Ogre::String object_name,
 		//mat = mat->clone(object_name.append("_" +material_name.append("_" + Ogre::StringConverter::toString(materialCounter))));
 		mat = mat->clone(name.append("_" +material_name.append("_" + Ogre::StringConverter::toString(materialCounter))));
 
-		std::cout << "NAME: " << name << std::endl;
+		//std::cout << "NAME: " << name << std::endl;
 		//mat = mat->clone(object_name.append(material_name));
 		/* Apply a material to the entity */
 		entity->setMaterialName(mat->getName());
