@@ -70,7 +70,9 @@ void Rocket::collide(int damage){
 	collide();
 }
 
-
+void Rocket::shoot(GameObjectFactory*){
+	
+}
 
 void Rocket::explode(){
 	//run explosion particle effect

@@ -61,6 +61,9 @@ void Fighter::collide(int damage){
 	}
 }
 
+void Fighter::shoot(GameObjectFactory*){
+	
+}
 
 void Fighter::move(void)
 {

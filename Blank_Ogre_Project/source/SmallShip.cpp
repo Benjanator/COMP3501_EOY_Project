@@ -168,6 +168,10 @@ void SmallShip::collide(int damage){
 	}
 }
 
+void SmallShip::shoot(GameObjectFactory*){
+	
+}
+
 
 void SmallShip::move(void)
 {

@@ -3,6 +3,7 @@
 #include <OGRE/OgreSceneNode.h>
 
 
+
 class Bomber: public GameObject
 {
 public:
@@ -14,6 +15,7 @@ public:
 	void update(float _timer);
 	void collide();
 	void collide(int);
+	void shoot(	GameObjectFactory*  );
 
 	protected:
 

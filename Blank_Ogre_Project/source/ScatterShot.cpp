@@ -147,6 +147,9 @@ void ScatterShot::collide(int damage){
 	collide();
 }
 
+void ScatterShot::shoot(GameObjectFactory*){
+	
+}
 
 void ScatterShot::particle(){
 	//add these for anything that could collide

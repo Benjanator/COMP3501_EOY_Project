@@ -2,6 +2,7 @@
 #include <OGRE/OgreSceneManager.h>
 #include "GameObject.h"
 
+
 class Rocket: public GameObject
 {
 public:
@@ -15,6 +16,7 @@ public:
 	void collide();
 	void collide(int);
 	void update(float _timer);
+	void shoot( 	GameObjectFactory* );
 
 private:
 	

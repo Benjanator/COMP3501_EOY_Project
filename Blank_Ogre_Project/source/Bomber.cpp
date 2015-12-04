@@ -56,6 +56,12 @@ void Bomber::collide(int damage){
 	}
 }
 
+void Bomber::shoot(GameObjectFactory*){
+	
+}
+
+
+
 
 void Bomber::move(void)
 {

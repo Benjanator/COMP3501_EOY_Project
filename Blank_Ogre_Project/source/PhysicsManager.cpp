@@ -41,6 +41,16 @@ void PhysicsManager::pollTotalEvents(float timer)
 	}
 }
 
+void PhysicsManager::pollAiShots(GameObjectFactory* factory){
+	std::vector<GameObject*> tempList = objectManager->getObjectList();
+	
+	for(unsigned int i = 0; i < tempList.size(); i++)
+	{
+		tempList.at(i)->shoot(factory);
+	}
+
+ }
+
 /*
  * Private Functions
  * 

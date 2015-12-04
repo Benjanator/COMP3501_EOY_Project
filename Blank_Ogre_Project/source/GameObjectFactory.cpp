@@ -302,9 +302,7 @@ Ogre::SceneNode* GameObjectFactory::create_LEC()
 	 child->translate(7.1f, -2.7f,0.0f);
 	}
 
-	
-	child = factory->CreateParticleEntity("_Explosion","ParticleMaterial",node, Ogre::Vector3(1,1,1));
-	child->translate(7.1f, -2.7f,0.0f);
+
 
 	factory->resetCounter();
 	return node;

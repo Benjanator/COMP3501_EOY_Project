@@ -11,6 +11,10 @@
 #include "OGRE/OgreManualObject.h"
 #include "OGRE/OgreEntity.h"
 #include "OIS/OIS.h"
+#include "OGRE/Overlay/OgreFontManager.h"
+#include "OGRE/Overlay/OgreTextAreaOverlayElement.h"
+#include "OGRE/Overlay/OgreOverlayManager.h"
+#include "OGRE/Overlay/OgreOverlaySystem.h"
 
 #include "SmallShip.h"
 #include "PlayerInput.h"
@@ -84,6 +88,7 @@ namespace ogre_application {
 			void InitViewport(void);
 			void InitEvents(void);
 			void InitOIS(void);
+			void InitOverlay(void);
 			void LoadMaterials(void);
 			void LoadModels(void);
 			void LoadSkybox(void);

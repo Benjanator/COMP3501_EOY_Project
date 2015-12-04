@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include <OGRE/OgreSceneNode.h>
 
+
+
 class SmallShip: public GameObject
 {
 public:
@@ -22,6 +24,7 @@ public:
 
 	void update(float _timer);
 	void collide();
+	void shoot(	GameObjectFactory* );
 
 	Ogre::Quaternion getOrientation();
 	Ogre::Vector3 getPosition();

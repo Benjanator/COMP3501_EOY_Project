@@ -1,8 +1,6 @@
 #pragma once
+
 #include "GameObject.h"
-#include <OGRE\OgreSceneNode.h>
-#include <OGRE\OgreSceneManager.h>
-#include <OGRE/OgreEntity.h>
 #include "SmallShip.h"
 #include "Rocket.h"
 #include "Carrier.h"
@@ -10,11 +8,19 @@
 #include "Bomber.h"
 #include "Laser.h"
 #include "Scattershot.h"
+
+#include <OGRE\OgreSceneNode.h>
+#include <OGRE\OgreSceneManager.h>
+#include <OGRE/OgreEntity.h>
 #include "ParticleFactory.h"
+
+
 
 class GameObjectFactory
 {
 public:
+
+
 	GameObjectFactory(Ogre::SceneManager*);
 	~GameObjectFactory(void);
 

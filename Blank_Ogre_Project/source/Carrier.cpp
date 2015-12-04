@@ -44,16 +44,7 @@ void Carrier::update(float timer_)
 		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_ - i);
 	}
 
-	if(hasExploded){
-		personalTimer += 1;
-		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Explosion_ParticleMaterial_"+ Ogre::StringConverter::toString(30)));
-		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", personalTimer);
 
-		if(personalTimer >= 15){
-			m_pNode->setVisible(false);
-			dead = true;
-		}
-	}
 		move();
 		return;
 }
@@ -65,11 +56,14 @@ void Carrier::collide(){
 void Carrier::collide(int damage){
 	health-=damage;
 	if(health <= 0){
-		
-		hasExploded = true;
+		m_pNode->setVisible(false);
+		dead = true;
 	}
 }
 
+void Carrier::shoot(GameObjectFactory*){
+	
+}
 
 void Carrier::turn_right(Ogre::Degree _degree)
 {

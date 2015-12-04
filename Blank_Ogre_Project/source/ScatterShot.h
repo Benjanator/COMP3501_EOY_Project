@@ -3,6 +3,8 @@
 #include <OGRE/OgreSceneManager.h>
 #include "GameObject.h"
 
+
+
 class ScatterShot: public GameObject
 {
 public: 
@@ -16,6 +18,7 @@ public:
 	void update(float _timer);
 	void collide();
 	void collide(int);
+	void shoot(	GameObjectFactory* );
 
 private:
 

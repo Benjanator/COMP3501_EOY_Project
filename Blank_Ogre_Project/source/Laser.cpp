@@ -65,6 +65,10 @@ void Laser::collide(int damage){
 	collide();
 }
 
+void Laser::shoot(GameObjectFactory*){
+	
+}
+
 void Laser::particle(){
 	//add these for anything that could collide
 }
