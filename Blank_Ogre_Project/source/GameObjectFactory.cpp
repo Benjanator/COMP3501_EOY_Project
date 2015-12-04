@@ -7,8 +7,10 @@ GameObjectFactory::GameObjectFactory(Ogre::SceneManager* _sm): SAF_id(0), SEF_id
 	factory = new ParticleFactory(scene_manager);
 	factory->CreateThrusterParticleGeometry("_Thruster", 200000);
 	factory->CreateExplosionParticleGeometry("_Explosion",2000000);
-
 	factory->CreateExplosionParticleGeometry("_Laser",200000);
+	factory->CreateImplosionParticleGeometry("_Implosion",30000);
+
+
 
 	factory->CreateSplineParticleGeometry("_SField", 20000);
 	factory->CreateSplineParticleGeometry("_SFieldP", 20000);
@@ -408,6 +410,8 @@ Ogre::SceneNode* GameObjectFactory::create_SCTR(Ogre::Quaternion shipOrientation
 	node->attachObject(entity);
 	node->setScale(0.5,0.5,0.5);
 
+
+	Ogre::SceneNode* child = factory->CreateParticleEntity("_Implosion","ImplosionParticleMaterial",node, Ogre::Vector3(2,2,2));
 
 	factory->resetCounter();
 	return node;

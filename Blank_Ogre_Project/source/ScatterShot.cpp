@@ -38,6 +38,20 @@ void ScatterShot::update(float _timer)
 	Ogre::MaterialPtr mat;
 	
 	splinetraj(_timer);
+
+		if(hasExploded){
+		personalTimer += 1;
+		
+		//std::cout << "NAME: " << m_pNode->getName()<< std::endl;
+		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Implosion_ImplosionParticleMaterial_"+ Ogre::StringConverter::toString(1)));
+		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", personalTimer);
+
+		if(personalTimer >= 20){
+			m_pNode->setVisible(false);
+			dead = true;
+		}
+		return;
+	}
 }
 
 void ScatterShot::generateCP(int num_control_points){
@@ -138,9 +152,9 @@ void ScatterShot::splinetraj(float _timer){
 
 void ScatterShot::collide(){
 	
-	m_pNode->setVisible(false);
-	dead = true;
-	//hasExploded = true;
+	//m_pNode->setVisible(false);
+	//dead = true;
+	hasExploded = true;
 }
 
 void ScatterShot::collide(int damage){
