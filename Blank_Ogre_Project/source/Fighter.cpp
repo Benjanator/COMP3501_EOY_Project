@@ -66,9 +66,9 @@ void Fighter::shoot(GameObjectFactory* factory ,ObjectManager* manager,GameObjec
 	GameObjectFactory* tmpfctry = factory;
 	ObjectManager* tmpmngr = manager;
 	//GameObject* temp;
+	Ogre::Vector3 playerPos = (player->getNode()).getPosition();
 
-	//m_pNode->lookAt((player->getNode()).getPosition(),Ogre::Node::TS_WORLD);	
-
+	m_pNode->lookAt((player->getNode()).getPosition(),Ogre::Node::TS_PARENT,Ogre::Vector3::UNIT_Y);	
 
 }
 

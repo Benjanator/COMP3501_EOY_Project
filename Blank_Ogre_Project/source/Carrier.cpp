@@ -66,7 +66,7 @@ void Carrier::shoot(GameObjectFactory* factory ,ObjectManager* manager, GameObje
 	ObjectManager* tmpmngr = manager;
 	//GameObject* temp;
 
-	m_pNode->lookAt((player->getNode()).getPosition(),Ogre::Node::TS_WORLD);	
+	m_pNode->lookAt((player->getNode()).getPosition(),Ogre::Node::TS_PARENT,Ogre::Vector3::UNIT_Y);		
 }
 
 void Carrier::turn_right(Ogre::Degree _degree)

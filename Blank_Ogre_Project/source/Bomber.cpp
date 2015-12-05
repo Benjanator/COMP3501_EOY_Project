@@ -61,9 +61,8 @@ void Bomber::shoot(GameObjectFactory* factory ,ObjectManager* manager, GameObjec
 	ObjectManager* tmpmngr = manager;
 	//GameObject* temp;
 
-	m_pNode->lookAt((player->getNode()).getPosition(),Ogre::Node::TS_WORLD);	
+	m_pNode->lookAt((player->getNode()).getPosition(),Ogre::Node::TS_PARENT,Ogre::Vector3::UNIT_X);	
 }
-
 
 
 
