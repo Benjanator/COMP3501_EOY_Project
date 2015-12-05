@@ -4,6 +4,7 @@
 PhysicsManager::PhysicsManager(ObjectManager* _manager)
 {
 	objectManager = _manager;
+	waveClear = false;
 }
 
 
@@ -15,9 +16,14 @@ PhysicsManager::~PhysicsManager(void)
 void PhysicsManager::pollTotalEvents(float timer)
 {
 	std::vector<GameObject*> tempList = objectManager->getObjectList();
-	
+	int enemyCount = 0;
+
 	for(unsigned int i = 0; i < tempList.size(); i++)
 	{
+		if(tempList.at(i)->getType() == GameObject::objectType::smallEnemy_fighter || tempList.at(i)->getType() == GameObject::objectType::smallEnemy_bomber)
+		{
+			enemyCount++;
+		}
 		if(tempList.at(i)->isDead())
 		{
 			objectManager->removeObject(tempList.at(i));
@@ -39,6 +45,13 @@ void PhysicsManager::pollTotalEvents(float timer)
 		}
 		tempList.at(i)->update(timer);
 	}
+
+	if(enemyCount == 0){
+		waveClear = true;
+	}
+	else{
+		waveClear = false;
+	}
 }
 
 void PhysicsManager::pollAiShots(GameObjectFactory* factory,ObjectManager* manager){
@@ -51,6 +64,11 @@ void PhysicsManager::pollAiShots(GameObjectFactory* factory,ObjectManager* manag
 	}
 
  }
+
+bool PhysicsManager::spawnNextWave()
+{
+	return waveClear;
+}
 
 /*
  * Private Functions

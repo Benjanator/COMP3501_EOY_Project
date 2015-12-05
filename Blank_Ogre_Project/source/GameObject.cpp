@@ -50,7 +50,7 @@ GameObject::objectType GameObject::getType()
 
 Ogre::Vector3 GameObject::getAABBCenter()
 {
-	if(type == objectType::smallAlly_fighter){
+	if(type == objectType::smallAlly_fighter || type == objectType::rocket){
 		return m_pNode->_getDerivedPosition() + aabbCenter;
 	}
 	else{
@@ -60,7 +60,7 @@ Ogre::Vector3 GameObject::getAABBCenter()
 
 Ogre::Vector3 GameObject::getAABBSize()
 {
-	if(type == objectType::smallAlly_fighter){
+	if(type == objectType::smallAlly_fighter || type == objectType::rocket){
 		return aabbSize;
 	}
 	else{

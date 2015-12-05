@@ -23,30 +23,37 @@ GameObjectFactory::~GameObjectFactory(void)
 	scene_manager = 0;
 }
 
-GameObject* GameObjectFactory::createGameObject(GameObject::objectType _type)
+GameObject* GameObjectFactory::createGameObject(GameObject::objectType _type, Ogre::Vector3 _spawnPoint)
 {
 	GameObject* newObject = nullptr;
+	Ogre::SceneNode* sceneObject = nullptr;
+
 	switch(_type){
 	case GameObject::smallAlly_fighter:
-		newObject = new SmallShip(create_SAF());
+		sceneObject = create_SAF();
+		sceneObject->setPosition(_spawnPoint);
+		newObject = new SmallShip(sceneObject);
 		newObject->setTeam(0);
 		break;
 	case GameObject::smallEnemy_fighter:
-		//newObject = new SmallShip(create_SEF());
-		newObject = new Fighter(create_SEF());
+		sceneObject = create_SEF();
+		sceneObject->setPosition(_spawnPoint);
+		newObject = new Fighter(sceneObject);
 		newObject->setTeam(1);
 		break;
 	case GameObject::smallAlly_bomber:
 		//newObject->setTeam(0);
 		break;
 	case GameObject::smallEnemy_bomber:
-		//newObject = new SmallShip(create_SEB());
-		newObject = new Bomber(create_SEB());
+		sceneObject = create_SEB();
+		sceneObject->setPosition(_spawnPoint);
+		newObject = new Bomber(sceneObject);
 		newObject->setTeam(1);
 		break;
 	case GameObject::largeEnemy_cmd:
-		//newObject = new SmallShip(create_LEC());
-		newObject = new Carrier(create_LEC());
+		sceneObject = create_LEC();
+		sceneObject->setPosition(_spawnPoint);
+		newObject = new Carrier(sceneObject);
 		newObject->setTeam(1);
 		break;
 	case GameObject::largeAlly_cmd:
@@ -54,7 +61,9 @@ GameObject* GameObjectFactory::createGameObject(GameObject::objectType _type)
 	case GameObject::asteroid:
 		break;
 	case GameObject::platform:
-		newObject = new SmallShip(create_EP());
+		sceneObject = create_EP();
+		sceneObject->setPosition(_spawnPoint);
+		newObject = new SmallShip(sceneObject);
 		newObject->setTeam(1);
 		break;
 	default:
@@ -212,7 +221,7 @@ Ogre::SceneNode* GameObjectFactory::create_SEF()
 	//node->setOrientation((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Z)));
 	//node->rotate((Ogre::Quaternion(Ogre::Degree(-180),Ogre::Vector3::UNIT_Z)));
 	node->setScale(1.0,1.0,1.0);
-
+	//node->showBoundingBox(true);
 	//factory->CreateThrusterParticleGeometry(_objectName + "_Thruster", 200000);
 		
 	Ogre::SceneNode* child = factory->CreateParticleEntity("_Thruster","FireMaterial",node, Ogre::Vector3(1,1,0.1));
@@ -367,14 +376,13 @@ Ogre::SceneNode* GameObjectFactory::create_RCKT(Ogre::Quaternion shipOrientation
 	node->setScale(0.5,0.5,0.5);
 
 	//factory->CreateThrusterParticleGeometry(_objectName + "_Thruster", 200000);
-
+	//node->showBoundingBox(true);
 
 	Ogre::SceneNode* child = factory->CreateParticleEntity("_Thruster","FireMaterial",node, Ogre::Vector3(1,1,1));
 	child->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_Y)));
 	child->translate(5,0,0);
 
 	child = factory->CreateParticleEntity("_Explosion","ParticleMaterial",node, Ogre::Vector3(1,1,1));
-	
 	
 
 	factory->resetCounter();
