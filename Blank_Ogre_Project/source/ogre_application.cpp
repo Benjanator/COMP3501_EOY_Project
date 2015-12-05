@@ -71,7 +71,7 @@ void OgreApplication::Init(void){
 	InitEvents();
 	InitOIS();
 	InitViewport();
-	//InitOverlay();
+	InitOverlay();
 	LoadMaterials();
 	LoadModels();
 	LoadSkybox();
@@ -297,12 +297,33 @@ void OgreApplication::InitOverlay(void){
     panel->setDimensions(200, 100);
         
     // Create a text area and add it to the panel
-    Ogre::TextAreaOverlayElement* text_area = static_cast<Ogre::TextAreaOverlayElement*>(overlay_manager.createOverlayElement("TextArea", "MyTextArea"));
+	
+    Ogre::TextAreaOverlayElement* text_area = static_cast<Ogre::TextAreaOverlayElement*>(overlay_manager.createOverlayElement("TextArea", "MyTextArea_Score"));
     text_area->setMetricsMode(Ogre::GMM_PIXELS);
     text_area->setPosition(0, 0);
     text_area->setDimensions(200, 100);
     text_area->setFontName("MyFont");
 	text_area->setCaption("Score: " + Ogre::StringConverter::toString(Score));
+    text_area->setCharHeight(26);
+    text_area->setColour(Ogre::ColourValue(0.8, 0.0, 0.0));
+    panel->addChild(text_area);
+
+	text_area = static_cast<Ogre::TextAreaOverlayElement*>(overlay_manager.createOverlayElement("TextArea", "MyTextArea_Health"));
+    text_area->setMetricsMode(Ogre::GMM_PIXELS);
+    text_area->setPosition(0, 26);
+    text_area->setDimensions(200, 100);
+    text_area->setFontName("MyFont");
+	text_area->setCaption("Health: " + Ogre::StringConverter::toString(Score));
+    text_area->setCharHeight(26);
+    text_area->setColour(Ogre::ColourValue(0.8, 0.0, 0.0));
+    panel->addChild(text_area);
+
+	text_area = static_cast<Ogre::TextAreaOverlayElement*>(overlay_manager.createOverlayElement("TextArea", "MyTextArea_Reticule"));
+    text_area->setMetricsMode(Ogre::GMM_PIXELS);
+	text_area->setPosition(window_width_g/2-7, window_height_g/2);
+    text_area->setDimensions(50,50);
+    text_area->setFontName("MyFont");
+	text_area->setCaption("X");
     text_area->setCharHeight(26);
     text_area->setColour(Ogre::ColourValue(0.8, 0.0, 0.0));
     panel->addChild(text_area);
@@ -402,7 +423,7 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 	timer_ += fe.timeSinceLastFrame;
 
 	physicsManager->pollTotalEvents(timer_);
-	physicsManager->pollAiShots(factory);
+	physicsManager->pollAiShots(factory,objectManager);
 	player->updateCamera();
 
 	if (keyboard_->isKeyDown(OIS::KC_ESCAPE)){

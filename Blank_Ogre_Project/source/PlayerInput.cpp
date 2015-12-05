@@ -150,7 +150,7 @@ void PlayerInput::handleInput(void){
 		if(playerKeyboard_->isKeyDown(OIS::KC_X)){
 		if(xkeyUp == true){
 			temp = factory->createGameScatterShot(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
-			//temp->setTeam(0);
+			temp->setTeam(0);
 			objectManager->addObject(temp);
 			xkeyUp = false;
 			

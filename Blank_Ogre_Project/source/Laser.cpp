@@ -65,7 +65,7 @@ void Laser::collide(int damage){
 	collide();
 }
 
-void Laser::shoot(GameObjectFactory*){
+void Laser::shoot(GameObjectFactory* factory ,ObjectManager* manager, GameObject* player){
 	
 }
 

@@ -24,7 +24,7 @@ public:
 
 	void update(float _timer);
 	void collide();
-	void shoot(	GameObjectFactory* );
+	void shoot(	GameObjectFactory* ,ObjectManager*, GameObject*);
 
 	Ogre::Quaternion getOrientation();
 	Ogre::Vector3 getPosition();

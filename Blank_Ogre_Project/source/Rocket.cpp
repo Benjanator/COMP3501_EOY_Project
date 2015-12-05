@@ -70,7 +70,7 @@ void Rocket::collide(int damage){
 	collide();
 }
 
-void Rocket::shoot(GameObjectFactory*){
+void Rocket::shoot(GameObjectFactory* factory ,ObjectManager* manager, GameObject* player){
 	
 }
 

@@ -61,8 +61,15 @@ void Fighter::collide(int damage){
 	}
 }
 
-void Fighter::shoot(GameObjectFactory*){
-	
+void Fighter::shoot(GameObjectFactory* factory ,ObjectManager* manager,GameObject* player){
+
+	GameObjectFactory* tmpfctry = factory;
+	ObjectManager* tmpmngr = manager;
+	//GameObject* temp;
+
+	//m_pNode->lookAt((player->getNode()).getPosition(),Ogre::Node::TS_WORLD);	
+
+
 }
 
 void Fighter::move(void)

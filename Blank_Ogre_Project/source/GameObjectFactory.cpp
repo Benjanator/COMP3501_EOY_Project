@@ -207,6 +207,10 @@ Ogre::SceneNode* GameObjectFactory::create_SEF()
 
 	
 	node->setPosition(0.0,0.0 + 40.0 * SEF_id,-50.0);
+	//node->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_Z)));
+	//node->lookAt(Ogre::Vector3(0.0f,0.0f,0.0f),Ogre::Node::TS_WORLD);
+	//node->setOrientation((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Z)));
+	//node->rotate((Ogre::Quaternion(Ogre::Degree(-180),Ogre::Vector3::UNIT_Z)));
 	node->setScale(1.0,1.0,1.0);
 
 	//factory->CreateThrusterParticleGeometry(_objectName + "_Thruster", 200000);
@@ -242,6 +246,7 @@ Ogre::SceneNode* GameObjectFactory::create_SEB()
 	node->attachObject(entity);
 
 	node->setPosition(0.0,0.0 + 40 * SEB_id,-100.0);
+	node->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_Y)));
 	node->setScale(0.5,0.5,1.0);
 
 	//node->setScale(0.5,1.0,0.5);

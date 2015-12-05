@@ -6,8 +6,10 @@
 #include "OGRE/OgreEntity.h"
 
 
-
 class GameObjectFactory;
+class ObjectManager;
+
+
 
 class GameObject
 {
@@ -33,7 +35,7 @@ public:
 	virtual void update(float) = 0;
 	virtual void collide() = 0;
 	virtual void collide(int) = 0;
-	virtual void shoot(	GameObjectFactory* ) = 0;
+	virtual void shoot(	GameObjectFactory* ,ObjectManager*, GameObject* ) = 0;
 
 	Ogre::SceneNode& getNode();
 

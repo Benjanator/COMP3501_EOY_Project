@@ -168,7 +168,7 @@ void SmallShip::collide(int damage){
 	}
 }
 
-void SmallShip::shoot(GameObjectFactory*){
+void SmallShip::shoot(GameObjectFactory* factory ,ObjectManager* manager, GameObject* player){
 	
 }
 

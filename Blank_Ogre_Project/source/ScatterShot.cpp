@@ -161,7 +161,7 @@ void ScatterShot::collide(int damage){
 	collide();
 }
 
-void ScatterShot::shoot(GameObjectFactory*){
+void ScatterShot::shoot(GameObjectFactory* factory ,ObjectManager* manager, GameObject* player){
 	
 }
 
