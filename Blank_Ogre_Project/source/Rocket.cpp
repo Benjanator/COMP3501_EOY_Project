@@ -17,7 +17,7 @@ Rocket::Rocket(Ogre::SceneNode * newRocket,Ogre::Quaternion shipOrientation,Ogre
 	accel_Rate = 0.02;
 	personalTimer = 0;
 	hasExploded = false;
-	flyTime = 1000.0f;
+	flyTime = 100.0f;
 	aabbCenter = Ogre::Vector3(0.0f, 0.0f, 0.0f);
 	aabbSize = Ogre::Vector3(0.1f, 0.1f, 0.1f);
 	numMaterials = 1;
@@ -63,7 +63,8 @@ void Rocket::move(){
 
 void Rocket::collide(){
 	hasExploded = true;
-	
+	dead = true;
+	//std::cout<<"ROCKET"<< std::endl;
 }
 
 void Rocket::collide(int damage){

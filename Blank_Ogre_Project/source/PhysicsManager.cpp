@@ -89,8 +89,10 @@ bool PhysicsManager::testcollidableDistance(GameObject* _focus, GameObject* _col
 	}
 	if(_focus->getTeam() == _collidie->getTeam())
 	{
+	
 		return false;
 	}
+	
 
 	if( _focus->getAABBCenter().squaredDistance(_collidie->getAABBCenter()) < Math::Sqr((_focus->getAABBSize() * 0.5).length()) + Math::Sqr((_collidie->getAABBSize() * 0.5).length())){
 		Vector3 box1_center = _focus->getAABBCenter();
@@ -152,21 +154,19 @@ void PhysicsManager::elasticCollision(GameObject* _focus, GameObject* _collidie)
 	vel1 = vel1.dotProduct(dif);
 
 	//std::cout << "new:: " << vel1 << std::endl;
-
-	
-	std::cout << "focus:: " << _focus->getType() << std::endl;
-	std::cout << "collide:: " << _collidie->getType()  << std::endl;
 	
 
 	if(_focus->getType() == GameObject::objectType::rocket && _collidie->getType() == GameObject::objectType::smallEnemy_fighter || _focus->getType() == GameObject::objectType::smallEnemy_fighter && _collidie->getType() == GameObject::objectType::rocket ||
 		_focus->getType() == GameObject::objectType::rocket && _collidie->getType() == GameObject::objectType::smallEnemy_bomber || _focus->getType() == GameObject::objectType::smallEnemy_bomber && _collidie->getType() == GameObject::objectType::rocket ||
-		_focus->getType() == GameObject::objectType::rocket && _collidie->getType() == GameObject::objectType::largeEnemy_cmd || _focus->getType() == GameObject::objectType::largeEnemy_cmd && _collidie->getType() == GameObject::objectType::rocket){
+		_focus->getType() == GameObject::objectType::rocket && _collidie->getType() == GameObject::objectType::largeEnemy_cmd || _focus->getType() == GameObject::objectType::largeEnemy_cmd && _collidie->getType() == GameObject::objectType::rocket ||
+		_focus->getType() == GameObject::objectType::rocket && _collidie->getType() == GameObject::objectType::smallAlly_fighter|| _focus->getType() == GameObject::objectType::smallAlly_fighter && _collidie->getType() == GameObject::objectType::rocket){
 			_focus->collide(5);
 			_collidie->collide(5);
 			std::cout << "HIT WITH ROCKET: " << std::endl;
 	}else if(_focus->getType() == GameObject::objectType::laser && _collidie->getType() == GameObject::objectType::smallEnemy_fighter || _focus->getType() == GameObject::objectType::smallEnemy_fighter && _collidie->getType() == GameObject::objectType::laser ||
 		_focus->getType() == GameObject::objectType::laser && _collidie->getType() == GameObject::objectType::smallEnemy_bomber || _focus->getType() == GameObject::objectType::smallEnemy_bomber && _collidie->getType() == GameObject::objectType::laser ||
-		_focus->getType() == GameObject::objectType::laser && _collidie->getType() == GameObject::objectType::largeEnemy_cmd || _focus->getType() == GameObject::objectType::largeEnemy_cmd && _collidie->getType() == GameObject::objectType::laser){
+		_focus->getType() == GameObject::objectType::laser && _collidie->getType() == GameObject::objectType::largeEnemy_cmd || _focus->getType() == GameObject::objectType::largeEnemy_cmd && _collidie->getType() == GameObject::objectType::laser ||
+	   _focus->getType() == GameObject::objectType::laser && _collidie->getType() == GameObject::objectType::smallAlly_fighter|| _focus->getType() == GameObject::objectType::smallAlly_fighter && _collidie->getType() == GameObject::objectType::laser){
 				_focus->collide(1);
 				_collidie->collide(1);
 				std::cout << "HIT WITH LASER: " << std::endl;
