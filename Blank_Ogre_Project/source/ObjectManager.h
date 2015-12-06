@@ -20,11 +20,9 @@ public:
 	int getScore();
 	int getPlayerHealth();
 
-
 private:
 
 	int Score;
-
 	Ogre::SceneManager* scene_manager;
 
 	std::vector<GameObject*> objectList;

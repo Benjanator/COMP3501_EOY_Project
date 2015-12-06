@@ -5,6 +5,7 @@ ObjectManager::ObjectManager(Ogre::SceneManager* _sm)
 {
 	scene_manager = _sm;
 	Score = 0;
+
 }
 
 
@@ -26,7 +27,11 @@ int ObjectManager::getScore(){
 }
 
 int ObjectManager::getPlayerHealth(){
-	return objectList.at(0)->getHealth();
+	if(objectList.at(0)->getType() == GameObject::objectType::smallAlly_fighter ){
+	  return objectList.at(0)->getHealth();
+	}else{
+	  return 0;
+	}
 }
 
 

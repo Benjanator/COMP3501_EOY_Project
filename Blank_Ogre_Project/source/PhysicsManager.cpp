@@ -178,7 +178,7 @@ void PhysicsManager::elasticCollision(GameObject* _focus, GameObject* _collidie)
 				_collidie->collide(2);
 				std::cout << "HIT WITH SCATTERSHOT: " << std::endl;
 	}else{
-	_focus->collide();
-	_collidie->collide();
+		_focus->collide();
+		_collidie->collide();
 	}
 }
