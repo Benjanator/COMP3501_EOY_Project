@@ -476,9 +476,9 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 	  	
 	  overlay_manager.getOverlayElement( "MyTextArea_Score")->setCaption("Score: " + Ogre::StringConverter::toString(objectManager->getScore()));
 	  overlay_manager.getOverlayElement( "MyTextArea_Health")->setCaption("Health: " + Ogre::StringConverter::toString(objectManager->getPlayerHealth()));
-	  overlay_manager.getOverlayElement("MyTextArea_Rocket_CD")->setCaption("Rocket Cooldown: " + Ogre::StringConverter::toString(player->getRocketCD()));
-	  overlay_manager.getOverlayElement("MyTextArea_Laser_CD")->setCaption("Laser Cooldown: "  + Ogre::StringConverter::toString(player->getLaserCD()));
-	  overlay_manager.getOverlayElement("MyTextArea_Scatter_CD")->setCaption("ScatterShot Cooldown: "  + Ogre::StringConverter::toString(player->getScatterCD()));
+	  overlay_manager.getOverlayElement("MyTextArea_Rocket_CD")->setCaption("Rocket Cooldown: " + Ogre::StringConverter::toString(static_cast<int>(player->getRocketCD())));
+	  overlay_manager.getOverlayElement("MyTextArea_Laser_CD")->setCaption("Laser Cooldown: "  + Ogre::StringConverter::toString(static_cast<int>(player->getLaserCD())));
+	  overlay_manager.getOverlayElement("MyTextArea_Scatter_CD")->setCaption("ScatterShot Cooldown: "  + Ogre::StringConverter::toString(static_cast<int>(player->getScatterCD())));
 	}else{
 
 	  overlay_manager.getOverlayElement("MyTextArea_GAMEOVER")->setCaption("GAME OVER");

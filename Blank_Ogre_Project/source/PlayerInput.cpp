@@ -182,6 +182,9 @@ void PlayerInput::handleInput(void){
 
 	if(playerKeyboard_->isKeyDown(OIS::KC_P)){
 		playerShip->fullStop();
+		  reloadingScatter = 50.0f;
+		  reloadingRocket = 50.0f;
+		   reloadingLaser = 50.0f;
 	}
 
 
