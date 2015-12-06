@@ -303,7 +303,7 @@ void OgreApplication::InitOverlay(void){
     text_area->setPosition(0, 0);
     text_area->setDimensions(200, 100);
     text_area->setFontName("MyFont");
-	text_area->setCaption("Score: " + Ogre::StringConverter::toString(Score));
+	text_area->setCaption("Score: ");
     text_area->setCharHeight(26);
     text_area->setColour(Ogre::ColourValue(0.8, 0.0, 0.0));
     panel->addChild(text_area);
@@ -313,7 +313,7 @@ void OgreApplication::InitOverlay(void){
     text_area->setPosition(0, 26);
     text_area->setDimensions(200, 100);
     text_area->setFontName("MyFont");
-	text_area->setCaption("Health: " + Ogre::StringConverter::toString(Score));
+	text_area->setCaption("Health: ");
     text_area->setCharHeight(26);
     text_area->setColour(Ogre::ColourValue(0.8, 0.0, 0.0));
     panel->addChild(text_area);
@@ -324,6 +324,36 @@ void OgreApplication::InitOverlay(void){
     text_area->setDimensions(50,50);
     text_area->setFontName("MyFont");
 	text_area->setCaption("X");
+    text_area->setCharHeight(26);
+    text_area->setColour(Ogre::ColourValue(0.8, 0.0, 0.0));
+    panel->addChild(text_area);
+
+	text_area = static_cast<Ogre::TextAreaOverlayElement*>(overlay_manager.createOverlayElement("TextArea", "MyTextArea_Rocket_CD"));
+    text_area->setMetricsMode(Ogre::GMM_PIXELS);
+	text_area->setPosition(0, 52);
+    text_area->setDimensions(200, 100);
+    text_area->setFontName("MyFont");
+	text_area->setCaption("Rocket Cooldown: ");
+    text_area->setCharHeight(26);
+    text_area->setColour(Ogre::ColourValue(0.8, 0.0, 0.0));
+    panel->addChild(text_area);
+
+	text_area = static_cast<Ogre::TextAreaOverlayElement*>(overlay_manager.createOverlayElement("TextArea", "MyTextArea_Laser_CD"));
+    text_area->setMetricsMode(Ogre::GMM_PIXELS);
+	text_area->setPosition(0, 78);
+    text_area->setDimensions(200, 100);
+    text_area->setFontName("MyFont");
+	text_area->setCaption("Laser Cooldown: ");
+    text_area->setCharHeight(26);
+    text_area->setColour(Ogre::ColourValue(0.8, 0.0, 0.0));
+    panel->addChild(text_area);
+
+	text_area = static_cast<Ogre::TextAreaOverlayElement*>(overlay_manager.createOverlayElement("TextArea", "MyTextArea_Scatter_CD"));
+    text_area->setMetricsMode(Ogre::GMM_PIXELS);
+	text_area->setPosition(0, 104);
+    text_area->setDimensions(200, 100);
+    text_area->setFontName("MyFont");
+	text_area->setCaption("ScatterShot Cooldown: ");
     text_area->setCharHeight(26);
     text_area->setColour(Ogre::ColourValue(0.8, 0.0, 0.0));
     panel->addChild(text_area);
@@ -429,6 +459,14 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 	physicsManager->pollTotalEvents(timer_);
 	physicsManager->pollAiShots(factory,objectManager);
 	player->updateCamera();
+
+	Ogre::OverlayManager& overlay_manager = Ogre::OverlayManager::getSingleton();
+	overlay_manager.getOverlayElement( "MyTextArea_Score")->setCaption("Score: " + Ogre::StringConverter::toString(objectManager->getScore()));
+	overlay_manager.getOverlayElement( "MyTextArea_Health")->setCaption("Health: " + Ogre::StringConverter::toString(objectManager->getPlayerHealth()));
+	overlay_manager.getOverlayElement("MyTextArea_Rocket_CD")->setCaption("Rocket Cooldown: " + Ogre::StringConverter::toString(player->getRocketCD()));
+	overlay_manager.getOverlayElement("MyTextArea_Laser_CD")->setCaption("Laser Cooldown: "  + Ogre::StringConverter::toString(player->getLaserCD()));
+	overlay_manager.getOverlayElement("MyTextArea_Scatter_CD")->setCaption("ScatterShot Cooldown: "  + Ogre::StringConverter::toString(player->getScatterCD()));
+	
 
 	if (keyboard_->isKeyDown(OIS::KC_ESCAPE)){
 		ogre_root_->shutdown();

@@ -17,7 +17,7 @@ Rocket::Rocket(Ogre::SceneNode * newRocket,Ogre::Quaternion shipOrientation,Ogre
 	accel_Rate = 0.02;
 	personalTimer = 0;
 	hasExploded = false;
-	flyTime = 100.0f;
+	flyTime = 500.0f;
 	aabbCenter = Ogre::Vector3(0.0f, 0.0f, 0.0f);
 	aabbSize = Ogre::Vector3(0.1f, 0.1f, 0.1f);
 	numMaterials = 1;

@@ -36,7 +36,9 @@
 		factory = oFactory;
 		objectManager = oManager;
 
-
+		reloadingRocket = 0.0f;
+		reloadingLaser = 0.0f;
+		reloadingScatter = 0.0f;
 
 		player_camera = scene_manager->createCamera("MyCamera");
         camera_scene_node = root_scene_node->createChildSceneNode("MyCameraNode");
@@ -120,11 +122,14 @@ void PlayerInput::handleInput(void){
 
 	if(playerMouse_->getMouseState().buttonDown(OIS::MB_Left)){
 		if(mouseLeft == true){
-			temp = factory->createGameLaser(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
-			temp->setTeam(0);
-			objectManager->addObject(temp);
-			mouseLeft = false;
-			lasrLR = !lasrLR;
+			if(reloadingLaser <= 0){
+			  temp = factory->createGameLaser(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
+			  temp->setTeam(0);
+			  objectManager->addObject(temp);
+			  mouseLeft = false;
+			  lasrLR = !lasrLR;
+			  reloadingLaser = 1.0f;
+			}
 		}
 	}else{
 		mouseLeft = true;
@@ -132,11 +137,13 @@ void PlayerInput::handleInput(void){
 
 	if(playerKeyboard_->isKeyDown(OIS::KC_C)){
 		if(ckeyUp == true){
-			temp = factory->createGameRocket(playerShip->getOrientation(),playerShip->getPosition(),playerShip->getMotionDirection());
-			temp->setTeam(0);
-			objectManager->addObject(temp);
-			ckeyUp = false;
-			
+			if(reloadingRocket <= 0){
+			  temp = factory->createGameRocket(playerShip->getOrientation(),playerShip->getPosition(),playerShip->getMotionDirection());
+			  temp->setTeam(0);
+			  objectManager->addObject(temp);
+			  ckeyUp = false;
+			  reloadingRocket = 10.0f;
+			}
 		}
 	}else{
 		ckeyUp = true;
@@ -144,18 +151,32 @@ void PlayerInput::handleInput(void){
 
 		if(playerKeyboard_->isKeyDown(OIS::KC_X)){
 		if(xkeyUp == true){
-			temp = factory->createGameScatterShot(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
-			temp->setTeam(0);
-			objectManager->addObject(temp);
-			xkeyUp = false;
+			if(reloadingScatter <= 0){
+			  temp = factory->createGameScatterShot(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
+			  temp->setTeam(0);
+			  objectManager->addObject(temp);
+			  xkeyUp = false;
+			  reloadingScatter = 3.0f;
+			}
 			
 		}
 	}else{
 		xkeyUp = true;
 	}
 	
+		
+	if(reloadingLaser  > 0.0f){
+		reloadingLaser-= 0.1f;
+	}
 
-	
+	if(reloadingRocket > 0.0f){
+		reloadingRocket-= 0.1f;
+	}
+
+	if(reloadingScatter > 0.0f){
+		reloadingScatter-= 0.1f;
+	}
+
 
 	Ogre::Radian rot_factor(Ogre::Math::PI / 180); // Camera rotation with directional thrusters
 
@@ -231,4 +252,33 @@ void PlayerInput::bindCamera(SmallShip* _ship, Ogre::Node* _node)
 	Ogre::Node* temp = root_scene_node->removeChild("MyCameraNode");
 	
 	_node->addChild(temp);
+}
+
+float PlayerInput::getRocketCD()
+{
+	if(reloadingRocket > 0){
+		return reloadingRocket;
+	}else{
+		return 0;	
+	}
+}
+
+float PlayerInput::getLaserCD()
+{
+	if(reloadingLaser > 0){
+		return reloadingLaser;
+	}else{
+		return 0;	
+	}
+	
+}
+
+float PlayerInput::getScatterCD()
+{
+	if(reloadingScatter > 0){
+		return reloadingScatter;
+	}else{
+		return 0;	
+	}
+	
 }

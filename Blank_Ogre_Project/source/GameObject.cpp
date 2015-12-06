@@ -49,6 +49,11 @@ GameObject::objectType GameObject::getType()
 	return type;
 }
 
+int GameObject::getHealth()
+{
+	return health;
+}
+
 Ogre::Vector3 GameObject::getAABBCenter()
 {
 	if(type == objectType::smallAlly_fighter || type == objectType::rocket){

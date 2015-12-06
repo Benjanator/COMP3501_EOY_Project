@@ -28,8 +28,7 @@ public:
 
 	Ogre::Quaternion getOrientation();
 	Ogre::Vector3 getPosition();
-
-	
+	int getHealth();
 
 
 protected:
@@ -56,7 +55,6 @@ protected:
 
 private:
 
-	int health;
 	bool hasExploded;
 	float personalTimer;
 };

@@ -42,10 +42,18 @@ public:
 	void handleInput(void);
 	void bindCamera(SmallShip*, Ogre::Node*);
 
+
+	float reloadingRocket;
+	float reloadingLaser;
+	float reloadingScatter;
+
 	Ogre::SceneNode* getFirstNode(){
 		return camera_first_person_node;
 	}
 
+	float getRocketCD();
+	float getLaserCD();
+	float getScatterCD();
 
 };
 

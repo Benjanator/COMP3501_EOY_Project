@@ -6,7 +6,7 @@ Carrier::Carrier(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 {
 	this->type = largeEnemy_cmd;
 		m_pNode = newShip;
-
+	
 
 	degree = 0.0f;
 	hasExploded = false;
@@ -14,7 +14,7 @@ Carrier::Carrier(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
 	numMaterials = 3;
 	velocity = Ogre::Vector3(0.0f, 0.0f, 0.0f);
-	health = 10;
+	health = 1500;
 	personalTimer = 0;
 
 	reloading = 0.0f;
@@ -76,7 +76,7 @@ void Carrier::shoot(GameObjectFactory* factory ,ObjectManager* manager, GameObje
 	  manager->addObject(temp);
 	  reloading = 10.0f;
 	}else{
-	  reloading -= -0.1f;
+	  reloading -= 0.1f;
 	}
 	
 	//m_pNode->lookAt((player->getNode()).getPosition(),Ogre::Node::TS_PARENT,Ogre::Vector3::UNIT_Y);		

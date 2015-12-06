@@ -30,7 +30,7 @@ SmallShip::SmallShip(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
 	numMaterials = 4;
-	health = 100000;
+	health = 1000;
 }
 
 
@@ -196,4 +196,5 @@ Ogre::Quaternion SmallShip::getOrientation(){
 Ogre::Vector3 SmallShip::getPosition(){
 	return m_pNode->getPosition();
 }
+
 

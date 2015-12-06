@@ -45,18 +45,22 @@ public:
 	bool isIndestructable();
 	bool isDead();
 	int getTeam();
+	int getHealth();
+
 	void setTeam(int);
 	objectType getType();
 
 	Ogre::Vector3 getAABBCenter();
 	Ogre::Vector3 getAABBSize();
 
+	
+
 protected:
 	Ogre::SceneNode* m_pNode;
 
 	objectType type;
 	int team;
-
+	int health;
 	bool indestructable;
 	bool hasExploded;
 	bool dead;

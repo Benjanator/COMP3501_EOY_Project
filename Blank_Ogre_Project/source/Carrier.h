@@ -27,7 +27,7 @@ public:
 	Ogre::Vector3 velocity;
 
 private:
-	int health;
+
 	bool hasExploded;
 	float personalTimer;
 };

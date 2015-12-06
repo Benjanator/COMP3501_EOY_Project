@@ -21,7 +21,7 @@ public:
 	void move();
 
 private:
-	int health;
+
 	bool hasExploded;
 	float personalTimer;
 	
