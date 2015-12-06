@@ -60,6 +60,7 @@ protected:
 	bool indestructable;
 	bool hasExploded;
 	bool dead;
+	float reloading;
 	Ogre::Vector3 drift_Direction;
 	Ogre::Vector3 forward_Direction;
 

@@ -1,5 +1,6 @@
 #include "Bomber.h"
-
+#include "GameObjectFactory.h"
+#include "ObjectManager.h"
 
 Bomber::Bomber(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 {
@@ -11,6 +12,8 @@ Bomber::Bomber(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
 	health = 5;
+
+    reloading = 5.0f;
 }
 
 
@@ -57,11 +60,22 @@ void Bomber::collide(int damage){
 }
 
 void Bomber::shoot(GameObjectFactory* factory ,ObjectManager* manager, GameObject* player){
-	GameObjectFactory* tmpfctry = factory;
-	ObjectManager* tmpmngr = manager;
-	//GameObject* temp;
+	
 
+	GameObject* temp;
+	std::srand(std::time(0));
 	m_pNode->lookAt((player->getNode()).getPosition(),Ogre::Node::TS_PARENT,Ogre::Vector3::UNIT_X);	
+
+	if(reloading <= 0.0){
+	  temp = factory->createGameLaser(m_pNode->getOrientation() * (Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_Y)),m_pNode->getPosition(),true);
+	  temp->setTeam(1);
+	  manager->addObject(temp);
+	  reloading = 30.0f;
+	}else{
+	  reloading -= Ogre::Math::RangeRandom(0.5f,0.1f);
+	}
+
+	
 }
 
 

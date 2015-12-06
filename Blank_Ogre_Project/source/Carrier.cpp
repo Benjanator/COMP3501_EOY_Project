@@ -1,5 +1,6 @@
 #include "Carrier.h"
-
+#include "GameObjectFactory.h"
+#include "ObjectManager.h"
 
 Carrier::Carrier(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 {
@@ -15,6 +16,8 @@ Carrier::Carrier(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 	velocity = Ogre::Vector3(0.0f, 0.0f, 0.0f);
 	health = 10;
 	personalTimer = 0;
+
+	reloading = 0.0f;
 }
 
 
@@ -62,11 +65,21 @@ void Carrier::collide(int damage){
 }
 
 void Carrier::shoot(GameObjectFactory* factory ,ObjectManager* manager, GameObject* player){
-	GameObjectFactory* tmpfctry = factory;
-	ObjectManager* tmpmngr = manager;
-	//GameObject* temp;
 
-	m_pNode->lookAt((player->getNode()).getPosition(),Ogre::Node::TS_PARENT,Ogre::Vector3::UNIT_Y);		
+	
+	GameObject* temp;
+	std::srand(std::time(0));
+
+	if(reloading <= 0.0){
+	  temp = factory->createGameScatterShot(m_pNode->getOrientation(),m_pNode->getPosition(),true);
+	  temp->setTeam(1);
+	  manager->addObject(temp);
+	  reloading = 10.0f;
+	}else{
+	  reloading -= -0.1f;
+	}
+	
+	//m_pNode->lookAt((player->getNode()).getPosition(),Ogre::Node::TS_PARENT,Ogre::Vector3::UNIT_Y);		
 }
 
 void Carrier::turn_right(Ogre::Degree _degree)

@@ -217,10 +217,11 @@ Ogre::SceneNode* GameObjectFactory::create_SEF()
 	
 	node->setPosition(0.0,0.0 + 40.0 * SEF_id,-50.0);
 	//node->lookAt(Ogre::Vector3(0.0,0.0 + 40.0 * SEF_id,-10.0),Ogre::Node::TS_WORLD);
-	//node->setDirection(Ogre::Vector3(0,1,0),Ogre::Node::TS_WORLD,Ogre::Vector3::NEGATIVE_UNIT_Z);
-	//node->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_X)));
-	node->rotate((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Y)),Ogre::Node::TS_WORLD);
-	node->rotate((Ogre::Quaternion(Ogre::Degree(90),Ogre::Vector3::UNIT_X)),Ogre::Node::TS_WORLD);
+	//node->setDirection(node->getPosition().NEGATIVE_UNIT_Z,Ogre::Node::TS_WORLD,Ogre::Vector3::UNIT_Y);
+	//node->rotate((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_X)));
+	//node->setOrientation(Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_X));
+	//node->rotate((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Y)),Ogre::Node::TS_WORLD);
+	//node->rotate((Ogre::Quaternion(Ogre::Degree(90),Ogre::Vector3::UNIT_X)),Ogre::Node::TS_WORLD);
 	
 	//node->lookAt(Ogre::Vector3(0.0,0.0,0.0),Ogre::Node::TS_WORLD);
 

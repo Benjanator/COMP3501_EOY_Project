@@ -1,17 +1,22 @@
 #include "Fighter.h"
+#include "GameObjectFactory.h"
+#include "ObjectManager.h"
 
 Fighter::Fighter(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 {
 	this->type = smallEnemy_fighter;
 		m_pNode = newShip;
 	
-
+	//m_pNode->setDirection(Ogre::Vector3::UNIT_Z,Ogre::Node::TS_LOCAL); 
 	hasExploded = false;
 	personalTimer = 0;
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
 	numMaterials = 2;
 	health = 5;
+
+	
+	reloading = 50.0f;
 }
 
 
@@ -63,13 +68,34 @@ void Fighter::collide(int damage){
 
 void Fighter::shoot(GameObjectFactory* factory ,ObjectManager* manager,GameObject* player){
 
-	GameObjectFactory* tmpfctry = factory;
-	ObjectManager* tmpmngr = manager;
-	//GameObject* temp;
+	
+	GameObject* temp;
+	
+
 	Ogre::Vector3 playerPos = (player->getNode()).getPosition();
+	m_pNode->lookAt((player->getNode()).getPosition(),Ogre::Node::TS_WORLD,Ogre::Vector3::UNIT_Y);	
 
-	m_pNode->lookAt((player->getNode()).getPosition(),Ogre::Node::TS_PARENT,Ogre::Vector3::UNIT_Y);	
+	if(reloading <= 0.0){
+	  temp = factory->createGameRocket(m_pNode->getOrientation() * (Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::NEGATIVE_UNIT_X)),m_pNode->getPosition(),this->getMotionDirection());
+      temp->setTeam(1);
+      manager->addObject(temp);
+	  reloading = 50.0f;
+	}else{
+	  reloading -=  Ogre::Math::RangeRandom(0.2f,0.1f);
+	  
+	}
+	
 
+	
+
+
+
+
+	/*
+	forward_Direction = m_pNode->_getDerivedOrientation() *  Ogre::Vector3::UNIT_Y;
+	drift_Direction = forward_Direction ;
+	m_pNode->translate(drift_Direction*0.1);
+	*/
 }
 
 void Fighter::move(void)

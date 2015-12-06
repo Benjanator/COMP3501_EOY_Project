@@ -5,6 +5,7 @@ GameObject::GameObject(objectType _type)
 {
 	type = _type;
 	dead = false;
+	drift_Direction = Ogre::Vector3(0.0f);
 }
 
 
