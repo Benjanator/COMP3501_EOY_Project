@@ -160,6 +160,14 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	entity->setMaterialName("ShinyGunTextureMaterial");
 	child->attachObject(entity);
 
+	entity =  scene_manager->createEntity(_objectName + "_Radar", "Radar.mesh");
+	child = node->createChildSceneNode(_objectName + "_Radar");
+	entity->setMaterialName("ShinyFighterTextureMaterial");
+	child->attachObject(entity);
+	child->setScale(0.05f,0.05f,0.05f);
+	//child->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_Y)));
+	child->translate(-1.5f, 0.5f, -5.0f);
+
 
 	//factory->CreateThrusterParticleGeometry(_objectName + "_Thruster", 200000);
 

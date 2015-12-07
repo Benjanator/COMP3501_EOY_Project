@@ -127,7 +127,9 @@ void SmallShip::update(float timer_)
 {
 	Ogre::MaterialPtr mat;
 	//Ogre::Entity* mEntity =(Ogre::Entity*) m_pNode->getChild("");
-	
+	Ogre::Node* radar = m_pNode->getChild(m_pNode->getName() + "_Radar");
+	radar->rotate((Ogre::Quaternion(Ogre::Degree(-0.5),Ogre::Vector3::UNIT_Y)));
+
 	for(int i = 1; i<=numMaterials; i++){
 		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Thruster_FireMaterial_"+ Ogre::StringConverter::toString(i)));
 		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_);
@@ -164,7 +166,7 @@ void SmallShip::collide(){
 void SmallShip::collide(int damage){
 	health-=damage;
 	if(health <= 0){
-		std::cout<<"DEAD"<<std::endl;
+		//std::cout<<"DEAD"<<std::endl;
 		hasExploded = true;
 
 	}
