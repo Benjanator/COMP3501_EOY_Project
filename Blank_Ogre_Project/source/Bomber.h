@@ -12,7 +12,7 @@ public:
 
 	Ogre::SceneNode& getNode();
 
-	void update(float _timer);
+	void update(float _timer, ObjectManager*);
 	void collide();
 	void collide(int);
 	void shoot(GameObjectFactory* ,ObjectManager *, GameObject* );
@@ -20,11 +20,12 @@ public:
 	protected:
 
 
-	void move();
+	void move(Ogre::Vector3);
 
 private:
 
 	bool hasExploded;
 	float personalTimer;
+	float warpTimer;
 };
 

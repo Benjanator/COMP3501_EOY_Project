@@ -34,7 +34,7 @@ public:
 
 	int numMaterials;
 
-	virtual void update(float) = 0;
+	virtual void update(float,ObjectManager*) = 0;
 	virtual void collide() = 0;
 	virtual void collide(int) = 0;
 	virtual void shoot(	GameObjectFactory* ,ObjectManager*, GameObject* ) = 0;

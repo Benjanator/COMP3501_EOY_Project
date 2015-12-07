@@ -108,7 +108,7 @@ void SmallShip::translate(Ogre::Vector3 _up, Ogre::Vector3 _right, Ogre::Vector3
 	m_pNode->needUpdate();
 }
 
-void SmallShip::update(float timer_)
+void SmallShip::update(float timer_,ObjectManager* manager)
 {
 	Ogre::MaterialPtr mat;
 	

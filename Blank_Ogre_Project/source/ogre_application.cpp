@@ -466,7 +466,7 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 
 	timer_ += fe.timeSinceLastFrame;
 
-	physicsManager->pollTotalEvents(timer_);
+	physicsManager->pollTotalEvents(timer_, objectManager);
 	physicsManager->pollAiShots(factory,objectManager);
 
 	Ogre::OverlayManager& overlay_manager = Ogre::OverlayManager::getSingleton();

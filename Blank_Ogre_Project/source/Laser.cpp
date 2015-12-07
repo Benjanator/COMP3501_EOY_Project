@@ -31,7 +31,7 @@ Laser::~Laser(void)
 {
 }
 
-void Laser::update(float timer_)
+void Laser::update(float timer_,ObjectManager* manager)
 {
 	
 	Ogre::MaterialPtr mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Laser_Fire2Material_"+ Ogre::StringConverter::toString(1)));

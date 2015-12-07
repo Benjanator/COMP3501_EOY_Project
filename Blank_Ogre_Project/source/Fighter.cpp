@@ -29,7 +29,7 @@ Ogre::SceneNode& Fighter::getNode()
 	return *m_pNode;
 }
 
-void Fighter::update(float timer_)
+void Fighter::update(float timer_, ObjectManager* manager)
 {
 	
 	Ogre::MaterialPtr mat;
@@ -48,6 +48,8 @@ void Fighter::update(float timer_)
 			dead = true;
 		}
 	}
+
+	std::vector<GameObject*> tempList = manager->getObjectList();
 
 	
 	move();
@@ -89,7 +91,6 @@ void Fighter::shoot(GameObjectFactory* factory ,ObjectManager* manager,GameObjec
 
 void Fighter::move(void)
 {
-	
-	
+	m_pNode->translate(m_pNode->getOrientation() * Ogre::Vector3::UNIT_Y);
 }
 

@@ -14,7 +14,7 @@ public:
 	void move();
 
 	void particle();
-	void update(float _timer);
+	void update(float _timer,ObjectManager*);
 	void collide();
 	void collide(int);
 	void shoot(GameObjectFactory* ,ObjectManager*, GameObject* );

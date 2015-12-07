@@ -12,7 +12,7 @@ public:
 
 	Ogre::SceneNode& getNode();
 
-	void update(float _timer);
+	void update(float _timer, ObjectManager*);
 	void collide();
 	void collide(int);
 	void shoot(	GameObjectFactory* ,ObjectManager*, GameObject* player);

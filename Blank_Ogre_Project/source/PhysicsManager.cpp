@@ -13,7 +13,7 @@ PhysicsManager::~PhysicsManager(void)
 	objectManager = 0;
 }
 
-void PhysicsManager::pollTotalEvents(float timer)
+void PhysicsManager::pollTotalEvents(float timer, ObjectManager* manager)
 {
 	std::vector<GameObject*> tempList = objectManager->getObjectList();
 	int enemyCount = 0;
@@ -43,7 +43,7 @@ void PhysicsManager::pollTotalEvents(float timer)
 				
 			}
 		}
-		tempList.at(i)->update(timer);
+		tempList.at(i)->update(timer,manager);
 	}
 
 	if(enemyCount == 0){

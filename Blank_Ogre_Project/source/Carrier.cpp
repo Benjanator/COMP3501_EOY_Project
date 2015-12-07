@@ -30,7 +30,7 @@ Ogre::SceneNode& Carrier::getNode()
 	return *m_pNode;
 }
 
-void Carrier::update(float timer_)
+void Carrier::update(float timer_, ObjectManager* manager)
 {
 
 	Ogre::MaterialPtr mat;
