@@ -23,9 +23,6 @@ public:
 	void turn_right(Ogre::Degree);
 	void turn_left(Ogre::Degree);
 
-	float degree;
-	Ogre::Vector3 velocity;
-
 private:
 
 	bool hasExploded;

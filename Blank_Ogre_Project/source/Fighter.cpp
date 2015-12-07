@@ -91,6 +91,6 @@ void Fighter::shoot(GameObjectFactory* factory ,ObjectManager* manager,GameObjec
 
 void Fighter::move(void)
 {
-	m_pNode->translate(m_pNode->getOrientation() * Ogre::Vector3::UNIT_Y);
+	m_pNode->translate(m_pNode->getOrientation() * Ogre::Vector3::UNIT_Y );
 }
 
