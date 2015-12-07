@@ -34,8 +34,8 @@ void Carrier::update(float timer_)
 {
 
 	Ogre::MaterialPtr mat;
-	//Ogre::Entity* mEntity =(Ogre::Entity*) m_pNode->getChild("");
-	
+
+
 	for(int i = 1; i<=numMaterials; i++){
 		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Thruster_FireMaterial_"+ Ogre::StringConverter::toString(i)));
 		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_);
@@ -79,7 +79,7 @@ void Carrier::shoot(GameObjectFactory* factory ,ObjectManager* manager, GameObje
 	  reloading -= 0.1f;
 	}
 	
-	//m_pNode->lookAt((player->getNode()).getPosition(),Ogre::Node::TS_PARENT,Ogre::Vector3::UNIT_Y);		
+		
 }
 
 void Carrier::turn_right(Ogre::Degree _degree)

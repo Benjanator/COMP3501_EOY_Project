@@ -63,13 +63,7 @@ void ObjectManager::removeObject(GameObject* _obj)
 	}
 }
 
-/*
-void ObjectManager::updateObjects()
-{
-	for(vector<GameObject*>::iterator it = objectList.begin(); it != objectList.end(); ++it){
-		(*it)->update();
-	}
-}*/
+
 
 void ObjectManager::cleanDestroyedObjects()
 {

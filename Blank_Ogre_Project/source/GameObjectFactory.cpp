@@ -102,13 +102,11 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 
 	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Base_Ship.mesh");
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
-	//entity->setMaterialName("ShinyMaterial");
 	entity->setMaterialName("ShinyShipTextureMaterial");
 	node->attachObject(entity);
 
 	node->setPosition(0.0f,0.0f,0.0f);
 	node->setScale(1.0,1.0,1.0);
-	//node->showBoundingBox(true);
 
 	//cockpit
 	entity = scene_manager->createEntity(_objectName + "_Cockpit", "Cockpit.mesh");
@@ -187,19 +185,6 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	child->setOrientation((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Y)));
 	child->translate(2.4f,-0.5f,3.0f);
 
-	
-	//for(int i = 0; i <= 25; i++){
-	 //factory ->CreateSplineControlPoints("ControlPoints"+ Ogre::StringConverter::toString(i), 64, "SplineParticleMaterial");
-	 //child = factory->CreateParticleEntity("_SField","SplineParticleMaterial",node, Ogre::Vector3(0.2,0.2,0.2));
-	 //child->translate(0.0f,0.0f,-2.0f);
-	//}
-
-
-	//child->translate(1.66224f, 0.21f, 0.005f);
-	
-	//
-	// reset Orientation
-	//
 
 	
 	child = factory->CreateParticleEntity("_Explosion","ParticleMaterial",node, Ogre::Vector3(1,1,1));
@@ -224,14 +209,7 @@ Ogre::SceneNode* GameObjectFactory::create_SEF()
 
 	
 	node->setPosition(0.0,0.0 + 40.0 * SEF_id,-50.0);
-	//node->lookAt(Ogre::Vector3(0.0,0.0 + 40.0 * SEF_id,-10.0),Ogre::Node::TS_WORLD);
-	//node->setDirection(node->getPosition().NEGATIVE_UNIT_Z,Ogre::Node::TS_WORLD,Ogre::Vector3::UNIT_Y);
-	//node->rotate((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_X)));
-	//node->setOrientation(Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_X));
-	//node->rotate((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Y)),Ogre::Node::TS_WORLD);
-	//node->rotate((Ogre::Quaternion(Ogre::Degree(90),Ogre::Vector3::UNIT_X)),Ogre::Node::TS_WORLD);
 	
-	//node->lookAt(Ogre::Vector3(0.0,0.0,0.0),Ogre::Node::TS_WORLD);
 
 	node->setScale(1.0,1.0,1.0);
 	//node->showBoundingBox(true);

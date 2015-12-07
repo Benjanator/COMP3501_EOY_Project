@@ -52,7 +52,6 @@
 
 		player_camera->setPosition(camera_position_g);
 		player_camera->lookAt(camera_look_at_g);
-		//camera->setFixedYawAxis(true, camera_up_g);
 		player_camera->setFixedYawAxis(false);
 		camera_scene_node->setFixedYawAxis(false);
 
@@ -107,16 +106,11 @@ void PlayerInput::handleInput(void){
 		Ogre::Quaternion pitchQuat(Ogre::Radian(playerMouse_->getMouseState().Y.rel * -0.01f),Ogre::Vector3::UNIT_X);
 		Ogre::Quaternion yawQuat(Ogre::Radian(playerMouse_->getMouseState().X.rel * -0.01f),Ogre::Vector3::UNIT_Y);
 		Ogre::Quaternion rotQuat =  pitchQuat * yawQuat;
-		//camera_first_person_node->rotate(pitchQuat,Ogre::Node::TS_LOCAL); //this allows us to have no roll when pitch and yaw are combined
-		//camera_first_person_node->rotate(yawQuat,Ogre::Node::TS_WORLD); //  this will also cause a forced lock
+		
 
 		playerShip->pitch(Ogre::Radian(playerMouse_->getMouseState().Y.rel * -0.01f));
 		playerShip->yaw(Ogre::Radian(playerMouse_->getMouseState().X.rel * -0.01f));
-		
-		//camera_first_person_node->rotate(rotQuat); // quaternion camera with rotations embedded from pitch and yaws
-
-		//camera_first_person_node->pitch(Ogre::Radian(playerMouse_->getMouseState().Y.rel * -0.01f));
-		///camera_first_person_node->yaw(Ogre::Radian(playerMouse_->getMouseState().X.rel * -0.01f));
+		;
 	
 	}
 

@@ -13,12 +13,7 @@ int main(void){
 
 	try {
 		application.Init();
-		//application.createLoadedEntity("MAN");
-		//application.createLoadedEntity("SAF");
-		//application.createLoadedEntity("SAF");
-		//application.createLoadedEntity("LEC");
 		application.loadFirstWave();
-		//application.test();
 		application.MainLoop();
 	}
 	catch (std::exception &e){

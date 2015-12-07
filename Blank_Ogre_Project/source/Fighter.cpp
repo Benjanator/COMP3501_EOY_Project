@@ -7,7 +7,7 @@ Fighter::Fighter(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 	this->type = smallEnemy_fighter;
 		m_pNode = newShip;
 	
-	//m_pNode->setDirection(Ogre::Vector3::UNIT_Z,Ogre::Node::TS_LOCAL); 
+
 	hasExploded = false;
 	personalTimer = 0;
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
@@ -60,8 +60,7 @@ void Fighter::collide(){
 void Fighter::collide(int damage){
 	health-=damage;
 	if(health <= 0){
-		//m_pNode->setVisible(false);
-		//dead = true;
+	
 		hasExploded = true;
 	}
 }
@@ -86,16 +85,6 @@ void Fighter::shoot(GameObjectFactory* factory ,ObjectManager* manager,GameObjec
 	}
 	
 
-	
-
-
-
-
-	/*
-	forward_Direction = m_pNode->_getDerivedOrientation() *  Ogre::Vector3::UNIT_Y;
-	drift_Direction = forward_Direction ;
-	m_pNode->translate(drift_Direction*0.1);
-	*/
 }
 
 void Fighter::move(void)

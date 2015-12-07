@@ -6,7 +6,6 @@ Laser::Laser(Ogre::SceneNode * newLaser,Ogre::Quaternion shipOrientation,Ogre::V
 	
 	m_pNode = newLaser;
 	this->type = laser;
-	//m_pNode->setPosition(shipPosition + Ogre::Vector3(0,0,-2));
 	m_pNode->setOrientation(shipOrientation);
 	forward_Direction = shipOrientation *  Ogre::Vector3::NEGATIVE_UNIT_Z;
 	Ogre::Vector3 left_Direction = shipOrientation *  Ogre::Vector3::NEGATIVE_UNIT_X;
@@ -57,7 +56,7 @@ void Laser::collide(){
 	//add these for anything that could collide
 	m_pNode->setVisible(false);
 	dead = true;
-	//std::cout << "HIT " << std::endl;
+	
 }
 
 
