@@ -12,6 +12,7 @@ Bomber::Bomber(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
 	health = 5;
+	warpTimer = 80.0f;
 
     reloading = 5.0f;
 }
@@ -84,10 +85,10 @@ void Bomber::shoot(GameObjectFactory* factory ,ObjectManager* manager, GameObjec
 
 void Bomber::move(Ogre::Vector3 distance)
 {
-	if(warpTimer <= 0.0){
-		m_pNode->translate(-1 * ((distance / 2) + Ogre::Vector3(Ogre::Math::RangeRandom(-20.5f,20.5f), Ogre::Math::RangeRandom(-20.5f,20.5f), Ogre::Math::RangeRandom(-20.5f,20.5f))));
+	if(warpTimer <= 0.0 && distance.length() <= 10000){
+		m_pNode->translate(m_pNode->getOrientation() * -150 * Ogre::Vector3::UNIT_Y);
 		m_pNode->needUpdate();
-		warpTimer = 30.0f;
+		warpTimer = 60.0f;
 	}else{
 		warpTimer -= 0.1f;
 	}
