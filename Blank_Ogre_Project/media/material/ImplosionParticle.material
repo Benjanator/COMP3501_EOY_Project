@@ -1,6 +1,6 @@
 vertex_program particle_shader/vs glsl 
 {
-    source ParticleMaterialVp.glsl 
+    source ImplosionParticleMaterialVp.glsl 
 
     default_params
     {
@@ -9,8 +9,9 @@ vertex_program particle_shader/vs glsl
 		param_named_auto normal_mat inverse_transpose_world_matrix
 		param_named_auto up_vec view_up_vector
 		param_named timer float 0.0
-		param_named object_colour float3 1.0 0.2 0.04
+		//param_named object_colour float3 0.8 0.3 0.04
 		//param_named object_colour float3 0.8 0.8 0.8
+		param_named object_colour float3 1.0 1.0 0.0
         //param_named_auto projection_mat projection_matrix
     }
 }
@@ -18,7 +19,7 @@ vertex_program particle_shader/vs glsl
 
 geometry_program particle_shader/gs glsl 
 {
-    source ParticleMaterialGp.glsl
+    source ImplosionParticleMaterialGp.glsl
 	input_operation_type point_list
 	output_operation_type triangle_strip
 	uses_adjacency_information false
@@ -34,7 +35,7 @@ geometry_program particle_shader/gs glsl
 
 fragment_program particle_shader/fs glsl 
 {
-    source ParticleMaterialFp.glsl 
+    source ImplosionParticleMaterialFp.glsl 
 
 	default_params
 	{
@@ -42,7 +43,7 @@ fragment_program particle_shader/fs glsl
 }
 
 
-material ParticleMaterial
+material ImplosionParticleMaterial
 {
     technique
     {

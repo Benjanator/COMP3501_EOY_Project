@@ -5,7 +5,7 @@ Laser::Laser(Ogre::SceneNode * newLaser,Ogre::Quaternion shipOrientation,Ogre::V
 {
 	
 	m_pNode = newLaser;
-	//m_pNode->setPosition(shipPosition + Ogre::Vector3(0,0,-2));
+	this->type = laser;
 	m_pNode->setOrientation(shipOrientation);
 	forward_Direction = shipOrientation *  Ogre::Vector3::NEGATIVE_UNIT_Z;
 	Ogre::Vector3 left_Direction = shipOrientation *  Ogre::Vector3::NEGATIVE_UNIT_X;
@@ -18,11 +18,12 @@ Laser::Laser(Ogre::SceneNode * newLaser,Ogre::Quaternion shipOrientation,Ogre::V
 		m_pNode->setPosition(shipPosition + (forward_Direction *12) + (right_Direction * 1.2) + (down_Direction*0.6));
 	}
 	hasExploded = false;
-	accel_Rate = 0.15;
+	accel_Rate = 0.3;
 	drift_Direction = Ogre::Vector3(0.0f);
 	aabbCenter = Ogre::Vector3(0.0f, 0.0f, 0.0f);
 	aabbSize = Ogre::Vector3(0.1f, 0.1f, 0.1f);
 	numMaterials = 1;
+	flyTime = 1000.0f;
 }
 
 
@@ -30,14 +31,23 @@ Laser::~Laser(void)
 {
 }
 
-void Laser::update(float _timer)
+void Laser::update(float timer_,ObjectManager* manager)
 {
+	
+	Ogre::MaterialPtr mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Laser_Fire2Material_"+ Ogre::StringConverter::toString(1)));
+	mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_);
+
 	move();
+
+	flyTime -= 2.75f;
+	if(flyTime < 0.0f){
+		dead = true;
+	}
 }
 
 void Laser::move(){
 
-	drift_Direction = drift_Direction += forward_Direction * accel_Rate;
+	drift_Direction += forward_Direction * accel_Rate;
 	m_pNode->translate(drift_Direction);
 	m_pNode->needUpdate();
 }
@@ -45,7 +55,17 @@ void Laser::move(){
 void Laser::collide(){
 	//add these for anything that could collide
 	m_pNode->setVisible(false);
-	//std::cout << "HIT " << std::endl;
+	dead = true;
+	
+}
+
+
+void Laser::collide(int damage){
+	collide();
+}
+
+void Laser::shoot(GameObjectFactory* factory ,ObjectManager* manager, GameObject* player){
+	
 }
 
 void Laser::particle(){

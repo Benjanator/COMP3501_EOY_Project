@@ -1,8 +1,6 @@
 #pragma once
+
 #include "GameObject.h"
-#include <OGRE\OgreSceneNode.h>
-#include <OGRE\OgreSceneManager.h>
-#include <OGRE/OgreEntity.h>
 #include "SmallShip.h"
 #include "Rocket.h"
 #include "Carrier.h"
@@ -10,15 +8,23 @@
 #include "Bomber.h"
 #include "Laser.h"
 #include "Scattershot.h"
+
+#include <OGRE\OgreSceneNode.h>
+#include <OGRE\OgreSceneManager.h>
+#include <OGRE/OgreEntity.h>
 #include "ParticleFactory.h"
+
+
 
 class GameObjectFactory
 {
 public:
+
+
 	GameObjectFactory(Ogre::SceneManager*);
 	~GameObjectFactory(void);
 
-	GameObject* createGameObject(GameObject::objectType);
+	GameObject* createGameObject(GameObject::objectType, Ogre::Vector3 );
 	GameObject* createGameRocket(Ogre::Quaternion ,Ogre::Vector3 , Ogre::Vector3 );
 	GameObject* createGameLaser(Ogre::Quaternion ,Ogre::Vector3, bool );
 	GameObject* createGameScatterShot(Ogre::Quaternion ,Ogre::Vector3, bool );
@@ -30,9 +36,11 @@ private:
 	int SEB_id; // small enemy bomber
 	int LAC_id; // large ally cmd
 	int LEC_id; // large enemy cmd
+	int AP_id;	// ally platform
+	int EP_id;  // enemy plaftorm
 	int RCKT_id;// rocket
 	int LSR_id; //lasers
-	int SCTR_id; //lasers
+	int SCTR_id;//lasers
 
 	Ogre::SceneManager* scene_manager;
 

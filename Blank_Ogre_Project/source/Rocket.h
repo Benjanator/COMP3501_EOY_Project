@@ -2,6 +2,7 @@
 #include <OGRE/OgreSceneManager.h>
 #include "GameObject.h"
 
+
 class Rocket: public GameObject
 {
 public:
@@ -13,13 +14,15 @@ public:
 	void move();
 	void explode();
 	void collide();
-	void update(float _timer);
+	void collide(int);
+	void update(float _timer,ObjectManager*);
+	void shoot(GameObjectFactory* ,ObjectManager*, GameObject* );
 
 private:
 	
 	int countdown;
-	bool hasExploded;
 	float accel_Rate; 
+	bool hasExploded;
 	float personalTimer;
 	float flyTime;
 

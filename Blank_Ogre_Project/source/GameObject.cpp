@@ -5,6 +5,7 @@ GameObject::GameObject(objectType _type)
 {
 	type = _type;
 	dead = false;
+	drift_Direction = Ogre::Vector3(0.0f);
 }
 
 
@@ -48,12 +49,27 @@ GameObject::objectType GameObject::getType()
 	return type;
 }
 
+int GameObject::getHealth()
+{
+	return health;
+}
+
 Ogre::Vector3 GameObject::getAABBCenter()
 {
-	return m_pNode->_getDerivedPosition() + aabbCenter;
+	if(type == objectType::smallAlly_fighter || type == objectType::rocket){
+		return m_pNode->_getDerivedPosition() + aabbCenter;
+	}
+	else{
+		return m_pNode->_getWorldAABB().getCenter();
+	}
 }
 
 Ogre::Vector3 GameObject::getAABBSize()
 {
-	return aabbSize;
+	if(type == objectType::smallAlly_fighter || type == objectType::rocket){
+		return aabbSize;
+	}
+	else{
+		return m_pNode->_getWorldAABB().getSize();
+	}
 }

@@ -6,6 +6,7 @@ Rocket::Rocket(Ogre::SceneNode * newRocket,Ogre::Quaternion shipOrientation,Ogre
 	
 	m_pNode = newRocket;
 	
+	this->type = rocket ;
 	m_pNode->setOrientation(shipOrientation*(Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_Y)));
 	drift_Direction = shipDirection;
 	forward_Direction = shipOrientation *  Ogre::Vector3::NEGATIVE_UNIT_Z;
@@ -13,10 +14,10 @@ Rocket::Rocket(Ogre::SceneNode * newRocket,Ogre::Quaternion shipOrientation,Ogre
 
 	m_pNode->setPosition(shipPosition + (forward_Direction *10) + (down_Direction*2));
 	
-	accel_Rate = 0.04;
+	accel_Rate = 0.02;
 	personalTimer = 0;
-	flyTime = 1000.0f;
 	hasExploded = false;
+	flyTime = 500.0f;
 	aabbCenter = Ogre::Vector3(0.0f, 0.0f, 0.0f);
 	aabbSize = Ogre::Vector3(0.1f, 0.1f, 0.1f);
 	numMaterials = 1;
@@ -27,7 +28,7 @@ Rocket::~Rocket(void)
 {
 }
 
-void Rocket::update(float timer_)
+void Rocket::update(float timer_, ObjectManager* manager)
 {
 	Ogre::MaterialPtr mat;
 	mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Thruster_FireMaterial_"+ Ogre::StringConverter::toString(1)));
@@ -62,6 +63,15 @@ void Rocket::move(){
 
 void Rocket::collide(){
 	hasExploded = true;
+	dead = true;
+	//std::cout<<"ROCKET"<< std::endl;
+}
+
+void Rocket::collide(int damage){
+	collide();
+}
+
+void Rocket::shoot(GameObjectFactory* factory ,ObjectManager* manager, GameObject* player){
 	
 }
 

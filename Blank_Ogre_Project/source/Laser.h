@@ -3,6 +3,7 @@
 #include <OGRE/OgreSceneManager.h>
 #include "GameObject.h"
 
+
 class Laser: public GameObject
 {
 public: 
@@ -13,11 +14,15 @@ public:
 	void move();
 
 	void particle();
-	void update(float _timer);
+	void update(float _timer,ObjectManager*);
 	void collide();
+	void collide(int);
+	void shoot(GameObjectFactory* ,ObjectManager*, GameObject* );
+
 
 private:
 	
+	float flyTime;
 	int countdown;
 	float accel_Rate; 
 	

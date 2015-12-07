@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include <OGRE/OgreSceneNode.h>
 
+
+
 class SmallShip: public GameObject
 {
 public:
@@ -20,15 +22,16 @@ public:
 	void roll(Ogre::Quaternion);
 	void translate(Ogre::Vector3, Ogre::Vector3, Ogre::Vector3);
 
-	void update(float _timer);
+	void update(float _timer, ObjectManager*);
 	void collide();
+	void shoot(	GameObjectFactory* ,ObjectManager*, GameObject*);
 
 	Ogre::Quaternion getOrientation();
 	Ogre::Vector3 getPosition();
+	int getHealth();
 
 
 protected:
-
 
 	void move();
 
@@ -46,7 +49,13 @@ protected:
 	float roll_Rate;
 	float yaw_Rate;
 	float pitch_Rate;
+	void collide(int);
 
 	Ogre::Vector3 velocity;
+
+private:
+
+	bool hasExploded;
+	float personalTimer;
 };
 

@@ -7,6 +7,10 @@ GameObjectFactory::GameObjectFactory(Ogre::SceneManager* _sm): SAF_id(0), SEF_id
 	factory = new ParticleFactory(scene_manager);
 	factory->CreateThrusterParticleGeometry("_Thruster", 200000);
 	factory->CreateExplosionParticleGeometry("_Explosion",2000000);
+	factory->CreateExplosionParticleGeometry("_Laser",200000);
+	factory->CreateImplosionParticleGeometry("_Implosion",30000);
+
+
 
 	factory->CreateSplineParticleGeometry("_SField", 20000);
 	factory->CreateSplineParticleGeometry("_SFieldP", 20000);
@@ -19,30 +23,37 @@ GameObjectFactory::~GameObjectFactory(void)
 	scene_manager = 0;
 }
 
-GameObject* GameObjectFactory::createGameObject(GameObject::objectType _type)
+GameObject* GameObjectFactory::createGameObject(GameObject::objectType _type, Ogre::Vector3 _spawnPoint)
 {
 	GameObject* newObject = nullptr;
+	Ogre::SceneNode* sceneObject = nullptr;
+
 	switch(_type){
 	case GameObject::smallAlly_fighter:
-		newObject = new SmallShip(create_SAF());
+		sceneObject = create_SAF();
+		sceneObject->setPosition(_spawnPoint);
+		newObject = new SmallShip(sceneObject);
 		newObject->setTeam(0);
 		break;
 	case GameObject::smallEnemy_fighter:
-		//newObject = new SmallShip(create_SEF());
-		newObject = new Fighter(create_SEF());
+		sceneObject = create_SEF();
+		sceneObject->setPosition(_spawnPoint);
+		newObject = new Fighter(sceneObject);
 		newObject->setTeam(1);
 		break;
 	case GameObject::smallAlly_bomber:
 		//newObject->setTeam(0);
 		break;
 	case GameObject::smallEnemy_bomber:
-		//newObject = new SmallShip(create_SEB());
-		newObject = new Bomber(create_SEB());
+		sceneObject = create_SEB();
+		sceneObject->setPosition(_spawnPoint);
+		newObject = new Bomber(sceneObject);
 		newObject->setTeam(1);
 		break;
 	case GameObject::largeEnemy_cmd:
-		//newObject = new SmallShip(create_LEC());
-		newObject = new Carrier(create_LEC());
+		sceneObject = create_LEC();
+		sceneObject->setPosition(_spawnPoint);
+		newObject = new Carrier(sceneObject);
 		newObject->setTeam(1);
 		break;
 	case GameObject::largeAlly_cmd:
@@ -50,7 +61,9 @@ GameObject* GameObjectFactory::createGameObject(GameObject::objectType _type)
 	case GameObject::asteroid:
 		break;
 	case GameObject::platform:
-		newObject = new SmallShip(create_EP());
+		sceneObject = create_EP();
+		sceneObject->setPosition(_spawnPoint);
+		newObject = new SmallShip(sceneObject);
 		newObject->setTeam(1);
 		break;
 	default:
@@ -89,13 +102,11 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 
 	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Base_Ship.mesh");
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
-	//entity->setMaterialName("ShinyMaterial");
 	entity->setMaterialName("ShinyShipTextureMaterial");
 	node->attachObject(entity);
 
 	node->setPosition(0.0f,0.0f,0.0f);
 	node->setScale(1.0,1.0,1.0);
-	//node->showBoundingBox(true);
 
 	//cockpit
 	entity = scene_manager->createEntity(_objectName + "_Cockpit", "Cockpit.mesh");
@@ -147,6 +158,14 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	entity->setMaterialName("ShinyGunTextureMaterial");
 	child->attachObject(entity);
 
+	entity =  scene_manager->createEntity(_objectName + "_Radar", "Radar.mesh");
+	child = node->createChildSceneNode(_objectName + "_Radar");
+	entity->setMaterialName("ShinyFighterTextureMaterial");
+	child->attachObject(entity);
+	child->setScale(0.05f,0.05f,0.05f);
+	//child->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_Y)));
+	child->translate(-1.5f, 0.5f, -5.0f);
+
 
 	//factory->CreateThrusterParticleGeometry(_objectName + "_Thruster", 200000);
 
@@ -166,19 +185,11 @@ Ogre::SceneNode* GameObjectFactory::create_SAF()
 	child->setOrientation((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Y)));
 	child->translate(2.4f,-0.5f,3.0f);
 
+
 	
-	//for(int i = 0; i <= 25; i++){
-	 //factory ->CreateSplineControlPoints("ControlPoints"+ Ogre::StringConverter::toString(i), 64, "SplineParticleMaterial");
-	 //child = factory->CreateParticleEntity("_SField","SplineParticleMaterial",node, Ogre::Vector3(0.2,0.2,0.2));
-	 //child->translate(0.0f,0.0f,-2.0f);
-	//}
+	child = factory->CreateParticleEntity("_Explosion","ParticleMaterial",node, Ogre::Vector3(1,1,1));
 
 
-	//child->translate(1.66224f, 0.21f, 0.005f);
-	
-	//
-	// reset Orientation
-	//
 	node->resetOrientation();
 	//node->translate(0.0f, 0.0f, 2.5f);
 	factory->resetCounter();
@@ -193,23 +204,29 @@ Ogre::SceneNode* GameObjectFactory::create_SEF()
 
 	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Enemy_Fighter.mesh");
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
-	entity->setMaterialName("ShinyMaterial");
+	entity->setMaterialName("ShinyFighterTextureMaterial");
 	node->attachObject(entity);
 
 	
-	node->setPosition(0.0,0.0 + 20.0 * SEF_id,-50.0);
-	node->setScale(1.0,1.0,1.0);
+	node->setPosition(0.0,0.0 + 40.0 * SEF_id,-50.0);
+	
 
+	node->setScale(1.0,1.0,1.0);
+	//node->showBoundingBox(true);
 	//factory->CreateThrusterParticleGeometry(_objectName + "_Thruster", 200000);
 		
 	Ogre::SceneNode* child = factory->CreateParticleEntity("_Thruster","FireMaterial",node, Ogre::Vector3(1,1,0.1));
-	child->setOrientation((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Y)));
-	child->translate(-3.3f,-1.7f,4.2f);
+	child->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_X)));
+	child->translate(-3.3f,-3.9f,-1.6f);
 	//child->showBoundingBox(true);
 
 	child = factory->CreateParticleEntity("_Thruster","FireMaterial",node, Ogre::Vector3(1,1,0.1));
-	child->setOrientation((Ogre::Quaternion(Ogre::Degree(180),Ogre::Vector3::UNIT_Y)));
-	child->translate(3.3f,-1.7f,4.2f);
+	child->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_X)));
+	child->translate(3.3f,-3.9f,-1.6f);
+
+
+	
+	child = factory->CreateParticleEntity("_Explosion","ParticleMaterial",node, Ogre::Vector3(1,1,1));
 	factory->resetCounter();
 	return node;
 }
@@ -225,21 +242,31 @@ Ogre::SceneNode* GameObjectFactory::create_SEB()
 	//Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Lancer.mesh");
 	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Platform.mesh");
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
-	entity->setMaterialName("ShinyMaterial");
+	entity->setMaterialName("ShinyPlatformTextureMaterial");
 	node->attachObject(entity);
 
-	node->setPosition(0.0,0.0 + 20 * SEB_id,-100.0);
-	//node->setScale(1.0,1.0,1.0);
+	node->setPosition(0.0,0.0 + 40 * SEB_id,-100.0);
+	//node->lookAt(Ogre::Vector3(0.0,0.0 + 40 * SEB_id,-10.0),Ogre::Node::TS_WORLD);
+	node->rotate((Ogre::Quaternion(Ogre::Degree(90),Ogre::Vector3::UNIT_Y)),Ogre::Node::TS_WORLD);
+	//node->setDirection(Ogre::Vector3(1,0,0),Ogre::Node::TS_WORLD);
+	//node->lookAt(Ogre::Vector3(0.0,0.0 + 40 * SEB_id,-10.0),Ogre::Node::TS_WORLD);
+	node->setScale(0.5,0.5,1.0);
 
-	node->setScale(0.5,1.0,0.5);
+	//node->setScale(0.5,1.0,0.5);
 
 	Ogre::SceneNode* child;
 
 	for(int i = 0; i <= 25; i++){
 	 factory ->CreateSplineControlPoints(_objectName+ "ControlPoints"+ Ogre::StringConverter::toString(i), 64, "SplineParticleMaterial");
 	 child = factory->CreateParticleEntity("_SField","SplineParticleMaterial",node, Ogre::Vector3(0.4,0.08,0.08));
-	  child->translate(2.0f, -5.4f,-0.2f);
+	 child->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_Y)));
+	  child->translate(0.0f, 0.0f,-5.4f);
+	  child->setScale(0.05,0.1,0.2);
 	}
+
+	
+	child = factory->CreateParticleEntity("_Explosion","ParticleMaterial",node, Ogre::Vector3(1,1,1));
+	child->translate(0.0f, -5.0f,-5.4f);
 
 	factory->resetCounter();
 	return node;
@@ -259,7 +286,7 @@ Ogre::SceneNode* GameObjectFactory::create_LEC()
 	entity->setMaterialName("ShinyCarrierTextureMaterial");
 	node->attachObject(entity);
 
-	node->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_X)));
+	//node->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_X)));
 	node->setPosition(0.0,0.0 + 5.0 * LEC_id,-200);
 	node->setScale(10.0,10.0,10.0);
 
@@ -284,6 +311,8 @@ Ogre::SceneNode* GameObjectFactory::create_LEC()
 	 child = factory->CreateParticleEntity("_SField","SplineParticleMaterial",node, Ogre::Vector3(0.18,0.05,0.05));
 	 child->translate(7.1f, -2.7f,0.0f);
 	}
+
+
 
 	factory->resetCounter();
 	return node;
@@ -336,19 +365,18 @@ Ogre::SceneNode* GameObjectFactory::create_RCKT(Ogre::Quaternion shipOrientation
 
 	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Rocket.mesh");
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
-	entity->setMaterialName("ShinyMaterial");
+	entity->setMaterialName("ShinyRocketTextureMaterial");
 	node->attachObject(entity);
 	node->setScale(0.5,0.5,0.5);
 
 	//factory->CreateThrusterParticleGeometry(_objectName + "_Thruster", 200000);
-
+	//node->showBoundingBox(true);
 
 	Ogre::SceneNode* child = factory->CreateParticleEntity("_Thruster","FireMaterial",node, Ogre::Vector3(1,1,1));
 	child->setOrientation((Ogre::Quaternion(Ogre::Degree(-90),Ogre::Vector3::UNIT_Y)));
 	child->translate(5,0,0);
 
-	child = factory->CreateParticleEntity("_Explosion","ParticleMaterial",node, Ogre::Vector3(0.5,0.5,0.5));
-	
+	child = factory->CreateParticleEntity("_Explosion","ParticleMaterial",node, Ogre::Vector3(1,1,1));
 	
 
 	factory->resetCounter();
@@ -364,9 +392,12 @@ Ogre::SceneNode* GameObjectFactory::create_LSR(Ogre::Quaternion shipOrientation,
 
 	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Laser.mesh");
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
-	entity->setMaterialName("BlueMaterial");
+	entity->setMaterialName("ShinyLaserTextureMaterial");
 	node->attachObject(entity);
 	node->setScale(0.5,0.5,3.0);
+
+	Ogre::SceneNode* child = factory->CreateParticleEntity("_Laser","Fire2Material",node, Ogre::Vector3(10,10,2));
+	child->setScale(500,500,10);
 
 	factory->resetCounter();
 	return node;
@@ -380,11 +411,14 @@ Ogre::SceneNode* GameObjectFactory::create_SCTR(Ogre::Quaternion shipOrientation
 	SCTR_id++;
 	Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
 
-	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "Laser.mesh");
+	Ogre::Entity* entity = scene_manager->createEntity(_objectName, "ScatterShot.mesh");
 	Ogre::SceneNode* node = root_scene_node->createChildSceneNode(_objectName);
-	entity->setMaterialName("BlueMaterial");
+	entity->setMaterialName("ShinyScatterShotTextureMaterial");
 	node->attachObject(entity);
-	node->setScale(0.5,0.5,3.0);
+	node->setScale(0.5,0.5,0.5);
+
+
+	Ogre::SceneNode* child = factory->CreateParticleEntity("_Implosion","ImplosionParticleMaterial",node, Ogre::Vector3(2,2,2));
 
 	factory->resetCounter();
 	return node;

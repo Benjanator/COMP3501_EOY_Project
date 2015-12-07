@@ -44,7 +44,7 @@ float change = 0.0f;
 
 //
 PlayerInput *player;
-
+int Score = 0;
 
 OgreApplication::OgreApplication(void){
 
@@ -71,6 +71,7 @@ void OgreApplication::Init(void){
 	InitEvents();
 	InitOIS();
 	InitViewport();
+	InitOverlay();
 	LoadMaterials();
 	LoadModels();
 	LoadSkybox();
@@ -270,6 +271,109 @@ void OgreApplication::InitOIS(void){
 }
 
 
+void OgreApplication::InitOverlay(void){
+
+    // Create and initialize the overlay system
+    Ogre::OverlaySystem *os = new Ogre::OverlaySystem();
+    Ogre::SceneManager* scene_manager =   ogre_root_->getSceneManager("MySceneManager");
+    scene_manager->addRenderQueueListener(os);
+
+    // Initialize a font: assumes a standard Windows system
+    Ogre::ResourceGroupManager& resource_group_manager = Ogre::ResourceGroupManager::getSingleton();
+    resource_group_manager.addResourceLocation("C:\\Windows\\Fonts", "FileSystem");
+    Ogre::FontManager& font_manager = Ogre::FontManager::getSingleton();
+    Ogre::ResourcePtr font = font_manager.create("MyFont", "General");
+    font->setParameter("type", "truetype");
+    font->setParameter("source", "arial.ttf");
+    font->setParameter("size", "26");
+    font->setParameter("resolution", "96");
+    font->load();
+
+    // Create a panel for the overlay
+    Ogre::OverlayManager& overlay_manager = Ogre::OverlayManager::getSingleton();
+    Ogre::OverlayContainer* panel = (Ogre::OverlayContainer*) overlay_manager.createOverlayElement("Panel", "MyPanel");
+    panel->setMetricsMode(Ogre::GMM_PIXELS);
+    panel->setPosition(0, 0);
+    panel->setDimensions(200, 100);
+        
+    // Create a text area and add it to the panel
+	
+    Ogre::TextAreaOverlayElement* text_area = static_cast<Ogre::TextAreaOverlayElement*>(overlay_manager.createOverlayElement("TextArea", "MyTextArea_Score"));
+    text_area->setMetricsMode(Ogre::GMM_PIXELS);
+    text_area->setPosition(0, 0);
+    text_area->setDimensions(200, 100);
+    text_area->setFontName("MyFont");
+	text_area->setCaption("Score: ");
+    text_area->setCharHeight(26);
+    text_area->setColour(Ogre::ColourValue(0.8, 0.0, 0.0));
+    panel->addChild(text_area);
+
+	text_area = static_cast<Ogre::TextAreaOverlayElement*>(overlay_manager.createOverlayElement("TextArea", "MyTextArea_Health"));
+    text_area->setMetricsMode(Ogre::GMM_PIXELS);
+    text_area->setPosition(0, 26);
+    text_area->setDimensions(200, 100);
+    text_area->setFontName("MyFont");
+	text_area->setCaption("Health: ");
+    text_area->setCharHeight(26);
+    text_area->setColour(Ogre::ColourValue(0.8, 0.0, 0.0));
+    panel->addChild(text_area);
+
+	text_area = static_cast<Ogre::TextAreaOverlayElement*>(overlay_manager.createOverlayElement("TextArea", "MyTextArea_Reticule"));
+    text_area->setMetricsMode(Ogre::GMM_PIXELS);
+	text_area->setPosition(window_width_g/2-7, window_height_g/2);
+    text_area->setDimensions(50,50);
+    text_area->setFontName("MyFont");
+	text_area->setCaption("X");
+    text_area->setCharHeight(26);
+    text_area->setColour(Ogre::ColourValue(0.8, 0.0, 0.0));
+    panel->addChild(text_area);
+
+	text_area = static_cast<Ogre::TextAreaOverlayElement*>(overlay_manager.createOverlayElement("TextArea", "MyTextArea_GAMEOVER"));
+    text_area->setMetricsMode(Ogre::GMM_PIXELS);
+	text_area->setPosition(window_width_g/2-7, window_height_g/2 + 52);
+    text_area->setDimensions(50,50);
+    text_area->setFontName("MyFont");
+	text_area->setCaption(" ");
+    text_area->setCharHeight(52);
+    text_area->setColour(Ogre::ColourValue(0.8, 0.0, 0.0));
+    panel->addChild(text_area);
+
+	text_area = static_cast<Ogre::TextAreaOverlayElement*>(overlay_manager.createOverlayElement("TextArea", "MyTextArea_Rocket_CD"));
+    text_area->setMetricsMode(Ogre::GMM_PIXELS);
+	text_area->setPosition(0, 52);
+    text_area->setDimensions(200, 100);
+    text_area->setFontName("MyFont");
+	text_area->setCaption("Rocket Cooldown: ");
+    text_area->setCharHeight(26);
+    text_area->setColour(Ogre::ColourValue(0.8, 0.0, 0.0));
+    panel->addChild(text_area);
+
+	text_area = static_cast<Ogre::TextAreaOverlayElement*>(overlay_manager.createOverlayElement("TextArea", "MyTextArea_Laser_CD"));
+    text_area->setMetricsMode(Ogre::GMM_PIXELS);
+	text_area->setPosition(0, 78);
+    text_area->setDimensions(200, 100);
+    text_area->setFontName("MyFont");
+	text_area->setCaption("Laser Cooldown: ");
+    text_area->setCharHeight(26);
+    text_area->setColour(Ogre::ColourValue(0.8, 0.0, 0.0));
+    panel->addChild(text_area);
+
+	text_area = static_cast<Ogre::TextAreaOverlayElement*>(overlay_manager.createOverlayElement("TextArea", "MyTextArea_Scatter_CD"));
+    text_area->setMetricsMode(Ogre::GMM_PIXELS);
+	text_area->setPosition(0, 104);
+    text_area->setDimensions(200, 100);
+    text_area->setFontName("MyFont");
+	text_area->setCaption("ScatterShot Cooldown: ");
+    text_area->setCharHeight(26);
+    text_area->setColour(Ogre::ColourValue(0.8, 0.0, 0.0));
+    panel->addChild(text_area);
+
+    // Create an overlay using the panel
+    Ogre::Overlay* overlay = overlay_manager.create("MyOverlay");
+    overlay->add2D(panel);
+    overlay->show();
+}
+
 void OgreApplication::LoadMaterials(void){
 
     try {
@@ -343,6 +447,10 @@ void OgreApplication::MainLoop(void){
             Ogre::WindowEventUtilities::messagePump();
 
 			objectManager->cleanDestroyedObjects();
+
+			if(physicsManager->spawnNextWave()){
+				loadNextWave();
+			}
         }
     }
     catch (Ogre::Exception &e){
@@ -358,8 +466,24 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 
 	timer_ += fe.timeSinceLastFrame;
 
-	physicsManager->pollTotalEvents(timer_);
-	player->updateCamera();
+	physicsManager->pollTotalEvents(timer_, objectManager);
+	physicsManager->pollAiShots(factory,objectManager);
+
+	Ogre::OverlayManager& overlay_manager = Ogre::OverlayManager::getSingleton();
+
+	if(objectManager->getPlayerHealth() > 0 ){
+	  player->updateCamera();
+	  	
+	  overlay_manager.getOverlayElement( "MyTextArea_Score")->setCaption("Score: " + Ogre::StringConverter::toString(objectManager->getScore()));
+	  overlay_manager.getOverlayElement( "MyTextArea_Health")->setCaption("Health: " + Ogre::StringConverter::toString(objectManager->getPlayerHealth()));
+	  overlay_manager.getOverlayElement("MyTextArea_Rocket_CD")->setCaption("Rocket Cooldown: " + Ogre::StringConverter::toString(static_cast<int>(player->getRocketCD())));
+	  overlay_manager.getOverlayElement("MyTextArea_Laser_CD")->setCaption("Laser Cooldown: "  + Ogre::StringConverter::toString(static_cast<double>(player->getLaserCD())));
+	  overlay_manager.getOverlayElement("MyTextArea_Scatter_CD")->setCaption("ScatterShot Cooldown: "  + Ogre::StringConverter::toString(static_cast<int>(player->getScatterCD())));
+	}else{
+
+	  overlay_manager.getOverlayElement("MyTextArea_GAMEOVER")->setCaption("GAME OVER");
+	  overlay_manager.getOverlayElement( "MyTextArea_Health")->setCaption("Health: 0");
+	}
 
 	if (keyboard_->isKeyDown(OIS::KC_ESCAPE)){
 		ogre_root_->shutdown();
@@ -395,7 +519,7 @@ void OgreApplication::windowResized(Ogre::RenderWindow* rw){
 
 
 
-void OgreApplication::createLoadedEntity(Ogre::String _objectName)
+void OgreApplication::createLoadedEntity(Ogre::String _objectName, Vector3 _spawnPoint)
 {
 	GameObject* temp;
 
@@ -404,22 +528,22 @@ void OgreApplication::createLoadedEntity(Ogre::String _objectName)
 	}
 
 	if(_objectName.compare("SAF") == 0 || _objectName.compare("smallAlly_fighter") == 0){
-		temp = factory->createGameObject(GameObject::objectType::smallAlly_fighter);
+		temp = factory->createGameObject(GameObject::objectType::smallAlly_fighter, _spawnPoint);
 	}
 	else if(_objectName.compare("SEF") == 0 || _objectName.compare("smallEnemy_fighter") == 0){
-		temp = factory->createGameObject(GameObject::objectType::smallEnemy_fighter);
+		temp = factory->createGameObject(GameObject::objectType::smallEnemy_fighter, _spawnPoint);
 	}
 	else if(_objectName.compare("SAB") == 0 || _objectName.compare("smallAlly_bomber") == 0){
-		temp = factory->createGameObject(GameObject::objectType::smallAlly_bomber);
+		temp = factory->createGameObject(GameObject::objectType::smallAlly_bomber, _spawnPoint);
 	}
 	else if(_objectName.compare("SEB") == 0 || _objectName.compare("smallEnemy_bomber") == 0){
-		temp = factory->createGameObject(GameObject::objectType::smallEnemy_bomber);
+		temp = factory->createGameObject(GameObject::objectType::smallEnemy_bomber, _spawnPoint);
 	}
 	else if(_objectName.compare("LAC") == 0 || _objectName.compare("largeAlly_cmd") == 0){
-		temp = factory->createGameObject(GameObject::objectType::largeAlly_cmd);
+		temp = factory->createGameObject(GameObject::objectType::largeAlly_cmd, _spawnPoint);
 	}
 	else if(_objectName.compare("LEC") == 0 || _objectName.compare("largeEnemy_cmd") == 0){
-		temp = factory->createGameObject(GameObject::objectType::largeEnemy_cmd);
+		temp = factory->createGameObject(GameObject::objectType::largeEnemy_cmd, _spawnPoint);
 	}
 	
 	
@@ -431,10 +555,60 @@ void OgreApplication::createLoadedEntity(Ogre::String _objectName)
 
 }
 
+void OgreApplication::loadFirstWave()
+{
+	/*Load MainPlayer*/
+	createLoadedEntity("SAF", Vector3(0.0f, 0.0f, 100.0f));
+
+	Ogre::Vector3 enemyPos = Ogre::Vector3(0.0f, 5.0f, -800.0f);
+
+	/*Load Enemy Carrier*/
+	createLoadedEntity("LEC", enemyPos);
+
+	int fighterAmount = rand() % 5 + 1;
+	float posX = -150.0f;
+
+	/*Load Enemy Fighters*/
+	for(int i = 0; i < fighterAmount; i++){
+		posX = (posX + 50.0f != 0.0f)? posX + 50.0f: posX + 100.0f;
+		createLoadedEntity("SEF", enemyPos + Vector3(posX, 0.0f, 0.0f));
+	}
+
+	int bomberAmount = rand() % 3 + 1;
+
+	/*Load Enemy Bomber/Platforms*/
+	for(int i = 0; i < bomberAmount; i++){
+		createLoadedEntity("SEB", enemyPos + Vector3(0.0f, 0.0f, 75.0f * i));
+	}
+}
+
+void OgreApplication::loadNextWave()
+{
+	cout << "Next Wave Has Appeared!" << endl;
+
+	Vector3 enemyPos = objectManager->getObjectList().at(1)->getNode().getPosition();
+
+	int fighterAmount = rand() % 5 + 1;
+	float posX = -150.0f;
+
+	/*Load Enemy Fighters*/
+	for(int i = 0; i < fighterAmount; i++){
+		posX = (posX + 50.0f != 0.0f)? posX + 50.0f: posX + 100.0f;
+		createLoadedEntity("SEF", enemyPos + Vector3(posX, 0.0f, 0.0f));
+	}
+
+	int bomberAmount = rand() % 3 + 1;
+
+	/*Load Enemy Bomber/Platforms*/
+	for(int i = 0; i < bomberAmount; i++){
+		createLoadedEntity("SEB", enemyPos + Vector3(0.0f, 0.0f, 75.0f * i));
+	}
+}
+
 void OgreApplication::test(){
 	
 
-	 GameObject* temp;
+	/* GameObject* temp;
 	 for(int i=0;i<3;i++){
 		temp = factory->createGameObject(GameObject::objectType::smallEnemy_fighter);
 		objectManager->addObject(temp);
@@ -448,7 +622,7 @@ void OgreApplication::test(){
 	  	temp = factory->createGameObject(GameObject::objectType::largeEnemy_cmd);
 		objectManager->addObject(temp);
 		
-	
+*/	
 }
 
 

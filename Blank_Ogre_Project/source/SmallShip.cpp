@@ -8,28 +8,20 @@ SmallShip::SmallShip(Ogre::SceneNode* newShip):GameObject(GameObject::empty)
 	velocity = Ogre::Vector3(0.0f, 0.0f, 0.1f);//Ogre::Vector3::ZERO;
 	
 	direction = newShip->_getDerivedOrientation() * Ogre::Vector3(0.0f, 0.0f, -1.0f);
-	//drift_Direction = direction;
+
 	drift_Direction = Ogre::Vector3(0.0f);
 	up = newShip->_getDerivedOrientation() * Ogre::Vector3(0.0f, 1.0f, 0.0f);
 	right = direction.crossProduct(up);
 
-
-	//velocity = Ogre::Vector3(0.0f, 0.0f, 0.1f);//Ogre::Vector3::ZERO;
-	//velocity = Ogre::Vector3(0.0f, 0.0f, 0.0f);//Ogre::Vector3::ZERO;
-	
-	//direction = newShip->_getDerivedOrientation() * Ogre::Vector3::NEGATIVE_UNIT_Z;
-	//up = newShip->_getDerivedOrientation() * Ogre::Vector3::UNIT_Y;
-	//right = direction.crossProduct(up);
-	//right = newShip->_getDerivedOrientation() * Ogre::Vector3::UNIT_X;
-
 	m_pNode = newShip;
 	accel_Rate = 0.01;
 	hasExploded = false;
+	personalTimer = 0;
 
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
 	aabbSize = Ogre::Vector3(7.82431f, 2.87618f, 11.2258f);
 	numMaterials = 4;
-	
+	health = 50;
 }
 
 
@@ -56,13 +48,7 @@ void SmallShip::fullStop()
 {
 	drift_Direction = Ogre::Vector3(0.0f);
 
-	//velocity = Ogre::Vector3::ZERO;
-	//velocity.x = 0;
-	//velocity.y = 0;
-	//velocity.z = 0;
-	//up = Ogre::Vector3::ZERO;
-	//right = Ogre::Vector3::ZERO;
-	//direction = Ogre::Vector3::ZERO;
+
 
 }
 
@@ -122,25 +108,30 @@ void SmallShip::translate(Ogre::Vector3 _up, Ogre::Vector3 _right, Ogre::Vector3
 	m_pNode->needUpdate();
 }
 
-void SmallShip::update(float timer_)
+void SmallShip::update(float timer_,ObjectManager* manager)
 {
 	Ogre::MaterialPtr mat;
-	//Ogre::Entity* mEntity =(Ogre::Entity*) m_pNode->getChild("");
 	
+	Ogre::Node* radar = m_pNode->getChild(m_pNode->getName() + "_Radar");
+	radar->rotate((Ogre::Quaternion(Ogre::Degree(-0.5),Ogre::Vector3::UNIT_Y)));
+
 	for(int i = 1; i<=numMaterials; i++){
 		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Thruster_FireMaterial_"+ Ogre::StringConverter::toString(i)));
 		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_);
 	}
 
 
-	//std::cout << "MATNAME:: " << m_pNode->getName()+"SField_SplineParticleMaterial_"+ Ogre::StringConverter::toString(5) << std::endl;
-	//"_SField","SplineParticleMaterial"
-	for(int i = 5; i<=30; i++){
-		//mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_SField_SplineParticleMaterial_"+ Ogre::StringConverter::toString(i)));
-		//mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_ - i);
+	if(hasExploded){
+		personalTimer += 1;
+		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Explosion_ParticleMaterial_"+ Ogre::StringConverter::toString(5)));
+		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", personalTimer);
+
+		if(personalTimer >= 15){
+			m_pNode->setVisible(false);
+			dead = true;
+		}
 	}
 
-	//SAF_0_SField_SplineParticleMaterial_5
 	move();
 }
 
@@ -148,16 +139,23 @@ void SmallShip::collide(){
 	
 }
 
+void SmallShip::collide(int damage){
+	health-=damage;
+	if(health <= 0){
+
+		hasExploded = true;
+
+	}
+}
+
+void SmallShip::shoot(GameObjectFactory* factory ,ObjectManager* manager, GameObject* player){
+	
+}
+
+
 void SmallShip::move(void)
 {
 	m_pNode->translate(drift_Direction);
-	
-	//m_pNode->translate(direction * velocity.z);
-	//m_pNode->translate(up*velocity.y);
-	//m_pNode->translate(right * velocity.x);
-
-	//m_pNode->translate((direction * velocity.z)+(up*velocity.y)+(right * velocity.x)); //combining translations seems to remove inconsistnecies
-	//multiple translate calls can give us controls that dont move the way we would expect due to order motion
 	m_pNode->needUpdate();
 	
 }
@@ -169,4 +167,5 @@ Ogre::Quaternion SmallShip::getOrientation(){
 Ogre::Vector3 SmallShip::getPosition(){
 	return m_pNode->getPosition();
 }
+
 

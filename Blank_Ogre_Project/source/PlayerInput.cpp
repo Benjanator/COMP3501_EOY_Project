@@ -13,6 +13,7 @@
 	bool relativeMotion = true;
 	bool keyUp = true;
 	bool ckeyUp = true;
+	bool xkeyUp = true;
 	bool mouseLeft = true;
 	bool lasrLR = true;
 	GameObject* temp;
@@ -35,7 +36,9 @@
 		factory = oFactory;
 		objectManager = oManager;
 
-
+		reloadingRocket = 0.0f;
+		reloadingLaser = 0.0f;
+		reloadingScatter = 0.0f;
 
 		player_camera = scene_manager->createCamera("MyCamera");
         camera_scene_node = root_scene_node->createChildSceneNode("MyCameraNode");
@@ -49,7 +52,6 @@
 
 		player_camera->setPosition(camera_position_g);
 		player_camera->lookAt(camera_look_at_g);
-		//camera->setFixedYawAxis(true, camera_up_g);
 		player_camera->setFixedYawAxis(false);
 		camera_scene_node->setFixedYawAxis(false);
 
@@ -97,37 +99,31 @@ void PlayerInput::handleInput(void){
 	rightDir = Ogre::Vector3(0.0f);
 	forwDir = Ogre::Vector3(0.0f);
 
+
 	if(playerMouse_->getMouseState().buttonDown(OIS::MB_Right)){
 		
 
 		Ogre::Quaternion pitchQuat(Ogre::Radian(playerMouse_->getMouseState().Y.rel * -0.01f),Ogre::Vector3::UNIT_X);
 		Ogre::Quaternion yawQuat(Ogre::Radian(playerMouse_->getMouseState().X.rel * -0.01f),Ogre::Vector3::UNIT_Y);
 		Ogre::Quaternion rotQuat =  pitchQuat * yawQuat;
-		//camera_first_person_node->rotate(pitchQuat,Ogre::Node::TS_LOCAL); //this allows us to have no roll when pitch and yaw are combined
-		//camera_first_person_node->rotate(yawQuat,Ogre::Node::TS_WORLD); //  this will also cause a forced lock
+		
 
 		playerShip->pitch(Ogre::Radian(playerMouse_->getMouseState().Y.rel * -0.01f));
 		playerShip->yaw(Ogre::Radian(playerMouse_->getMouseState().X.rel * -0.01f));
-		
-		//camera_first_person_node->rotate(rotQuat); // quaternion camera with rotations embedded from pitch and yaws
-
-		//camera_first_person_node->pitch(Ogre::Radian(playerMouse_->getMouseState().Y.rel * -0.01f));
-		///camera_first_person_node->yaw(Ogre::Radian(playerMouse_->getMouseState().X.rel * -0.01f));
+		;
 	
 	}
 
 	if(playerMouse_->getMouseState().buttonDown(OIS::MB_Left)){
 		if(mouseLeft == true){
-//<<<<<<< HEAD
-			//temp = factory->createGameLaser(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
-			//temp = factory->createGameScatterShot(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
-//=======
-			temp = factory->createGameLaser(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
-			temp->setTeam(0);
-//>>>>>>> 6ef87d019f27df578792ee5af98c1f0cd7b4db1e
-			objectManager->addObject(temp);
-			mouseLeft = false;
-			lasrLR = !lasrLR;
+			if(reloadingLaser <= 0){
+			  temp = factory->createGameLaser(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
+			  temp->setTeam(0);
+			  objectManager->addObject(temp);
+			  mouseLeft = false;
+			  lasrLR = !lasrLR;
+			  reloadingLaser = 1.0f;
+			}
 		}
 	}else{
 		mouseLeft = true;
@@ -135,23 +131,54 @@ void PlayerInput::handleInput(void){
 
 	if(playerKeyboard_->isKeyDown(OIS::KC_C)){
 		if(ckeyUp == true){
-			temp = factory->createGameRocket(playerShip->getOrientation(),playerShip->getPosition(),playerShip->getMotionDirection());
-			temp->setTeam(0);
-			objectManager->addObject(temp);
-			ckeyUp = false;
-			
+			if(reloadingRocket <= 0){
+			  temp = factory->createGameRocket(playerShip->getOrientation(),playerShip->getPosition(),playerShip->getMotionDirection());
+			  temp->setTeam(0);
+			  objectManager->addObject(temp);
+			  ckeyUp = false;
+			  reloadingRocket = 10.0f;
+			}
 		}
 	}else{
 		ckeyUp = true;
 	}
-	
 
+		if(playerKeyboard_->isKeyDown(OIS::KC_X)){
+		if(xkeyUp == true){
+			if(reloadingScatter <= 0){
+			  temp = factory->createGameScatterShot(playerShip->getOrientation(),playerShip->getPosition(),lasrLR);
+			  temp->setTeam(0);
+			  objectManager->addObject(temp);
+			  xkeyUp = false;
+			  reloadingScatter = 3.0f;
+			}
+			
+		}
+	}else{
+		xkeyUp = true;
+	}
 	
+		
+	if(reloadingLaser  > 0.0f){
+		reloadingLaser-= 0.1f;
+	}
+
+	if(reloadingRocket > 0.0f){
+		reloadingRocket-= 0.1f;
+	}
+
+	if(reloadingScatter > 0.0f){
+		reloadingScatter-= 0.1f;
+	}
+
 
 	Ogre::Radian rot_factor(Ogre::Math::PI / 180); // Camera rotation with directional thrusters
 
 	if(playerKeyboard_->isKeyDown(OIS::KC_P)){
 		playerShip->fullStop();
+		  reloadingScatter = 50.0f;
+		  reloadingRocket = 50.0f;
+		   reloadingLaser = 50.0f;
 	}
 
 
@@ -222,4 +249,33 @@ void PlayerInput::bindCamera(SmallShip* _ship, Ogre::Node* _node)
 	Ogre::Node* temp = root_scene_node->removeChild("MyCameraNode");
 	
 	_node->addChild(temp);
+}
+
+float PlayerInput::getRocketCD()
+{
+	if(reloadingRocket > 0){
+		return reloadingRocket;
+	}else{
+		return 0;	
+	}
+}
+
+float PlayerInput::getLaserCD()
+{
+	if(reloadingLaser > 0){
+		return reloadingLaser;
+	}else{
+		return 0;	
+	}
+	
+}
+
+float PlayerInput::getScatterCD()
+{
+	if(reloadingScatter > 0){
+		return reloadingScatter;
+	}else{
+		return 0;	
+	}
+	
 }

@@ -18,7 +18,7 @@ public:
 	Ogre::SceneNode* CreateParticleEntity(Ogre::String , Ogre::String ,Ogre::SceneNode*, Ogre::Vector3 ); // Create an entity of an object
 	void CreateThrusterParticleGeometry(Ogre::String , int ,float loop_radius = 0.6, float circle_radius = 0.2); // Create Thruster Fire (torus) particles
 	void CreateExplosionParticleGeometry(Ogre::String object_name, int num_particles);
-
+	void CreateImplosionParticleGeometry(Ogre::String object_name, int num_particles);
 	void CreateSplineParticleGeometry(Ogre::String object_name, int num_particles, float loop_radius = 0.6, float circle_radius = 0.2); // Create particles
 	void CreateSplineControlPoints(Ogre::String control_points_name, int num_control_points, Ogre::String material_name); // Create control points for the spline
 

@@ -17,7 +17,12 @@ public:
 	std::vector<GameObject*>& getObjectList();
 	int getListSize();
 
+	int getScore();
+	int getPlayerHealth();
+
 private:
+
+	int Score;
 	Ogre::SceneManager* scene_manager;
 
 	std::vector<GameObject*> objectList;

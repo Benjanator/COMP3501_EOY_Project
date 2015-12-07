@@ -5,6 +5,7 @@ ScatterShot::ScatterShot(Ogre::SceneNode * newScatterShot,Ogre::Quaternion shipO
 {
 	
 	m_pNode = newScatterShot;
+	this->type = scattershot;
 	m_pNode->setOrientation(shipOrientation);
 	forward_Direction = shipOrientation *  Ogre::Vector3::NEGATIVE_UNIT_Z;
 	left_Direction = shipOrientation *  Ogre::Vector3::NEGATIVE_UNIT_X;
@@ -12,9 +13,10 @@ ScatterShot::ScatterShot(Ogre::SceneNode * newScatterShot,Ogre::Quaternion shipO
 	down_Direction = shipOrientation *  Ogre::Vector3::NEGATIVE_UNIT_Y;
 
 
-	m_pNode->setPosition(shipPosition + (forward_Direction *12) + (down_Direction*0.6));
+	m_pNode->setPosition(shipPosition + (forward_Direction *15) + (down_Direction*0.6));
 	
 	hasExploded = false;
+	personalTimer = 0;
 	accel_Rate = 0.15;
 	drift_Direction = Ogre::Vector3(0.0f);
 	aabbCenter = Ogre::Vector3(0.0f, 0.230201f, -1.85835f);
@@ -22,7 +24,7 @@ ScatterShot::ScatterShot(Ogre::SceneNode * newScatterShot,Ogre::Quaternion shipO
 	numMaterials = 1;
 
 
-	generateCP(100);
+	generateCP(1000);
 
 }
 
@@ -31,9 +33,25 @@ ScatterShot::~ScatterShot(void)
 {
 }
 
-void ScatterShot::update(float _timer)
+void ScatterShot::update(float _timer, ObjectManager* manager)
 {
+	Ogre::MaterialPtr mat;
+	
 	splinetraj(_timer);
+
+		if(hasExploded){
+		personalTimer += 1;
+		
+		//std::cout << "NAME: " << m_pNode->getName()<< std::endl;
+		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Implosion_ImplosionParticleMaterial_"+ Ogre::StringConverter::toString(1)));
+		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", personalTimer);
+
+		if(personalTimer >= 20){
+			m_pNode->setVisible(false);
+			dead = true;
+		}
+		return;
+	}
 }
 
 void ScatterShot::generateCP(int num_control_points){
@@ -79,18 +97,18 @@ void ScatterShot::generateCP(int num_control_points){
 				controlPoints.push_back( 2.0*controlPoints.at(i-2) - controlPoints.at(i-3));
 			} else {
 
-				u= Ogre::Math::RangeRandom(0.5,5);
-				v= Ogre::Math::RangeRandom(-2,2);
-				w= Ogre::Math::RangeRandom(-2,2);
+				u= Ogre::Math::RangeRandom(-0.5,3.5);
+				v= Ogre::Math::RangeRandom(-5,5);
+				w= Ogre::Math::RangeRandom(-5,5);
 
 				controlPoints.push_back(controlPoints.at(i-1) + (forward_Direction *u) + (left_Direction * v) + (down_Direction*w));
 
 			}
 		}
 
-		for(int x=0; x<= controlPoints.size()-1;x++){
+		/*for(int x=0; x<= controlPoints.size()-1;x++){
 			std::cout << "Control Point:: " << controlPoints.at(x) << std::endl;
-		}
+		}*/
 
 }
 
@@ -102,13 +120,48 @@ void ScatterShot::move(){
 }
 
 void ScatterShot::splinetraj(float _timer){
-	
 
+	// The phase of the particle repeats in a cyclic manner and is dependent of the particle id
+	
+	//float phase = two_pi*particle_id;
+	float circtime = (static_cast<int>(_timer / 1.5 )% 56); // A cycle lasts 16 seconds
+	//std::cout << "Time:: " << circtime << std::endl;
+	// Change position of the particle based on a spline
+	
+	float t = circtime - floor(circtime); // Fractional part, 0-1
+	
+	// Spline evaluation
+	
+    float p1w = (1 - t)*(1 - t)*(1 - t);
+    float p2w = 3 * t*(1 - t)*(1 - t);
+    float p3w = 3 * t*t*(1 - t);
+    float p4w = t*t*t; 
+    int wsec = int(floor(circtime))*4; // Picks which set of control points are used           
+	Ogre::Vector3 Bt = p1w*controlPoints.at(0+wsec) + p2w*controlPoints.at(1+wsec) + p3w*controlPoints.at(2+wsec) + p4w*controlPoints.at(3+wsec);
+	//std::cout << "BT:: " << Bt << std::endl;
+	//m_pNode->setPosition(Bt);
+
+	//m_pNode->lookAt(m_pNode->getPosition() + Bt, Ogre::Node::TS_WORLD, Ogre::Vector3::UNIT_Z);
+	m_pNode->lookAt( Bt, Ogre::Node::TS_WORLD,   Ogre::Vector3::UNIT_Z);
+	
+	m_pNode->translate(0.25 * (m_pNode->getOrientation() *  Ogre::Vector3::UNIT_Z));
+
+	//forward_Direction = m_pNode->getOrientation() *  Ogre::Vector3::NEGATIVE_UNIT_Z;
+	m_pNode->needUpdate();
 }
 
 void ScatterShot::collide(){
 	
-	m_pNode->setVisible(false);
+	//m_pNode->setVisible(false);
+	//dead = true;
+	hasExploded = true;
+}
+
+void ScatterShot::collide(int damage){
+	collide();
+}
+
+void ScatterShot::shoot(GameObjectFactory* factory ,ObjectManager* manager, GameObject* player){
 	
 }
 

@@ -5,6 +5,12 @@
 #include "OGRE/OgreRoot.h"
 #include "OGRE/OgreEntity.h"
 
+
+class GameObjectFactory;
+class ObjectManager;
+
+
+
 class GameObject
 {
 public:
@@ -16,6 +22,8 @@ public:
 					largeEnemy_cmd = 20, 
 					largeAlly_cmd, 
 					asteroid = 100,
+					smallAlly_platform,
+					smallEnemy_platform,
 					platform,
 					rocket,
 					laser,
@@ -26,29 +34,37 @@ public:
 
 	int numMaterials;
 
-	virtual void update(float) = 0;
+	virtual void update(float,ObjectManager*) = 0;
 	virtual void collide() = 0;
+	virtual void collide(int) = 0;
+	virtual void shoot(	GameObjectFactory* ,ObjectManager*, GameObject* ) = 0;
+
 	Ogre::SceneNode& getNode();
 
 	Ogre::Vector3 getMotionDirection();
 	bool isIndestructable();
 	bool isDead();
 	int getTeam();
+	int getHealth();
+
 	void setTeam(int);
 	objectType getType();
 
 	Ogre::Vector3 getAABBCenter();
 	Ogre::Vector3 getAABBSize();
 
+	
+
 protected:
 	Ogre::SceneNode* m_pNode;
 
 	objectType type;
 	int team;
-
+	int health;
 	bool indestructable;
 	bool hasExploded;
 	bool dead;
+	float reloading;
 	Ogre::Vector3 drift_Direction;
 	Ogre::Vector3 forward_Direction;
 
