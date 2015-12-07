@@ -83,10 +83,11 @@ bool PhysicsManager::testcollidableDistance(GameObject* _focus, GameObject* _col
 {	
 	static int i = 0;
 
-	if(_focus->getType() == GameObject::objectType::rocket && _collidie->getType() == GameObject::objectType::rocket ||
-		_focus->getType() == GameObject::objectType::laser && _collidie->getType() == GameObject::objectType::laser){
-		return false;
-	}
+	//if(_focus->getType() == GameObject::objectType::rocket && _collidie->getType() == GameObject::objectType::rocket ||
+	//	_focus->getType() == GameObject::objectType::laser && _collidie->getType() == GameObject::objectType::laser){
+	//	return false;
+	//}
+
 	if(_focus->getTeam() == _collidie->getTeam())
 	{
 	
