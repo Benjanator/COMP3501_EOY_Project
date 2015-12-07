@@ -85,10 +85,10 @@ void Bomber::shoot(GameObjectFactory* factory ,ObjectManager* manager, GameObjec
 
 void Bomber::move(Ogre::Vector3 distance)
 {
-	if(warpTimer <= 0.0){
-		m_pNode->translate((-2 * (distance) + Ogre::Vector3(Ogre::Math::RangeRandom(-20.5f,20.5f), Ogre::Math::RangeRandom(-20.5f,20.5f), Ogre::Math::RangeRandom(-20.5f,20.5f))));
+	if(warpTimer <= 0.0 && distance.length() <= 10000){
+		m_pNode->translate(m_pNode->getOrientation() * -150 * Ogre::Vector3::UNIT_Y);
 		m_pNode->needUpdate();
-		warpTimer = 80.0f;
+		warpTimer = 60.0f;
 	}else{
 		warpTimer -= 0.1f;
 	}
