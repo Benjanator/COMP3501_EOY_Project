@@ -15,7 +15,7 @@ public:
 	void explode();
 	void collide();
 	void collide(int);
-	void update(float _timer);
+	void update(float _timer,ObjectManager*);
 	void shoot(GameObjectFactory* ,ObjectManager*, GameObject* );
 
 private:

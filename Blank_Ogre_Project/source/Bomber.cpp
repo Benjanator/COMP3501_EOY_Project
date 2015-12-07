@@ -26,8 +26,9 @@ Ogre::SceneNode& Bomber::getNode()
 	return *m_pNode;
 }
 
-void Bomber::update(float timer_)
+void Bomber::update(float timer_,ObjectManager* manager)
 {
+	std::vector<GameObject*> tempList = manager->getObjectList();
 	Ogre::MaterialPtr mat;
 	for(int i = 1; i<=26; i++){
 		mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_SField_SplineParticleMaterial_"+ Ogre::StringConverter::toString(i)));
@@ -44,7 +45,8 @@ void Bomber::update(float timer_)
 			dead = true;
 		}
 	}
-	move();
+	Ogre::Vector3 temp = m_pNode->getPosition() - tempList.at(0)->getNode().getPosition();
+	move(temp);
 }
 
 void Bomber::collide(){
@@ -80,9 +82,15 @@ void Bomber::shoot(GameObjectFactory* factory ,ObjectManager* manager, GameObjec
 
 
 
-void Bomber::move(void)
+void Bomber::move(Ogre::Vector3 distance)
 {
-
+	if(warpTimer <= 0.0){
+		m_pNode->translate(-1 * ((distance / 2) + Ogre::Vector3(Ogre::Math::RangeRandom(-20.5f,20.5f), Ogre::Math::RangeRandom(-20.5f,20.5f), Ogre::Math::RangeRandom(-20.5f,20.5f))));
+		m_pNode->needUpdate();
+		warpTimer = 30.0f;
+	}else{
+		warpTimer -= 0.1f;
+	}
 	
 }
 

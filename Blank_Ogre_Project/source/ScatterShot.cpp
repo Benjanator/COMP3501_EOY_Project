@@ -33,7 +33,7 @@ ScatterShot::~ScatterShot(void)
 {
 }
 
-void ScatterShot::update(float _timer)
+void ScatterShot::update(float _timer, ObjectManager* manager)
 {
 	Ogre::MaterialPtr mat;
 	

@@ -28,7 +28,7 @@ Rocket::~Rocket(void)
 {
 }
 
-void Rocket::update(float timer_)
+void Rocket::update(float timer_, ObjectManager* manager)
 {
 	Ogre::MaterialPtr mat;
 	mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(m_pNode->getName()+"_Thruster_FireMaterial_"+ Ogre::StringConverter::toString(1)));

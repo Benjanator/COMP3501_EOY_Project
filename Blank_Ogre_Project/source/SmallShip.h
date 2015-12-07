@@ -22,7 +22,7 @@ public:
 	void roll(Ogre::Quaternion);
 	void translate(Ogre::Vector3, Ogre::Vector3, Ogre::Vector3);
 
-	void update(float _timer);
+	void update(float _timer, ObjectManager*);
 	void collide();
 	void shoot(	GameObjectFactory* ,ObjectManager*, GameObject*);
 

@@ -11,7 +11,7 @@ public:
 	PhysicsManager(ObjectManager*);
 	~PhysicsManager(void);
 
-	void pollTotalEvents(float);
+	void pollTotalEvents(float,ObjectManager* );
 
 	void pollAiShots(GameObjectFactory *,ObjectManager* );
 	bool spawnNextWave();
